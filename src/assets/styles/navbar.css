@@ -1,0 +1,58 @@
+
+:root{
+    --laburo-green : #15BC7F;
+}
+
+
+
+.bg-laburo-green {
+    background-color:var(--laburo-green);
+}
+.laburo-green{
+    color: var(--laburo-green);
+}
+
+
+
+.nav-container{
+   display: flex;
+   height: 75px;
+   width: 100%;
+   padding: 0 20px;
+   justify-content: space-between;
+    align-items: center;
+    position: relative;
+ 
+}
+
+.nav-inner-container{
+    align-items: flex-end;
+}
+
+.post-job-btn{
+    border-radius: 50px;
+   width: 100px;
+   height: 43px;
+   text-align: center;
+   color: white;
+   padding: 2px;
+   font-size: 14px;
+}
+
+
+.nav-menu{
+   top: 0;
+   left: 0;
+    position: fixed;
+    background-color: rgba(256 , 256,256, 0.95);
+    height: 100vh;
+    width: 60%;
+    z-index: 10;
+}
+
+.nav-menu-items{
+    font-size: 22px;
+    line-height: 2;
+    margin-left: 20px;
+    margin-top: 100px;
+}

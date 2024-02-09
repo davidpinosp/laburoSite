@@ -1,0 +1,76 @@
+
+:root{
+    --laburo-green : #15BC7F;
+}
+
+
+
+.bg-laburo-green {
+    background-color:var(--laburo-green);
+}
+.laburo-green{
+    color: var(--laburo-green);
+}
+
+
+
+.flx{
+    display: flex;
+}
+
+.flx-center{
+ 
+    justify-content: center ;
+    align-items: center;
+}
+
+.flx-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.space-btwn{
+    justify-content: space-between;
+}
+
+.space-even{
+    justify-content: space-evenly;
+}
+
+
+.txt-s1{
+    font-size: 10px;
+}
+
+.txt-s2{
+    font-size: 12px;
+}
+
+.txt-s3{
+    font-size: 16px;
+}
+
+.txt-s4{
+    font-size: 20px;
+}
+.txt-s5{
+    font-size: 30px;
+}
+.txt-s6{
+    font-size: 32px;
+}
+
+
+.mb-50{
+    margin-bottom: 50px;
+}
+
+.mt-50{
+    margin-top: 50px;
+}
+
+
+.link-style{
+    text-decoration: none;
+    color: black;
+}
