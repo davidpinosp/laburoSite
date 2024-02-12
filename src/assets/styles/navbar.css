@@ -42,12 +42,20 @@
 
 .nav-menu{
    top: 0;
-   left: 0;
+   left: -300px;
     position: fixed;
-    background-color: rgba(256 , 256,256, 0.95);
+  
     height: 100vh;
     width: 60%;
-    z-index: 10;
+    z-index: -10;
+    transition: left 0.3s ease-out; 
+   
+}
+
+.nav-menu.open{
+left: 0px;
+background-color: rgba(256 , 256,256, 0.95);
+z-index: 10;
 }
 
 .nav-menu-items{
@@ -55,4 +63,5 @@
     line-height: 2;
     margin-left: 20px;
     margin-top: 100px;
+   
 }

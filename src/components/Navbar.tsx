@@ -25,9 +25,9 @@ function Navbar() {
           <div>
             <Link
               to="/post-job"
-              style={{ textDecoration: "none", color: "black" }}
+              style={{ textDecoration: "none", color: "white" }}
             >
-              Publica un Trabajo{" "}
+              Publica un Trabajo
             </Link>
           </div>
         </div>
@@ -39,27 +39,26 @@ function Navbar() {
         </div>
       </div>
       {/* nav menu */}
-      {navOpen && (
-        <div className="nav-menu" onClick={toggleMenu}>
-          <div className="nav-menu-items">
-            <div>
-              <Link to="/" className="link-style">
-                Pagina Principal
-              </Link>
-            </div>
-            <div>
-              <Link to="/jobs" className="link-style">
-                Buscar Trabajos
-              </Link>
-            </div>
-            <div>
-              <Link to="post-job" className="link-style">
-                Publicar un Trabajo
-              </Link>
-            </div>
+
+      <div className={`nav-menu ${navOpen ? "open" : ""}`} onClick={toggleMenu}>
+        <div className="nav-menu-items">
+          <div>
+            <Link to="/" className="link-style">
+              Pagina Principal
+            </Link>
+          </div>
+          <div>
+            <Link to="/jobs" className="link-style">
+              Buscar Trabajos
+            </Link>
+          </div>
+          <div>
+            <Link to="/post-job" className="link-style">
+              Publicar un Trabajo
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/styles/landing.css";
 import "../assets/styles/global.css";
 import Navbar from "../components/Navbar";
-
+import Footer from "../components/Footer";
 import FeatureSquares from "../components/FeatureSquares";
 import SearchJobsButton from "../components/SearchJobsButton";
 import WomanWritingPicture from "../assets/images/woman-writing.jpg";
@@ -26,14 +26,17 @@ function Landing() {
           </Link>
         </div>
       </div>
-      <div className="landing-text-body txt-s6">
-        Laburo es la nueva manera de encontrar tu siguiente trabajo y tomar el
-        control de tu futuro.
+
+      <div className="landing-text-body flx-col ">
+        <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
+        <span className="txt-s4">
+          Tenemos posiciones para lo que sea que estes buscando.
+        </span>
       </div>
       {/* 4 squares */}
       <FeatureSquares />
       <div className="landing-text-body flx-col mb-50">
-        <span className="txt-s6">Hecho para todos </span>
+        <span className="txt-s5 mb-25">Hecho para todos </span>
         <span className="txt-s4">
           puedes acceder a nuestros servicios a traves de nuestra pagina web o
           por <span className="laburo-green">whatsapp</span>
@@ -42,22 +45,23 @@ function Landing() {
       {/* image 2 */}
       <img src={WomanWritingPicture} alt=" Woman Writing" />
       <div className="landing-text-body flx-col mb-50">
-        <span className="txt-s6">
-          Encuentra tu siguiente aventura con nosotros
-        </span>
+        <span className="txt-s5 mb-25">Encuentra tu siguiente aventura</span>
         <span className="txt-s4">
-          Cada dia añadimos nuevas posiciones son a nuestra plataforma.
+          Cada dia añadimos nuevas{" "}
+          <span className="laburo-green">posiciones</span> son a nuestra
+          plataforma.
         </span>
       </div>
       {/* images 3/4 */}
-      <img src={ManDrillingpPicture} alt="" />
-      <img src={WomanLabPicture} alt="" />
+      <img src={ManDrillingpPicture} alt="" className="sbs-img" />
+      <img src={WomanLabPicture} alt="" className="sbs-img" />
       {/*  */}
       <div className="landing-text-body flx-col">
-        <span className="txt-s6"> Listo Para Contratar ? </span>
+        <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
         <span className="txt-s4">
-          Usa nuestra plataforma para llegar a miles de aplicantes y asi poder
-          obtener el mejor talento para tu empresa.
+          Usa nuestra plataforma para llegar a miles de{" "}
+          <span className="laburo-green">aplicantes</span> y asi poder obtener
+          el mejor talento para tu empresa.
         </span>
       </div>
       {/*  */}
@@ -74,6 +78,7 @@ function Landing() {
       </div>
 
       {/* footer */}
+      <Footer />
     </div>
   );
 }
