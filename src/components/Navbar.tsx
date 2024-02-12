@@ -4,11 +4,16 @@ import "../assets/styles/global.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { useState } from "react";
+import { useState, useRef } from "react";
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
+  const dropDownRef = useRef(null);
   const toggleMenu = () => {
     setNavOpen(!navOpen);
+  };
+
+  const handleOutsideClick = () => {
+    setNavOpen(false);
   };
   return (
     <div className="nav-container">
@@ -40,7 +45,11 @@ function Navbar() {
       </div>
       {/* nav menu */}
 
-      <div className={`nav-menu ${navOpen ? "open" : ""}`} onClick={toggleMenu}>
+      {navOpen && (
+        <div className="nav-menu-block" onClick={handleOutsideClick}></div>
+      )}
+
+      <div className={`nav-menu ${navOpen ? "open" : ""}`}>
         <div className="nav-menu-items">
           <div>
             <Link to="/" className="link-style">

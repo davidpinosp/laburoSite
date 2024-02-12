@@ -12,72 +12,96 @@ import WomanLabPicture from "../assets/images/woman-lab.jpg";
 import PublicarTrabajo from "./PostJob";
 function Landing() {
   return (
-    <div className="landing-container">
-      {/*  navbar */}
+    <div>
       <Navbar />
-      {/* image */}
-      <div className="hero">
-        <div className="hero-content hero-text-1">
-          Tu proximo <span className="laburo-green">trabajo</span> te espera!
-        </div>
-        <div className="hero-content">
-          <Link to="/jobs" style={{ textDecoration: "none", color: "black" }}>
-            <SearchJobsButton />
-          </Link>
-        </div>
-      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div className="landing-container">
+          {/*  navbar */}
 
-      <div className="landing-text-body flx-col ">
-        <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
-        <span className="txt-s4">
-          Tenemos posiciones para lo que sea que estes buscando.
-        </span>
-      </div>
-      {/* 4 squares */}
-      <FeatureSquares />
-      <div className="landing-text-body flx-col mb-50">
-        <span className="txt-s5 mb-25">Hecho para todos </span>
-        <span className="txt-s4">
-          puedes acceder a nuestros servicios a traves de nuestra pagina web o
-          por <span className="laburo-green">whatsapp</span>
-        </span>
-      </div>
-      {/* image 2 */}
-      <img src={WomanWritingPicture} alt=" Woman Writing" />
-      <div className="landing-text-body flx-col mb-50">
-        <span className="txt-s5 mb-25">Encuentra tu siguiente aventura</span>
-        <span className="txt-s4">
-          Cada dia añadimos nuevas{" "}
-          <span className="laburo-green">posiciones</span> son a nuestra
-          plataforma.
-        </span>
-      </div>
-      {/* images 3/4 */}
-      <img src={ManDrillingpPicture} alt="" className="sbs-img" />
-      <img src={WomanLabPicture} alt="" className="sbs-img" />
-      {/*  */}
-      <div className="landing-text-body flx-col">
-        <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
-        <span className="txt-s4">
-          Usa nuestra plataforma para llegar a miles de{" "}
-          <span className="laburo-green">aplicantes</span> y asi poder obtener
-          el mejor talento para tu empresa.
-        </span>
-      </div>
-      {/*  */}
+          {/* image */}
+          <div className="hero img-round">
+            <div className="hero-content hero-text-1">
+              Tu proximo <span className="laburo-green">trabajo</span> te
+              espera!
+            </div>
+            <div className="hero-content">
+              <Link
+                to="/jobs"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <SearchJobsButton />
+              </Link>
+            </div>
+          </div>
 
-      <div className="post-job-btn2-container mt-50 mb-50">
-        <div className="post-job-btn2">
-          <Link
-            to="/post-job"
-            style={{ textDecoration: "none", color: "black" }}
-          >
-            Publicar un trabajo
-          </Link>
+          <div className="landing-text-body flx-col ">
+            <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
+            <span className="txt-s4">
+              Tenemos posiciones para lo que sea que estes buscando.
+            </span>
+          </div>
+          {/* 4 squares */}
+          <FeatureSquares />
+          <div className="landing-text-body flx-col mb-50">
+            <span className="txt-s5 mb-25">Hecho para todos </span>
+            <span className="txt-s4">
+              puedes acceder a nuestros servicios a traves de nuestra pagina web
+              o por <span className="laburo-green">whatsapp</span>
+            </span>
+          </div>
+          {/* image 2 */}
+          <div
+            className="image-container img-round"
+            style={{ backgroundImage: `url(${WomanWritingPicture})` }}
+          ></div>
+          <div className="landing-text-body flx-col mb-50">
+            <span className="txt-s5 mb-25">
+              Encuentra tu siguiente aventura
+            </span>
+            <span className="txt-s4">
+              Cada dia añadimos nuevas{" "}
+              <span className="laburo-green">posiciones</span> son a nuestra
+              plataforma.
+            </span>
+          </div>
+          {/* images 3/4 */}
+          <div
+            className="image-container img-round-top"
+            style={{ backgroundImage: `url(${ManDrillingpPicture})` }}
+          ></div>
+          <div
+            className="image-container img-round-bt"
+            style={{ backgroundImage: `url(${WomanLabPicture})` }}
+          ></div>
+          {/*  */}
+          <div className="landing-text-body flx-col">
+            <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
+            <span className="txt-s4">
+              Usa nuestra plataforma para llegar a miles de{" "}
+              <span className="laburo-green">aplicantes</span> y asi poder
+              obtener el mejor talento para tu empresa.
+            </span>
+          </div>
+          {/*  */}
+
+          <div className="post-job-btn2-container mt-50 mb-50">
+            <div className="post-job-btn2">
+              <Link
+                to="/post-job"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Publicar un trabajo
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* footer */}
       <Footer />
     </div>
   );

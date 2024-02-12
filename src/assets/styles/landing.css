@@ -18,10 +18,14 @@
 .landing-container{
     display: flex;
   flex-direction: column;
-   
+  
+
+   max-width: 500px;
    /* height: 100vh;
    width: 100vw;
     */
+
+   
    
 
 }
@@ -143,3 +147,35 @@ justify-content: center;
     height: auto;
     
 }
+
+.image-container {
+    width: 100%;
+    height: 300px; /* Set the desired height for your image container */
+    background-size: cover;
+    background-position: center;
+  
+
+  }
+
+
+
+
+
+
+
+  /* make images round after exceding size  */
+
+
+  @media(min-width:500px){
+    .img-round{
+        border-radius:10px
+    }
+    .img-round-top {
+        border-radius: 10px 10px 0px 0px;
+    }
+
+    .img-round-bt {
+        border-radius: 0px 0px 10px 10px;
+    }
+
+  }

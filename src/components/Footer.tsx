@@ -3,18 +3,23 @@ import "../assets/styles/footer.css";
 
 function Footer() {
   return (
-    <div className="footer-container">
+    <div className="footer-container ">
       <div
-        className="flx space-btwn "
-        style={{ margin: "100px 20px 50px 20px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
-        <div>Quienes Somos</div>
-        <div>Whatsapp</div>
-        <div>Trabaja Con Nosotros</div>
+        <div className="footer-menu">
+          <div>Quienes Somos</div>
+          <div>Whatsapp</div>
+          <div>Trabaja Con Nosotros</div>
+        </div>
       </div>
 
       <div>Politica de Privacidad</div>
-      <div>Humm. Reservados todos los Derechos 2024</div>
+      <div>Humm Inc. Reservados todos los Derechos 2024</div>
     </div>
   );
 }
