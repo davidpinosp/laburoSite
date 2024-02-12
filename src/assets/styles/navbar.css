@@ -79,3 +79,18 @@ opacity: 1;
     
     
 }
+
+
+
+
+@media(min-width:650px){
+ 
+    .nav-inner-container{
+        justify-content: space-evenly;
+    }
+
+
+
+    
+
+  }

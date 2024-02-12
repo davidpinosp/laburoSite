@@ -9,7 +9,7 @@ import SearchJobsButton from "../components/SearchJobsButton";
 import WomanWritingPicture from "../assets/images/woman-writing.jpg";
 import ManDrillingpPicture from "../assets/images/man-drillling.jpg";
 import WomanLabPicture from "../assets/images/woman-lab.jpg";
-import PublicarTrabajo from "./PostJob";
+
 function Landing() {
   return (
     <div>
@@ -27,7 +27,7 @@ function Landing() {
           {/* image */}
           <div className="hero img-round">
             <div className="hero-content hero-text-1">
-              Tu proximo <span className="laburo-green">trabajo</span> te
+              ¡Tu proximo <span className="laburo-green">trabajo</span> te
               espera!
             </div>
             <div className="hero-content">
@@ -43,7 +43,9 @@ function Landing() {
           <div className="landing-text-body flx-col ">
             <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
             <span className="txt-s4">
-              Tenemos posiciones para lo que sea que estes buscando.
+              {" "}
+              Con nuestra plataorma puedes explorar miles de vacantes. Tenemos
+              posiciones para lo que sea que estes buscando :
             </span>
           </div>
           {/* 4 squares */}
@@ -51,26 +53,13 @@ function Landing() {
           <div className="landing-text-body flx-col mb-50">
             <span className="txt-s5 mb-25">Hecho para todos </span>
             <span className="txt-s4">
-              puedes acceder a nuestros servicios a traves de nuestra pagina web
-              o por <span className="laburo-green">whatsapp</span>
+              Aplica comodamente a través de nuestras integraciones multicanal.
+              Puedes acceder a todos nuestros servicios a traves de nuestra
+              pagina web o por
+              <span className="laburo-green"> whatsapp</span>
             </span>
           </div>
           {/* image 2 */}
-          <div
-            className="image-container img-round"
-            style={{ backgroundImage: `url(${WomanWritingPicture})` }}
-          ></div>
-          <div className="landing-text-body flx-col mb-50">
-            <span className="txt-s5 mb-25">
-              Encuentra tu siguiente aventura
-            </span>
-            <span className="txt-s4">
-              Cada dia añadimos nuevas{" "}
-              <span className="laburo-green">posiciones</span> son a nuestra
-              plataforma.
-            </span>
-          </div>
-          {/* images 3/4 */}
           <div
             className="image-container img-round-top"
             style={{ backgroundImage: `url(${ManDrillingpPicture})` }}
@@ -79,6 +68,24 @@ function Landing() {
             className="image-container img-round-bt"
             style={{ backgroundImage: `url(${WomanLabPicture})` }}
           ></div>
+
+          <div className="landing-text-body flx-col mb-50">
+            <span className="txt-s5 mb-25">
+              Encuentra tu siguiente aventura
+            </span>
+            <span className="txt-s4">
+              Cada dia añadimos nuevas{" "}
+              <span className="laburo-green">posiciones</span> a nuestra
+              plataforma. Trbajamos duro para brindarte una excelente
+              experiencia de busqueda.
+            </span>
+          </div>
+          {/* images 3/4 */}
+          <div
+            className="image-container img-round"
+            style={{ backgroundImage: `url(${WomanWritingPicture})` }}
+          ></div>
+
           {/*  */}
           <div className="landing-text-body flx-col">
             <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>

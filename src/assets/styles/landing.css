@@ -20,7 +20,7 @@
   flex-direction: column;
   
 
-   max-width: 500px;
+   max-width: 650px;
    /* height: 100vh;
    width: 100vw;
     */
@@ -160,13 +160,20 @@ justify-content: center;
 
 
 
-
+.feature-square-img{
+    background-image: url("../images/icons/change.svg");
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+}
 
 
   /* make images round after exceding size  */
 
 
-  @media(min-width:500px){
+  @media(min-width:650px){
     .img-round{
         border-radius:10px
     }
