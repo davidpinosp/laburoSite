@@ -90,3 +90,16 @@
 .in-dev-txt{
     width: 80%;
 }
+
+
+/*  mobile */
+
+
+@media(min-width:500px){
+ 
+    .mobile-only{
+        display: none;
+    }
+
+
+  }

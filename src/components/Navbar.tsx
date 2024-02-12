@@ -4,10 +4,9 @@ import "../assets/styles/global.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { useState, useRef } from "react";
+import { useState } from "react";
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
-  const dropDownRef = useRef(null);
   const toggleMenu = () => {
     setNavOpen(!navOpen);
   };
@@ -39,7 +38,7 @@ function Navbar() {
         <div>
           <PersonOutlineIcon style={{ fontSize: "30px" }} />
         </div>
-        <div onClick={toggleMenu}>
+        <div onClick={toggleMenu} className="mobile-only">
           <MenuIcon style={{ fontSize: "30px" }} />
         </div>
       </div>
