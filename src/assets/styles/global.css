@@ -8,8 +8,16 @@
 .bg-laburo-green {
     background-color:var(--la buro-green);
 }
+.bg-laburo-gray {
+background-color: rgba(80, 80, 80, 0.1)
+
+}
 .laburo-green{
     color: var(--laburo-green);
+}
+.laburo-gray{
+    color: rgba(80, 80, 80, 0.1)
+
 }
 
 
@@ -100,6 +108,13 @@
     
 
 }
+
+.w100{
+    width: 100%;
+}
+
+
+
 
 /*  mobile */
 
