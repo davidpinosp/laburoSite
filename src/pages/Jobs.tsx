@@ -32,8 +32,21 @@ function Jobs() {
         </div>
         {/* positions here  */}
         <div className="w100 mb-25">
-          <JobPost />
+          <JobPost
+            position="Ayudante De Boasdasdaasdasdasdasda"
+            company="Pydaco CIa LTDA"
+            location="quito"
+            salary="1k-2k"
+          />
         </div>
+        <div className="mb-25"></div>
+        <JobPost
+          position="Ayudante asdasdasdasdaasdasdasdasdasdasdasdasdasdasasd"
+          company="Pydacasdasdasdasdasdasdasdasdasdasdasdo CIa LTDA"
+          location="quasdasdasdasdasdasdasdasdasdasdasdasdito"
+          salary="1k-2k"
+        />
+        <div className="mb-25"></div>
       </div>
       <Footer />
     </div>

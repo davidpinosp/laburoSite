@@ -4,6 +4,7 @@
 padding: 0px 8px;
 
 
+
 }
 .search-container{
     
@@ -40,7 +41,7 @@ padding: 0px 8px;
     padding-left: 10px;
     padding-right: 20px;
     user-select: none;
-
+    outline: none;
     
 }
 
@@ -97,6 +98,8 @@ border-radius: 10px;
     height: 50px;
     width: 50px;
 }
+
+
 
 .job-post-txt{
 padding: 10px 0px;

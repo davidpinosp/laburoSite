@@ -2,13 +2,27 @@ import React from "react";
 import StoreIcon from "@mui/icons-material/Store";
 import { useState } from "react";
 
-function JobPost() {
-  const [position, setPostiion] = useState(
-    "Ayudante De Boasdasdaasdasdasdasda"
-  );
-  const [company, setCompany] = useState("Pydaco cia ltda ");
-  const [location, setLocation] = useState("Quito,Ecuador");
-  const [salary, setSalary] = useState("$100-$200");
+interface PostProps {
+  position: string;
+  company: string;
+  location: string;
+  salary: string;
+  posted?: Date;
+}
+
+const JobPost: React.FC<PostProps> = ({
+  position,
+  company,
+  location,
+  salary,
+  posted,
+}) => {
+  // const [position, setPostiion] = useState(
+  //   "Ayudante De Boasdasdaasdasdasdasda"
+  // );
+  // const [company, setCompany] = useState("Pydaco cia ltda ");
+  // const [location, setLocation] = useState("Quito,Ecuador");
+  // const [salary, setSalary] = useState("$100-$200");
 
   return (
     <div className="job-post-container">
@@ -38,6 +52,6 @@ function JobPost() {
       </div>
     </div>
   );
-}
+};
 
 export default JobPost;

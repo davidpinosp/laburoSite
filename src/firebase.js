@@ -18,9 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const auth = app.auth();
 const analytics = getAnalytics(app);
-analytics().setCurrentScreen(window.location.pathname) // sets `screen_name` parameter
-analytics().logEvent('screen_view')
 
-export { auth };
+export {auth}
