@@ -21,4 +21,4 @@ const app = initializeApp(firebaseConfig);
 const auth = app.auth();
 const analytics = getAnalytics(app);
 
-export {auth}
+export {auth,analytics}

@@ -42,6 +42,7 @@ padding: 0px 8px;
     padding-right: 20px;
     user-select: none;
     outline: none;
+    font-size: 16px;
     
 }
 
@@ -62,6 +63,7 @@ padding: 0px 8px;
     padding: 5px 10px;
     border-radius: 10px;
     background-color: rgba(80, 80, 80, 0.3);
+
 }
 
 
@@ -74,6 +76,7 @@ width: 100%;
 background-color: rgba(80, 80, 80, 0.1);
 display: flex;
 border-radius: 10px;
+margin-bottom: 10px;
 
 
 
@@ -111,19 +114,19 @@ overflow: hidden;
 .job-post-txt-col1{
     padding-left: 10px;
 
-    width: 55%;
+    width: 100%;
     line-height: 1.5;
 
 }
 
 .job-post-txt-col2{
-    width: 45%;
+    width: 0%;
 }
 
 .job-post-position{
     overflow:hidden;
-   
-    height: 60px;
+   height:25px;
+  
     width: 100%;
     padding-right: 10px;
     

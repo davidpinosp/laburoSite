@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 function Jobs() {
+  const [jobsnumber, setJobsNumber] = useState(12345);
+  const jobPositions = [
+    {
+      position: "Analista de Servicio al Cliente",
+      company: "Pydaco Cía Ltda",
+      location: "Quito, Ecuador",
+    },
+    {
+      position: "Desarrollador Frontend",
+      company: "TechSolutions",
+      location: "Guayaquil, Ecuador",
+    },
+    {
+      position: "Diseñador Gráfico",
+      company: "Creativos Studio",
+      location: "Cuenca, Ecuador",
+    },
+    {
+      position: "Ingeniero de Software",
+      company: "InnovateTech",
+      location: "Quito, Ecuador",
+    },
+    // Add more job positions as needed
+  ];
+
+  const fetchJobs = () => {
+    // get the jobs from firebase
+    // get length
+  };
+
   return (
     <div>
       <Navbar />
@@ -21,32 +51,26 @@ function Jobs() {
             <input
               type="text"
               className="search-pill-input"
-              placeholder="Ubicacion"
+              placeholder="Ubicación"
             />
           </div>
           <div className="bg-laburo-green search-btn">Boton Buscar</div>
         </div>
-        <div className="flx space-btwn w100">
-          <div>results</div>
-          <div className="order-dropdown">Ordenar</div>
+        <div className="flx space-btwn w100 mt-25">
+          <div>{jobsnumber} resultados</div>
+          <div className="order-dropdown">Ordenar </div>
         </div>
         {/* positions here  */}
         <div className="w100 mb-25">
-          <JobPost
-            position="Ayudante De Boasdasdaasdasdasdasda"
-            company="Pydaco CIa LTDA"
-            location="quito"
-            salary="1k-2k"
-          />
+          {jobPositions.map((job, index) => (
+            <JobPost
+              key={index}
+              position={job.position}
+              company={job.company}
+              location={job.location}
+            />
+          ))}
         </div>
-        <div className="mb-25"></div>
-        <JobPost
-          position="Ayudante asdasdasdasdaasdasdasdasdasdasdasdasdasdasasd"
-          company="Pydacasdasdasdasdasdasdasdasdasdasdasdo CIa LTDA"
-          location="quasdasdasdasdasdasdasdasdasdasdasdasdito"
-          salary="1k-2k"
-        />
-        <div className="mb-25"></div>
       </div>
       <Footer />
     </div>
