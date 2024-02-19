@@ -1,0 +1,3 @@
+const getJobsData = () => {};
+
+export { getJobsData };

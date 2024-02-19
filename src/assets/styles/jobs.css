@@ -1,4 +1,11 @@
 
+:root{
+    --laburo-green : #15BC7F;
+}
+
+
+
+
 .job-page-container{
 
 padding: 0px 8px;
@@ -54,9 +61,19 @@ padding: 0px 8px;
     border-radius: 10px;
     height: 55px;
     width: 100%;
-   
+    transition: background-color 0.1s; 
+        color:white;
+        font-size: 20px;
     
 }
+
+.search-btn:hover{
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+   
+    background-color: rgba(21, 188, 127,0.9);
+}
+
+
 
 .order-dropdown{
 
@@ -109,6 +126,7 @@ padding: 10px 0px;
 align-items: baseline;
 width: 100%;
 overflow: hidden;
+
 }
 
 .job-post-txt-col1{
@@ -125,16 +143,18 @@ overflow: hidden;
 
 .job-post-position{
     overflow:hidden;
-   height:25px;
+  
   
     width: 100%;
     padding-right: 10px;
+   
     
 }
 .job-post-company{
     overflow: hidden;
     height: 20px;
     width: 100%;
+    margin-bottom: 2px;
 
 }
 .job-post-location{
@@ -148,4 +168,9 @@ overflow: hidden;
     height: 24px;
     width: 100%
 
+}
+
+.filters-menu{
+    align-items: baseline;
+    margin: 10px 0px 5px 0px;
 }
