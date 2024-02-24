@@ -4,7 +4,9 @@ import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 import TuneIcon from "@mui/icons-material/Tune";
-import { Button } from "@mui/material";
+import { getJobsData, getJobsDataQuery } from "../utils/jobsUtils";
+import { DocumentData } from "firebase/firestore";
+import { Link } from "react-router-dom";
 interface PostProps {
   position: string;
   company: string;
@@ -14,52 +16,37 @@ interface PostProps {
 }
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(12345);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [locationQuery, setLocationQuery] = useState("");
-  const [filteredJobs, setFilteredJobs] = useState<PostProps[]>([]); // Provide an initial value as an empty array
-  const [jobPositions, setJobPositions] = useState<PostProps[]>([
-    {
-      position: "Analista de Servicio al Cliente",
-      company: "Pydaco Cía Ltda",
-      location: "Quito, Ecuador",
-    },
-    {
-      position: "Desarrollador Frontend",
-      company: "TechSolutions",
-      location: "Guayaquil, Ecuador",
-    },
-    {
-      position: "Diseñador Gráfico",
-      company: "Creativos Studio",
-      location: "Cuenca, Ecuador",
-    },
-    {
-      position: "Ingeniero de Software",
-      company: "InnovateTech",
-      location: "Quito, Ecuador",
-    },
-    // Add more job positions as needed
-  ]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [locationValue, setLocationValue] = useState("");
+  const [positionValue, setPositionValue] = useState("");
+  const [jobPositions, setJobPositions] =
+    useState<{ data: DocumentData; id: string }[]>();
+  const [filteredJobs, setFilteredJobs] =
+    useState<{ data: DocumentData; id: string }[]>();
 
-  const handleMouseEnter = (e: any) => {
-    e.target.style.background = "";
-  };
-  const handleMouseLeave = (e: any) => {
-    e.target.style.background = "maroon";
-  };
-
-  const fetchJobs = () => {
+  const fetchJobs = async () => {
     // get the jobs from firebase
     // get length
-    const filtered = jobPositions.filter(
-      (jobs) => jobs.location === "Quito, Ecuador"
-    );
-    setJobPositions(filtered);
+    const jobsList = await getJobsData(0);
+
+    let filtered: { data: DocumentData; id: string }[] = jobsList;
+    if (locationValue && positionValue) {
+      filtered = jobsList
+        .filter((jobs) => jobs.data.location.country === locationValue)
+        .filter((jobs) => jobs.data.title === positionValue);
+    } else if (locationValue) {
+      filtered = jobsList.filter(
+        (jobs) => jobs.data.location.country === locationValue
+      );
+    } else if (positionValue) {
+      filtered = jobsList.filter((jobs) => jobs.data.title === positionValue);
+    }
+    console.log("filtered jobs: " + filtered);
+    setJobPositions(jobsList);
+    setFilteredJobs(filtered);
   };
 
-  const searchJobs = (query: string) => {
-    // get query and filter from available jobs
-  };
+  // use effect to fetch all jobs or saved filters
 
   return (
     <div>
@@ -71,6 +58,10 @@ function Jobs() {
               type="text"
               className="search-pill-input"
               placeholder="Posición "
+              value={positionValue}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPositionValue(e.target.value);
+              }}
             />
           </div>
 
@@ -79,6 +70,9 @@ function Jobs() {
               type="text"
               className="search-pill-input"
               placeholder="Ubicación"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setLocationValue(e.target.value);
+              }}
             />
           </div>
           <div
@@ -98,13 +92,22 @@ function Jobs() {
         </div>
         {/* positions here  */}
         <div className="w100 mb-25">
-          {jobPositions.map((job, index) => (
-            <JobPost
+          {filteredJobs?.map((job, index) => (
+            <Link
+              to={`/job-des/?id=${job.id}`}
               key={index}
-              position={job.position}
-              company={job.company}
-              location={job.location}
-            />
+              className="link-style"
+            >
+              <JobPost
+                position={job.data.title}
+                company={job.data.company}
+                location={
+                  job.data.location.city
+                    ? job.data.location.city + "," + job.data.location.country
+                    : " "
+                }
+              />
+            </Link>
           ))}
         </div>
       </div>

@@ -1,0 +1,43 @@
+
+:root{
+    --laburo-green : #15BC7F;
+}
+
+
+.job-des-bg{
+
+    background-color: rgba(80, 80, 80, 0.1) ;
+    height: 100vh;
+
+    z-index: -1;
+}
+
+.job-des-content{
+    min-height: 700px;
+    width: 100%;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.job-des-img{
+
+    background-color: var(--laburo-green);
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.aplicar-btn{
+    height: 55px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 80px;
+    background-color: var(--laburo-green);
+    border-radius: 10px;
+    width: 190px;
+
+}
