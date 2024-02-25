@@ -6,6 +6,7 @@ import Jobs from "./pages/Jobs";
 import JobDescription from "./pages/JobDescription";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import JobApply from "./pages/JobApply";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/job-des" element={<JobDescription />} />
+          <Route path="/job-des/job-apply" element={<JobApply />} />
         </Routes>
       </BrowserRouter>
     </div>
