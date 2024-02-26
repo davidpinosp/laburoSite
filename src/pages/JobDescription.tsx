@@ -33,7 +33,7 @@ function JobDescription() {
           <ArrowBackIcon />
         </Link>
       </div>
-      <div className="job-des-content ">
+      <div className="job-des-content  ">
         {/*  go back  */}
 
         {/* info */}
