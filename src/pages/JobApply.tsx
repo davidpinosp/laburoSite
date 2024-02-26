@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { DocumentData } from "firebase/firestore";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { getJobPositionData } from "../utils/jobsUtils";
 
 function JobApply() {
   const [jobId, setJobId] = useState("");
@@ -12,18 +10,15 @@ function JobApply() {
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  const submitData = () => {
-    // send all data to db as application and redirect to thanks page
-  };
   useEffect(() => {
     const id = searchParams.get("id");
 
     if (id) {
       setJobId(id);
     }
-  }, []);
+  }, [searchParams]);
   return (
     <div className="bg-laburo-gray">
       <Navbar />
@@ -46,9 +41,9 @@ function JobApply() {
                   <input
                     type="text"
                     className="search-pill-input "
-                    value={email}
+                    value={name}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setEmail(e.target.value);
+                      setName(e.target.value);
                     }}
                   />
                 </div>
@@ -74,9 +69,9 @@ function JobApply() {
                   <input
                     type="text"
                     className="search-pill-input "
-                    value={email}
+                    value={number}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setEmail(e.target.value);
+                      setNumber(e.target.value);
                     }}
                   />
                 </div>
