@@ -1,6 +1,5 @@
 import React from "react";
 import StoreIcon from "@mui/icons-material/Store";
-import { useState } from "react";
 
 interface PostProps {
   position: string;
