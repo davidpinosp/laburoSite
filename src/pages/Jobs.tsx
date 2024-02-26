@@ -50,7 +50,7 @@ function Jobs() {
   useEffect(() => {
     fetchJobs();
     setJobsNumber(12345);
-  });
+  }, []);
 
   // use effect to fetch all jobs or saved filters
 
