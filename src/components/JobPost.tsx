@@ -5,7 +5,7 @@ interface PostProps {
   position: string;
   company: string;
   location: string;
-  salary: string;
+  salary?: string;
   posted?: Date;
 }
 
@@ -46,7 +46,7 @@ const JobPost: React.FC<PostProps> = ({
           </div>
         </div>
         <div className="job-post-txt-col2">
-          <div className="job-post-salary">{salary ? salary : "Salario"} </div>
+          <div className="job-post-salary">{salary ? salary : ""} </div>
         </div>
       </div>
     </div>
