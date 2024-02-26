@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import TuneIcon from "@mui/icons-material/Tune";
-import PersonOutline from "@mui/icons-material/PersonOutline";
+
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import { getJobPositionData } from "../utils/jobsUtils";
 
 function JobDescription() {
   // get data from params for id
   const [currJob, setCurrJob] = useState<DocumentData>();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchJobData = async () => {
@@ -23,7 +22,7 @@ function JobDescription() {
       }
     };
     fetchJobData();
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="job-des-bg">

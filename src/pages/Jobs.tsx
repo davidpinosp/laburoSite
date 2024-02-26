@@ -4,19 +4,13 @@ import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 import TuneIcon from "@mui/icons-material/Tune";
-import { getJobsData, getJobsDataQuery } from "../utils/jobsUtils";
+import { getJobsData } from "../utils/jobsUtils";
 import { DocumentData } from "firebase/firestore";
 import { Link } from "react-router-dom";
-interface PostProps {
-  position: string;
-  company: string;
-  location: string;
-  salary?: string;
-  posted?: Date;
-}
+
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(12345);
-  const [pageNumber, setPageNumber] = useState(0);
+  // const [pageNumber, setPageNumber] = useState(0);
   const [locationValue, setLocationValue] = useState("");
   const [positionValue, setPositionValue] = useState("");
   const [jobPositions, setJobPositions] =
@@ -54,7 +48,7 @@ function Jobs() {
 
   useEffect(() => {
     fetchJobs();
-  }, []);
+  });
 
   // use effect to fetch all jobs or saved filters
 
