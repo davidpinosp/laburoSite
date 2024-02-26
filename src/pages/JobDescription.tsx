@@ -11,13 +11,16 @@ import { getJobPositionData } from "../utils/jobsUtils";
 function JobDescription() {
   // get data from params for id
   const [currJob, setCurrJob] = useState<DocumentData>();
-  const [queryParameters] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchJobData = async () => {
       // get the job data from aprams
-      const jobData = await getJobPositionData("65AiGCSqRTCQ65ddWzJX");
-      setCurrJob(jobData);
+      const id = searchParams.get("id");
+      if (id) {
+        const jobData = await getJobPositionData(id);
+        setCurrJob(jobData);
+      }
     };
     fetchJobData();
   }, []);

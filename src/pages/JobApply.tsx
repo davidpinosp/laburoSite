@@ -3,16 +3,27 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { DocumentData } from "firebase/firestore";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { getJobPositionData } from "../utils/jobsUtils";
 
 function JobApply() {
-  const [jobId, setJobId] = useState();
+  const [jobId, setJobId] = useState("");
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const submitData = () => {
+    // send all data to db as application and redirect to thanks page
+  };
+  useEffect(() => {
+    const id = searchParams.get("id");
+
+    if (id) {
+      setJobId(id);
+    }
+  }, []);
   return (
     <div className="bg-laburo-gray">
       <Navbar />
@@ -24,38 +35,63 @@ function JobApply() {
       </div>
       <div className="job-des-content ">
         <div className="w100">
-          <div className="search-pill">
-            <input
-              type="text"
-              className="search-pill-input"
-              placeholder="Posición "
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setName(e.target.value);
-              }}
-            />
+          <div>
+            <div style={{ marginBottom: "10px" }}> Email</div>
+
+            <div className="search-pill">
+              <input
+                type="text"
+                className="search-pill-input "
+                placeholder="Email "
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
           </div>
-          <div className="search-pill">
-            <input
-              type="text"
-              className="search-pill-input"
-              placeholder="Name "
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setName(e.target.value);
-              }}
-            />
+          <div>
+            <div style={{ marginBottom: "10px" }}> Email</div>
+
+            <div className="search-pill">
+              <input
+                type="text"
+                className="search-pill-input "
+                placeholder="Email "
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
           </div>
-          <div className="search-pill">
-            <input
-              type="text"
-              className="search-pill-input"
-              placeholder="Descrip "
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setName(e.target.value);
-              }}
-            />
+          <div>
+            <div style={{ marginBottom: "10px" }}> Email</div>
+
+            <div className="search-pill">
+              <input
+                type="text"
+                className="search-pill-input "
+                placeholder="Email "
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div>
+            <div style={{ marginBottom: "10px" }}>Descripción</div>
+            <div className=" job-des-input">
+              <textarea
+                className="job-des-input-pill"
+                value={description}
+                placeholder="Descripción "
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                  setDescription(e.target.value);
+                }}
+              />
+            </div>
           </div>
         </div>
 
