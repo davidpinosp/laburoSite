@@ -1,22 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 import TuneIcon from "@mui/icons-material/Tune";
-import { getJobsData, getJobsDataQuery } from "../utils/jobsUtils";
+import { getJobsData } from "../utils/jobsUtils";
 import { DocumentData } from "firebase/firestore";
 import { Link } from "react-router-dom";
-interface PostProps {
-  position: string;
-  company: string;
-  location: string;
-  salary?: string;
-  posted?: Date;
-}
+
 function Jobs() {
-  const [jobsnumber, setJobsNumber] = useState(12345);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [jobsnumber, setJobsNumber] = useState(0);
+  // const [pageNumber, setPageNumber] = useState(0);
   const [locationValue, setLocationValue] = useState("");
   const [positionValue, setPositionValue] = useState("");
   const [jobPositions, setJobPositions] =
@@ -24,37 +18,39 @@ function Jobs() {
   const [filteredJobs, setFilteredJobs] =
     useState<{ data: DocumentData; id: string }[]>();
 
-  const fetchJobs = async () => {
-    // get the jobs from firebase
-    // get length
+  const fetchJobs = useCallback(async () => {
     const jobsList = await getJobsData(0);
-
-    let filtered: { data: DocumentData; id: string }[] = jobsList;
-    if (locationValue && positionValue) {
-      filtered = jobsList
-        .filter((jobs) => jobs.data.location.country === locationValue)
-        .filter((jobs) => jobs.data.title === positionValue);
-    } else if (locationValue) {
-      filtered = jobsList.filter(
-        (jobs) => jobs.data.location.country === locationValue
-      );
-    } else if (positionValue) {
-      filtered = jobsList.filter((jobs) => jobs.data.title === positionValue);
-    }
-    console.log("filtered jobs: " + filtered);
     setJobPositions(jobsList);
-    setFilteredJobs(filtered);
-  };
+    setFilteredJobs(jobsList); // Display all jobs initially
+  }, []);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
-    fetchJobs();
+    const jobsList = jobPositions;
+    if (jobsList) {
+      let filtered: { data: DocumentData; id: string }[] = jobsList;
+      if (locationValue && positionValue) {
+        filtered = jobsList
+          .filter((jobs) => jobs.data.location.country === locationValue)
+          .filter((jobs) => jobs.data.title === positionValue);
+      } else if (locationValue) {
+        filtered = jobsList.filter(
+          (jobs) => jobs.data.location.city === locationValue
+        );
+      } else if (positionValue) {
+        filtered = jobsList.filter((jobs) => jobs.data.title === positionValue);
+      }
+      console.log("filtered jobs:", filtered);
+      setFilteredJobs(filtered);
+    }
   };
 
   useEffect(() => {
+    console.log("mounting");
     fetchJobs();
-  }, []);
+    setJobsNumber(27);
+  }, [fetchJobs]);
 
   // use effect to fetch all jobs or saved filters
 
@@ -88,14 +84,7 @@ function Jobs() {
                   }}
                 />
               </div>
-              <button
-                className="bg-laburo-green search-btn"
-                onClick={() => {
-                  fetchJobs();
-                }}
-              >
-                Buscar
-              </button>
+              <button className="bg-laburo-green search-btn">Buscar</button>
             </div>
           </form>
 

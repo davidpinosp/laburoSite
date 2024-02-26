@@ -1,12 +1,6 @@
 import "firebase/firestore";
 import { db } from "../firebase";
-import {
-  DocumentData,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-} from "firebase/firestore";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 const getJobsData = async (page: number) => {
   // get the first 25 jobs
 
@@ -26,10 +20,6 @@ const getJobsData = async (page: number) => {
 const getJobsDataQuery = (query: string, page: number) => {
   // look for jobs that match the query string in the given page
 };
-
-const getJobsFromLocation = () => {};
-
-const getJobsFromPosition = () => {};
 
 const getJobPositionData = async (id: string) => {
   const documentRef = doc(db, "job", id);
