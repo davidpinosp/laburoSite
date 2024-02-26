@@ -48,9 +48,13 @@ function Jobs() {
   };
 
   useEffect(() => {
-    fetchJobs();
-    setJobsNumber(12345);
-  }, []);
+    const fetchData = async () => {
+      await fetchJobs();
+      setJobsNumber(12345);
+    };
+
+    fetchData();
+  }, [fetchJobs]);
 
   // use effect to fetch all jobs or saved filters
 
