@@ -9,7 +9,7 @@ import { DocumentData } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 function Jobs() {
-  const [jobsnumber, setJobsNumber] = useState(12345);
+  const [jobsnumber, setJobsNumber] = useState(0);
   // const [pageNumber, setPageNumber] = useState(0);
   const [locationValue, setLocationValue] = useState("");
   const [positionValue, setPositionValue] = useState("");
@@ -38,6 +38,7 @@ function Jobs() {
     console.log("filtered jobs: " + filtered);
     setJobPositions(jobsList);
     setFilteredJobs(filtered);
+    console.log(jobPositions);
   };
 
   const handleSubmit = (event: any) => {
@@ -48,6 +49,7 @@ function Jobs() {
 
   useEffect(() => {
     fetchJobs();
+    setJobsNumber(12345);
   });
 
   // use effect to fetch all jobs or saved filters
