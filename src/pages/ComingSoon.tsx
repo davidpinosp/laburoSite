@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
+import AutocompleteLocation from "../components/AutocompleteLocation";
 function ComingSoon() {
   return (
     <div>
@@ -14,6 +15,9 @@ function ComingSoon() {
             Mientras tanto puedes acceder a todos nuestros servicios a traves de
             whatsapp
           </div>
+
+          {/* test autocomplete */}
+          <AutocompleteLocation />
         </div>
       </div>
     </div>
