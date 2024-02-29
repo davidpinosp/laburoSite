@@ -119,7 +119,7 @@ function JobApply() {
         </div>
       </div>
 
-      <Footer />
+      <Footer type={2} />
     </div>
   );
 }

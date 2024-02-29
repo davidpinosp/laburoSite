@@ -29,7 +29,9 @@ function Jobs() {
   const fetchJobs = useCallback(async () => {
     const jobsList = await getJobsData(0);
     setJobPositions(jobsList);
+
     setFilteredJobs(jobsList); // Display all jobs initially
+    setJobsNumber(jobsList.length); // Display
   }, []);
 
   const handleSubmit = (event: any) => {
@@ -53,6 +55,7 @@ function Jobs() {
       }
       console.log("filtered jobs:", filtered);
       setFilteredJobs(filtered);
+      setJobsNumber(filtered.length);
     }
     setGrayButton(true);
     console.log(selectedLocation);
@@ -112,9 +115,9 @@ function Jobs() {
 
           <div className="flx space-btwn w100  filters-menu">
             <div>{jobsnumber} resultados</div>
-            <div className="order-dropdown">
+            {/* <div className="order-dropdown">
               <TuneIcon />
-            </div>
+            </div> */}
           </div>
           {/* positions here  */}
           <div className="w100 mb-25">
@@ -137,7 +140,7 @@ function Jobs() {
             ))}
           </div>
         </div>
-        <Footer />
+        <Footer type={2} />
       </div>
     </div>
   );

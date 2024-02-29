@@ -83,33 +83,15 @@ function Landing() {
           {/* images 3/4 */}
           <div
             className="image-container img-round"
-            style={{ backgroundImage: `url(${WomanWritingPicture})` }}
+            style={{
+              backgroundImage: `url(${WomanWritingPicture})`,
+            }}
           ></div>
 
           {/*  */}
-          <div className="landing-text-body flx-col">
-            <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
-            <span className="txt-s4">
-              Usa nuestra plataforma para llegar a miles de{" "}
-              <span className="laburo-green">aplicantes</span> y asi poder
-              obtener el mejor talento para tu empresa.
-            </span>
-          </div>
-          {/*  */}
-
-          <div className="post-job-btn2-container mt-50 mb-50">
-            <div className="post-job-btn2">
-              <Link
-                to="/post-job"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                Publicar un trabajo
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
-      <Footer />
+      <Footer type={1} />
     </div>
   );
 }

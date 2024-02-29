@@ -182,7 +182,7 @@ overflow: hidden;
 .job-des-bg{
 
     background-color: rgba(80, 80, 80, 0.1) ;
-    height: 100vh;
+    height: 100%;
 
     z-index: -1;
 }

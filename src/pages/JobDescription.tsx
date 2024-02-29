@@ -68,7 +68,7 @@ function JobDescription() {
         </Link>
       </div>
 
-      <Footer />
+      <Footer type={2} />
     </div>
   );
 }

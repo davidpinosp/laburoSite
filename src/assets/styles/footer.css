@@ -1,6 +1,6 @@
 .footer-container{
     width: 100%;
-    background-color: rgba( 0, 0,0, 0.4);
+    
     display : flex;
     text-align: center;
     justify-content: center;
@@ -12,7 +12,7 @@
 
 display: flex;
 width: 100%;
-justify-content: space-between;
+justify-content: space-evenly;
 align-items: center;
 max-width: 500px;
 margin: 0px 20px;
@@ -25,7 +25,7 @@ margin-bottom: 50px;
 
 @media (max-width: 370px) {
     .footer-menu{
-      color: red;
+      
       flex-direction: column;
       line-height: 2;
     }
