@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, redirect, useSearchParams } from "react-router-dom";
+import { setJobData } from "../utils/jobsUtils";
+import { useNavigate } from "react-router-dom";
 
 function JobApply() {
   const [jobId, setJobId] = useState("");
@@ -11,6 +13,27 @@ function JobApply() {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    const data = {
+      number,
+      email,
+      date: new Date(),
+      description,
+      jobId,
+    };
+    // set loading
+    if ((await setJobData(data)) === true) {
+      // turn off loading
+      navigate("/thank-you");
+    } else {
+      alert("Unable to add");
+    }
+
+    // send data to firebase
+    // redirect to thank you page
+  };
 
   useEffect(() => {
     const id = searchParams.get("id");
@@ -89,9 +112,10 @@ function JobApply() {
         </div>
 
         <div className="w100 flx-center flx mb-50">
-          <Link to={`job-apply/?id=${jobId}`} className="link-style">
-            <div className="aplicar-btn"> Aplicar </div>
-          </Link>
+          <div className="aplicar-btn" onClick={handleSubmit}>
+            {" "}
+            Enviar{" "}
+          </div>
         </div>
       </div>
 

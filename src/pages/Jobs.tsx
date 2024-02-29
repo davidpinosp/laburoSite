@@ -7,11 +7,19 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { getJobsData } from "../utils/jobsUtils";
 import { DocumentData } from "firebase/firestore";
 import { Link } from "react-router-dom";
-
+import AutocompleteLocation from "../components/AutocompleteLocation";
+interface LocationData {
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+}
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
   // const [pageNumber, setPageNumber] = useState(0);
-  const [locationValue, setLocationValue] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState<LocationData>();
+  const [grayButton, setGrayButton] = useState(true);
+  const [locationValue, setLocationValue] = useState();
   const [positionValue, setPositionValue] = useState("");
   const [jobPositions, setJobPositions] =
     useState<{ data: DocumentData; id: string }[]>();
@@ -30,13 +38,15 @@ function Jobs() {
     const jobsList = jobPositions;
     if (jobsList) {
       let filtered: { data: DocumentData; id: string }[] = jobsList;
-      if (locationValue && positionValue) {
+      if (selectedLocation && positionValue) {
         filtered = jobsList
-          .filter((jobs) => jobs.data.location.country === locationValue)
+          .filter(
+            (jobs) => jobs.data.location.country === selectedLocation.country
+          )
           .filter((jobs) => jobs.data.title === positionValue);
-      } else if (locationValue) {
+      } else if (selectedLocation) {
         filtered = jobsList.filter(
-          (jobs) => jobs.data.location.city === locationValue
+          (jobs) => jobs.data.location.country === selectedLocation.country
         );
       } else if (positionValue) {
         filtered = jobsList.filter((jobs) => jobs.data.title === positionValue);
@@ -44,6 +54,8 @@ function Jobs() {
       console.log("filtered jobs:", filtered);
       setFilteredJobs(filtered);
     }
+    setGrayButton(true);
+    console.log(selectedLocation);
   };
 
   useEffect(() => {
@@ -70,21 +82,31 @@ function Jobs() {
                   value={positionValue}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPositionValue(e.target.value);
+                    setGrayButton(false);
                   }}
                 />
               </div>
 
-              <div className="search-pill">
-                <input
+              {/* <input
                   type="text"
                   className="search-pill-input"
                   placeholder="Ubicación"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setLocationValue(e.target.value);
                   }}
-                />
-              </div>
-              <button className="bg-laburo-green search-btn">Buscar</button>
+                /> */}
+              <AutocompleteLocation
+                setSelectedLocation={setSelectedLocation}
+                setGrayButton={setGrayButton}
+              />
+
+              <button
+                className={` search-btn ${
+                  grayButton ? "bg-laburo-gray" : "bg-laburo-green"
+                }`}
+              >
+                Buscar
+              </button>
             </div>
           </form>
 

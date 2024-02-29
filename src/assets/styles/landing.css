@@ -134,12 +134,14 @@ justify-content: center;
 .post-job-btn2{
     background-color: var(--laburo-green);
     border-radius: 10px;
-    padding: 10px 20px;
   
+    
     width: 180px;
-    height: 45px;
+    height: 55px;
     text-align: center;
- 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

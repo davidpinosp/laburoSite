@@ -1,12 +1,29 @@
 import React, { useState } from "react";
 import { Autocomplete, useLoadScript } from "@react-google-maps/api";
 
-function App() {
+interface AutocompleteProps {
+  setSelectedLocation: React.Dispatch<
+    React.SetStateAction<LocationData | undefined>
+  >;
+  setGrayButton: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface LocationData {
+  city: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+}
+
+function AutocompleteLocation({
+  setSelectedLocation,
+  setGrayButton,
+}: AutocompleteProps) {
   const [searchResult, setSearchResult] = useState<any>(null);
-  const apikey = process.env.REACT_APP_PLACES_API_KEY;
+  //   const apikey = ;
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: apikey || "",
+    googleMapsApiKey: process.env.REACT_APP_PLACES_API_KEY || "",
     libraries: ["places"],
   });
 
@@ -14,16 +31,34 @@ function App() {
     setSearchResult(autocomplete);
   }
 
-  function onPlaceChanged() {
+  async function onPlaceChanged() {
     if (searchResult != null) {
-      const place = searchResult.getPlace();
+      const place = await searchResult.getPlace();
+      if (place.name === "") {
+        setGrayButton(true);
+        setSelectedLocation(undefined);
+        return;
+      }
       const name = place.name;
       const status = place.business_status;
       const formattedAddress = place.formatted_address;
-      console.log(`Name: ${name}`);
-      console.log(`Business Status: ${status}`);
-      console.log(`Formatted Address: ${formattedAddress}`);
+      const city = place.address_components[0].long_name;
+      const country =
+        place.address_components[place.address_components.length - 1].long_name;
+
+      const data: LocationData = {
+        city: city,
+        country: country,
+        latitude: 123,
+        longitude: 123,
+      };
+
+      setSelectedLocation(data);
+      setGrayButton(false);
+      console.log(`Country: ${country}`);
+      console.log(`City: ${city}`);
     } else {
+      setSelectedLocation(undefined);
       alert("Please enter text");
     }
   }
@@ -33,13 +68,13 @@ function App() {
   }
 
   return (
-    <div id="searchColumn">
+    <div id="searchColumn" className="w100">
       <Autocomplete
         onPlaceChanged={onPlaceChanged}
         onLoad={onLoad}
         options={{
           types: ["(cities)"],
-          componentRestrictions: { country: ["ec", "co"] },
+          componentRestrictions: { country: ["ec", "co", "mx"] },
         }}
       >
         <div className="search-pill">
@@ -50,4 +85,4 @@ function App() {
   );
 }
 
-export default App;
+export default AutocompleteLocation;

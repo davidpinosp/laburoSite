@@ -7,13 +7,17 @@ function ComingSoon() {
       <Navbar />
       <div className="in-dev">
         <div className="flx-col flx-center">
-          <div className="in-dev-txt mb-25">
-            Disculpa! Esta pagina aun esta en desarollo...
+          <div
+            className="in-dev-txt mb-25"
+            style={{ textAlign: "left", fontSize: "30px" }}
+          >
+            ¡Gracias por confiar en nosotros !
           </div>
 
           <div className="in-dev-txt">
-            Mientras tanto puedes acceder a todos nuestros servicios a traves de
-            whatsapp
+            Tu applicación ha sido enviada exitosamente. La empresa se pondra en
+            contacto contigo directamente. Que tengas un excelente dia y mucha
+            suerte en tu busqueda.
           </div>
 
           {/* test autocomplete */}

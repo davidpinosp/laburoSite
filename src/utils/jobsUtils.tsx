@@ -1,6 +1,6 @@
 import "firebase/firestore";
 import { db } from "../firebase";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
 const getJobsData = async (page: number) => {
   // get the first 25 jobs
 
@@ -43,7 +43,23 @@ const getJobPositionData = async (id: string) => {
   }
 };
 
+const setJobData = async (data: {
+  email: string; // look for jobs that match the query string in the given page
+  number: string;
+  description: string;
+  date: Date;
+  jobId: string;
+}) => {
+  try {
+    const docRef = await addDoc(collection(db, "application"), data);
+    console.log("Document written with ID: ", docRef.id);
+    return true;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
+
 // use places api to store place and coordinates
 // for retrieval use autocomplete and also get coordinates so that then we can query db using geojson
 
-export { getJobsData, getJobsDataQuery, getJobPositionData };
+export { getJobsData, getJobsDataQuery, getJobPositionData, setJobData };
