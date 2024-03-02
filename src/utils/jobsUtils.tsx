@@ -1,14 +1,31 @@
 import "firebase/firestore";
 import { db } from "../firebase";
-import { addDoc, collection, doc, getDoc, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  startAfter,
+} from "firebase/firestore";
 const getJobsData = async (page: number) => {
   // get the first 25 jobs
 
-  console.log("getting job data ...");
+  console.log("getting job data ..." + page);
   const jobs = collection(db, "job");
-  //   get the latest 25 and display like that based on page
-  //   const q = query(jobsCollection, orderBy('timestamp'), limit(25));
-  const jobsSnapshot = await getDocs(jobs);
+  //  get the latest 25 and display like that based on page
+  const startAtDocument = 3 * page;
+  const q = query(
+    jobs,
+    orderBy("datePosted"),
+    startAfter(startAtDocument),
+    limit(3)
+  );
+
+  const jobsSnapshot = await getDocs(q);
   const jobList = jobsSnapshot.docs.map((doc) => ({
     data: doc.data(),
     id: doc.id,
@@ -59,7 +76,26 @@ const setJobData = async (data: {
   }
 };
 
+const getCollectionLength = async () => {
+  const collectionRef = collection(db, "job");
+
+  try {
+    const snapshot = await getDocs(collectionRef);
+    const collectionLength = snapshot.size;
+    return collectionLength;
+  } catch (error) {
+    console.error("Error getting collection length:", error);
+    throw error;
+  }
+};
+
 // use places api to store place and coordinates
 // for retrieval use autocomplete and also get coordinates so that then we can query db using geojson
 
-export { getJobsData, getJobsDataQuery, getJobPositionData, setJobData };
+export {
+  getJobsData,
+  getJobsDataQuery,
+  getJobPositionData,
+  setJobData,
+  getCollectionLength,
+};

@@ -3,11 +3,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
-import TuneIcon from "@mui/icons-material/Tune";
+// import TuneIcon from "@mui/icons-material/Tune";
 import { getJobsData } from "../utils/jobsUtils";
 import { DocumentData } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import AutocompleteLocation from "../components/AutocompleteLocation";
+import PageCounter from "../components/PageCounter";
 interface LocationData {
   city: string;
   country: string;
@@ -16,23 +17,28 @@ interface LocationData {
 }
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
-  // const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
   const [grayButton, setGrayButton] = useState(true);
-  const [locationValue, setLocationValue] = useState();
   const [positionValue, setPositionValue] = useState("");
+
   const [jobPositions, setJobPositions] =
     useState<{ data: DocumentData; id: string }[]>();
   const [filteredJobs, setFilteredJobs] =
     useState<{ data: DocumentData; id: string }[]>();
 
   const fetchJobs = useCallback(async () => {
-    const jobsList = await getJobsData(0);
+    console.log("getting data for page :" + pageNumber);
+
+    const jobsList = await getJobsData(pageNumber);
+    // get last element of array and get id
+    const lastIndex = jobsList[jobsList.length - 1].id;
+    console.log(lastIndex);
     setJobPositions(jobsList);
 
     setFilteredJobs(jobsList); // Display all jobs initially
     setJobsNumber(jobsList.length); // Display
-  }, []);
+  }, [pageNumber]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -64,7 +70,7 @@ function Jobs() {
   useEffect(() => {
     console.log("mounting");
     fetchJobs();
-    setJobsNumber(27);
+    setJobsNumber(0);
   }, [fetchJobs]);
 
   // use effect to fetch all jobs or saved filters
@@ -139,6 +145,8 @@ function Jobs() {
               </Link>
             ))}
           </div>
+          {/* Page Component */}
+          <PageCounter setPageCallback={setPageNumber} arrayLength={25} />
         </div>
         <Footer type={2} />
       </div>

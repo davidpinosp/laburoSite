@@ -270,3 +270,57 @@ button{
 form{
     width: 100%;
 }
+
+
+
+      /* for desktop */
+      .whatsapp_float {
+          position: fixed;
+          width: 55px;
+          height: 55px;
+          bottom: 40px;
+          right: 30px;
+          background-color: #25d366;
+          color: #FFF;
+          border-radius: 50px;
+          text-align: center;
+          font-size: 35px;
+          box-shadow: 2px 2px 3px #999;
+          z-index: 100;
+      }
+
+      .whatsapp-icon {
+        margin-top: 11px;
+        margin-left: 2px;
+      }
+
+      /* for mobile */
+      @media screen and (max-width: 767px) {
+          .whatsapp-icon {
+              margin-top: 11px;
+              margin-left: 2px;
+          }
+
+          .whatsapp_float {
+            position: fixed;
+            
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+              width: 55px;
+              height: 55px;
+              bottom: 40px;
+              right: 20px;
+              font-size: 35px;
+          }
+      }
+
+
+
+      .page-active{
+        color: var(--laburo-green);
+      }

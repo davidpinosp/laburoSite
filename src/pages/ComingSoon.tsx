@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import AutocompleteLocation from "../components/AutocompleteLocation";
+import Footer from "../components/Footer";
 function ComingSoon() {
   return (
     <div>
@@ -19,6 +20,8 @@ function ComingSoon() {
           {/* test autocomplete */}
         </div>
       </div>
+
+      <Footer type={2} />
     </div>
   );
 }
