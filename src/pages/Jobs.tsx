@@ -4,8 +4,12 @@ import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 // import TuneIcon from "@mui/icons-material/Tune";
-import { getJobsData } from "../utils/jobsUtils";
-import { DocumentData } from "firebase/firestore";
+import {
+  getJobSnapshot,
+  getJobsData,
+  getJobsByLocationAndPosition,
+} from "../utils/jobsUtils";
+import { DocumentData, DocumentSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import AutocompleteLocation from "../components/AutocompleteLocation";
 import PageCounter from "../components/PageCounter";
@@ -21,50 +25,77 @@ function Jobs() {
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
   const [grayButton, setGrayButton] = useState(true);
   const [positionValue, setPositionValue] = useState("");
-
+  const [expandAmount, setExpandAmount] = useState(1);
+  const [lastSnapshot, setLastSnapshot] =
+    useState<DocumentSnapshot<DocumentData, DocumentData>>();
   const [jobPositions, setJobPositions] =
     useState<{ data: DocumentData; id: string }[]>();
   const [filteredJobs, setFilteredJobs] =
     useState<{ data: DocumentData; id: string }[]>();
 
   const fetchJobs = useCallback(async () => {
-    console.log("getting data for page :" + pageNumber);
-
-    const jobsList = await getJobsData(pageNumber);
-    // get last element of array and get id
-    const lastIndex = jobsList[jobsList.length - 1].id;
-    console.log(lastIndex);
-    setJobPositions(jobsList);
-
-    setFilteredJobs(jobsList); // Display all jobs initially
-    setJobsNumber(jobsList.length); // Display
-  }, [pageNumber]);
+    console.log("fetching jobs");
+    getJobsToDisplay();
+  }, []);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    // handle which filters to use
+    getJobsToDisplay();
+  };
+  const getJobsToDisplay = async () => {
+    try {
+      // get jobs with filters
+      const jobsList = await getJobsByLocationAndPosition(
+        selectedLocation,
+        positionValue
+      );
+      // set length
 
-    const jobsList = jobPositions;
-    if (jobsList) {
-      let filtered: { data: DocumentData; id: string }[] = jobsList;
-      if (selectedLocation && positionValue) {
-        filtered = jobsList
-          .filter(
-            (jobs) => jobs.data.location.country === selectedLocation.country
-          )
-          .filter((jobs) => jobs.data.title === positionValue);
-      } else if (selectedLocation) {
-        filtered = jobsList.filter(
-          (jobs) => jobs.data.location.country === selectedLocation.country
-        );
-      } else if (positionValue) {
-        filtered = jobsList.filter((jobs) => jobs.data.title === positionValue);
+      setJobsNumber(jobsList.length);
+      if (jobsList.length > 0) {
+        const lastIndex = jobsList[jobsList.length - 1].id;
+
+        setLastSnapshot(await getJobSnapshot(lastIndex));
+
+        setJobPositions(jobsList);
+
+        setFilteredJobs(jobsList);
+
+        setGrayButton(true);
+        console.log(selectedLocation);
+      } else {
+        console.log("no results found ");
+        setJobPositions([]);
+        setFilteredJobs([]);
       }
-      console.log("filtered jobs:", filtered);
-      setFilteredJobs(filtered);
-      setJobsNumber(filtered.length);
+    } catch (error) {
+      console.log(error);
     }
-    setGrayButton(true);
-    console.log(selectedLocation);
+  };
+
+  const getMoreJobs = async () => {
+    // pass last job
+
+    try {
+      const moreJobs = await getJobsByLocationAndPosition(
+        selectedLocation,
+        positionValue,
+        lastSnapshot
+      );
+
+      const lastIndex = moreJobs[moreJobs.length - 1].id;
+
+      setLastSnapshot(await getJobSnapshot(lastIndex));
+
+      moreJobs.forEach((element) => {
+        filteredJobs?.push(element);
+
+        console.log("next job" + element.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -145,8 +176,10 @@ function Jobs() {
               </Link>
             ))}
           </div>
-          {/* Page Component */}
-          <PageCounter setPageCallback={setPageNumber} arrayLength={25} />
+
+          <div className=" laburo-green" onClick={getMoreJobs}>
+            Cargar Mas
+          </div>
         </div>
         <Footer type={2} />
       </div>
