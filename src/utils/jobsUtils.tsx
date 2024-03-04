@@ -23,28 +23,12 @@ interface LocationData {
   latitude: number;
   longitude: number;
 }
-const getJobsData = async () => {
-  // description  :  get the first n jobs with no filters
-
-  const jobs = collection(db, "job");
-  //  get the latest 25 and display like that based on page
-
-  const q = query(jobs, orderBy("datePosted"), limit(3));
-
-  const jobsSnapshot = await getDocs(q);
-  const jobList = jobsSnapshot.docs.map((doc) => ({
-    data: doc.data(),
-    id: doc.id,
-  }));
-
-  return jobList;
-};
 
 const getJobsByLocationAndPosition = async (
   location?: LocationData,
   position?: string,
   lastIndex?: DocumentSnapshot<DocumentData, DocumentData>,
-  limitVal: number = 3
+  limitVal: number = 25
 ) => {
   try {
     const jobsCollection = collection(db, "job");
@@ -170,7 +154,6 @@ const getCollectionLength = async () => {
 // for retrieval use autocomplete and also get coordinates so that then we can query db using geojson
 
 export {
-  getJobsData,
   getJobPositionData,
   setJobData,
   getCollectionLength,

@@ -47,7 +47,7 @@ function Footer({ type }: FooterProps) {
       <div style={{ paddingTop: "10px" }}>
         <div style={{ marginBottom: "5px" }}>Politica de Privacidad</div>
         <div style={{ fontSize: "12px" }}>
-          Humm Inc. Reservados todos los Derechos 2024
+          Humm Labs. Reservados todos los Derechos 2024
         </div>
       </div>
     </div>

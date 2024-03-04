@@ -23,7 +23,7 @@ function Navbar() {
       </div>
       <div
         className="flx space-btwn flx-center nav-inner-container"
-        style={{ minWidth: "200px" }}
+        style={{ minWidth: "150px" }}
       >
         <div className="bg-laburo-green post-job-btn ">
           <div>
@@ -35,9 +35,9 @@ function Navbar() {
             </Link>
           </div>
         </div>
-        <div>
+        {/* <div>
           <PersonOutlineIcon style={{ fontSize: "30px" }} />
-        </div>
+        </div> */}
         <div onClick={toggleMenu} className="mobile-only">
           <MenuIcon style={{ fontSize: "30px" }} />
         </div>

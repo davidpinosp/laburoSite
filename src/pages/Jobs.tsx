@@ -5,8 +5,8 @@ import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 // import TuneIcon from "@mui/icons-material/Tune";
 import {
+  getCollectionLength,
   getJobSnapshot,
-  getJobsData,
   getJobsByLocationAndPosition,
 } from "../utils/jobsUtils";
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
@@ -23,6 +23,7 @@ function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
+  const [loadMoreText, setLoadMoreText] = useState(true);
   const [grayButton, setGrayButton] = useState(true);
   const [positionValue, setPositionValue] = useState("");
   const [expandAmount, setExpandAmount] = useState(1);
@@ -52,17 +53,17 @@ function Jobs() {
       );
       // set length
 
-      setJobsNumber(jobsList.length);
+      setJobsNumber(await getCollectionLength());
       if (jobsList.length > 0) {
         const lastIndex = jobsList[jobsList.length - 1].id;
 
+        // get the length from function directly
         setLastSnapshot(await getJobSnapshot(lastIndex));
 
         setJobPositions(jobsList);
 
         setFilteredJobs(jobsList);
 
-        setGrayButton(true);
         console.log(selectedLocation);
       } else {
         console.log("no results found ");
@@ -84,15 +85,24 @@ function Jobs() {
         lastSnapshot
       );
 
-      const lastIndex = moreJobs[moreJobs.length - 1].id;
+      if (moreJobs.length > 0) {
+        const lastIndex = moreJobs[moreJobs.length - 1].id;
 
-      setLastSnapshot(await getJobSnapshot(lastIndex));
+        setLastSnapshot(await getJobSnapshot(lastIndex));
 
-      moreJobs.forEach((element) => {
-        filteredJobs?.push(element);
+        moreJobs.forEach((element) => {
+          filteredJobs?.push(element);
 
-        console.log("next job" + element.data);
-      });
+          console.log("next job" + element.data);
+        });
+
+        if (filteredJobs?.length === jobsnumber) {
+          setLoadMoreText(false);
+        }
+      } else {
+        setLoadMoreText(false);
+        console.log("no more jobs");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -169,7 +179,9 @@ function Jobs() {
                   company={job.data.company}
                   location={
                     job.data.location.city
-                      ? job.data.location.city + "," + job.data.location.country
+                      ? job.data.location.city +
+                        ", " +
+                        job.data.location.country
                       : " "
                   }
                 />
@@ -177,8 +189,11 @@ function Jobs() {
             ))}
           </div>
 
-          <div className=" laburo-green" onClick={getMoreJobs}>
-            Cargar Mas
+          <div
+            className={`${loadMoreText ? "laburo-green" : "laburo-gray"}`}
+            onClick={loadMoreText ? getMoreJobs : undefined}
+          >
+            Cargar Más
           </div>
         </div>
         <Footer type={2} />

@@ -45,17 +45,19 @@ function JobDescription() {
             <div style={{ marginLeft: "100px" }}>1k-2k</div>
           </div> */}
 
-          <div className="txt-s5 ">{currJob ? currJob.data.title : "Pos"}</div>
+          <div className="txt-s5 ">
+            {currJob ? currJob.data.title : "Loading..."}
+          </div>
           <div className="txt-s4 mt-25">
             {currJob ? currJob.data.company : "Compania"}
           </div>
           <div className="txt-s3 mt-25" style={{ color: "rgba(0,0,0,0.5)" }}>
             {currJob
               ? currJob.data.location.city + "," + currJob.data.location.country
-              : "Pos"}
+              : ""}
           </div>
           <div className="txt-s3 mt-25">
-            {currJob ? currJob.data.description : "Descripcion"}
+            {currJob ? currJob.data.description : ""}
           </div>
         </div>
 

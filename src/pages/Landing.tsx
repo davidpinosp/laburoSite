@@ -9,7 +9,7 @@ import SearchJobsButton from "../components/SearchJobsButton";
 import WomanWritingPicture from "../assets/images/woman-writing.jpg";
 import ManDrillingpPicture from "../assets/images/man-drillling.jpg";
 import WomanLabPicture from "../assets/images/woman-lab.jpg";
-
+import LaunchIcon from "@mui/icons-material/Launch";
 function Landing() {
   return (
     <div>
@@ -44,7 +44,7 @@ function Landing() {
             <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
             <span className="txt-s4">
               {" "}
-              Con nuestra plataorma puedes explorar miles de vacantes. Tenemos
+              Con nuestra plataforma puedes explorar miles de vacantes. Tenemos
               posiciones para lo que sea que estes buscando :
             </span>
           </div>
@@ -76,9 +76,20 @@ function Landing() {
             <span className="txt-s4">
               Cada dia añadimos nuevas{" "}
               <span className="laburo-green">posiciones</span> a nuestra
-              plataforma. Trbajamos duro para brindarte una excelente
+              plataforma. Trabajamos duro para brindarte una excelente
               experiencia de busqueda.
             </span>
+            <div className="flx-center flx ">
+              <div className="mt-25 ">
+                <Link
+                  to={"/jobs"}
+                  className="link-style laburo-green txt-s4 flx flx-center "
+                >
+                  {"¡Buscar Ahora! "}{" "}
+                  <LaunchIcon style={{ marginLeft: "5px" }} />
+                </Link>
+              </div>
+            </div>
           </div>
           {/* images 3/4 */}
           <div
