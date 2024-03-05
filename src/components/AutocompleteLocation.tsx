@@ -41,9 +41,9 @@ function AutocompleteLocation({
           setSelectedLocation(undefined);
           return;
         }
-        const name = place.name;
-        const status = place.business_status;
-        const formattedAddress = place.formatted_address;
+        // const name = place.name;
+        // const status = place.business_status;
+        // const formattedAddress = place.formatted_address;
         const city = place.address_components[0].long_name;
         const country =
           place.address_components[place.address_components.length - 1]

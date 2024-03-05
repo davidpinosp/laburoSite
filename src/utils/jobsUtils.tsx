@@ -17,7 +17,7 @@ import {
   startAt,
   where,
 } from "firebase/firestore";
-import { ExpandMore } from "@mui/icons-material";
+
 interface LocationData {
   city: string;
   country: string;
@@ -30,7 +30,7 @@ const getJobsByLocationAndPosition = async (
   position?: string,
   setLength?: React.Dispatch<React.SetStateAction<number>>,
   lastIndex?: DocumentSnapshot<DocumentData, DocumentData>,
-  limitVal: number = 3
+  limitVal: number = 20
 ) => {
   try {
     const jobsCollection = collection(db, "job");
@@ -80,17 +80,6 @@ const getJobsByLocationAndPosition = async (
     console.error("Error fetching jobs:", error);
     throw error;
   }
-};
-
-const getMoreJobs = (
-  type: string,
-  amount: number,
-  lastSnapshot: any,
-  location?: LocationData,
-  position?: string
-) => {
-  // get n more jobs for all,position,location,both
-  // remember to check if quanitity of displayed jobs is equal to total then this function shouldnt run
 };
 
 const getJobSnapshot = async (id: string) => {

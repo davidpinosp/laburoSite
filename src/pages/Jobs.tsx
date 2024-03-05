@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 // import TuneIcon from "@mui/icons-material/Tune";
 import {
-  getCollectionLength,
   getJobSnapshot,
   getJobsByLocationAndPosition,
 } from "../utils/jobsUtils";
@@ -52,7 +51,7 @@ function Jobs() {
 
     // handle which filters to use
     getJobsToDisplay();
-    setLoadMoreText(true);
+    // setLoadMoreText(true);
     setGrayButton(true);
   };
   const getJobsToDisplay = async () => {
@@ -112,7 +111,7 @@ function Jobs() {
           setLoadMoreText(false);
         }
       } else {
-        setLoadMoreText(false);
+        // setLoadMoreText(false);
         console.log("no more jobs");
       }
     } catch (error) {
@@ -127,14 +126,18 @@ function Jobs() {
         let q = query(jobsCollection);
         const snapshot = await getCountFromServer(q);
 
-        const jobsSnapshot = await getDocs(query(q, limit(3)));
-
-        setJobsNumber(snapshot.data().count);
+        const jobsSnapshot = await getDocs(query(q, limit(20)));
+        const totalCount = snapshot.data().count;
+        if (totalCount === jobsSnapshot.docs.length) {
+          setLoadMoreText(false);
+        }
+        setJobsNumber(totalCount);
         const jobsData = jobsSnapshot.docs.map((doc) => ({
           id: doc.id,
           data: doc.data(),
         }));
         const index = jobsSnapshot.docs[jobsSnapshot.docs.length - 1].id;
+
         setLastSnapshot(await getJobSnapshot(index));
         setFilteredJobs(jobsData);
       } catch (error) {
