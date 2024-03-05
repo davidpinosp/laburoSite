@@ -7,6 +7,7 @@ import {
   collection,
   doc,
   endAt,
+  getCountFromServer,
   getDoc,
   getDocs,
   limit,
@@ -27,8 +28,9 @@ interface LocationData {
 const getJobsByLocationAndPosition = async (
   location?: LocationData,
   position?: string,
+  setLength?: React.Dispatch<React.SetStateAction<number>>,
   lastIndex?: DocumentSnapshot<DocumentData, DocumentData>,
-  limitVal: number = 25
+  limitVal: number = 3
 ) => {
   try {
     const jobsCollection = collection(db, "job");
@@ -54,13 +56,19 @@ const getJobsByLocationAndPosition = async (
         endAt(position + "\uf8ff")
       );
     }
+
+    const snapshot = await getCountFromServer(q);
+    if (setLength) {
+      setLength(snapshot.data().count);
+    }
+
     if (lastIndex) {
       q = query(q, startAfter(lastIndex));
     }
 
     q = query(q, limit(limitVal));
     const jobsSnapshot = await getDocs(q);
-    // later teest the const snapshot = await getCountFromServer(q);
+    // get length
 
     const jobsData = jobsSnapshot.docs.map((doc) => ({
       id: doc.id,

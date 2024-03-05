@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Autocomplete, useLoadScript } from "@react-google-maps/api";
+import { Autocomplete, Libraries, useLoadScript } from "@react-google-maps/api";
 
 interface AutocompleteProps {
   setSelectedLocation: React.Dispatch<
@@ -21,10 +21,11 @@ function AutocompleteLocation({
 }: AutocompleteProps) {
   const [searchResult, setSearchResult] = useState<any>(null);
   //   const apikey = ;
+  const libraries: Libraries = ["places"];
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_PLACES_API_KEY || "",
-    libraries: ["places"],
+    libraries,
   });
 
   function onLoad(autocomplete: google.maps.places.Autocomplete) {
@@ -32,34 +33,39 @@ function AutocompleteLocation({
   }
 
   async function onPlaceChanged() {
-    if (searchResult != null) {
-      const place = await searchResult.getPlace();
-      if (place.name === "") {
-        setGrayButton(true);
+    try {
+      if (searchResult != null) {
+        const place = await searchResult.getPlace();
+        if (place.name === "") {
+          setGrayButton(true);
+          setSelectedLocation(undefined);
+          return;
+        }
+        const name = place.name;
+        const status = place.business_status;
+        const formattedAddress = place.formatted_address;
+        const city = place.address_components[0].long_name;
+        const country =
+          place.address_components[place.address_components.length - 1]
+            .long_name;
+
+        const data: LocationData = {
+          city: city,
+          country: country,
+          latitude: 123,
+          longitude: 123,
+        };
+
+        setSelectedLocation(data);
+        setGrayButton(false);
+        console.log(`Country: ${country}`);
+        console.log(`City: ${city}`);
+      } else {
         setSelectedLocation(undefined);
-        return;
       }
-      const name = place.name;
-      const status = place.business_status;
-      const formattedAddress = place.formatted_address;
-      const city = place.address_components[0].long_name;
-      const country =
-        place.address_components[place.address_components.length - 1].long_name;
-
-      const data: LocationData = {
-        city: city,
-        country: country,
-        latitude: 123,
-        longitude: 123,
-      };
-
-      setSelectedLocation(data);
-      setGrayButton(false);
-      console.log(`Country: ${country}`);
-      console.log(`City: ${city}`);
-    } else {
-      setSelectedLocation(undefined);
-      alert("Please enter text");
+    } catch (err) {
+      setGrayButton(true);
+      console.log(err);
     }
   }
 

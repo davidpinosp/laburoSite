@@ -11,7 +11,7 @@ import JobApply from "./pages/JobApply";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" style={{ minHeight: "100vh" }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />

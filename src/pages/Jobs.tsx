@@ -9,10 +9,18 @@ import {
   getJobSnapshot,
   getJobsByLocationAndPosition,
 } from "../utils/jobsUtils";
-import { DocumentData, DocumentSnapshot } from "firebase/firestore";
+import {
+  DocumentData,
+  DocumentSnapshot,
+  collection,
+  getCountFromServer,
+  getDocs,
+  limit,
+  query,
+} from "firebase/firestore";
 import { Link } from "react-router-dom";
 import AutocompleteLocation from "../components/AutocompleteLocation";
-import PageCounter from "../components/PageCounter";
+import { db } from "../firebase";
 interface LocationData {
   city: string;
   country: string;
@@ -21,53 +29,56 @@ interface LocationData {
 }
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
-  const [pageNumber, setPageNumber] = useState(1);
+
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
   const [loadMoreText, setLoadMoreText] = useState(true);
   const [grayButton, setGrayButton] = useState(true);
   const [positionValue, setPositionValue] = useState("");
-  const [expandAmount, setExpandAmount] = useState(1);
+
   const [lastSnapshot, setLastSnapshot] =
     useState<DocumentSnapshot<DocumentData, DocumentData>>();
-  const [jobPositions, setJobPositions] =
-    useState<{ data: DocumentData; id: string }[]>();
+  // const [jobPositions, setJobPositions] =
+  //   useState<{ data: DocumentData; id: string }[]>();
   const [filteredJobs, setFilteredJobs] =
     useState<{ data: DocumentData; id: string }[]>();
 
-  const fetchJobs = useCallback(async () => {
-    console.log("fetching jobs");
-    getJobsToDisplay();
-  }, []);
+  // const fetchJobs = useCallback(async () => {
+  //   console.log("fetching jobs");
+  //   getJobsToDisplay();
+  // }, []);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+
     // handle which filters to use
     getJobsToDisplay();
+    setLoadMoreText(true);
+    setGrayButton(true);
   };
   const getJobsToDisplay = async () => {
     try {
       // get jobs with filters
       const jobsList = await getJobsByLocationAndPosition(
         selectedLocation,
-        positionValue
+        positionValue,
+        setJobsNumber
       );
       // set length
 
-      setJobsNumber(await getCollectionLength());
       if (jobsList.length > 0) {
         const lastIndex = jobsList[jobsList.length - 1].id;
 
         // get the length from function directly
         setLastSnapshot(await getJobSnapshot(lastIndex));
 
-        setJobPositions(jobsList);
+        // setJobPositions(jobsList);
 
         setFilteredJobs(jobsList);
 
         console.log(selectedLocation);
       } else {
         console.log("no results found ");
-        setJobPositions([]);
+        // setJobPositions([]);
         setFilteredJobs([]);
       }
     } catch (error) {
@@ -82,6 +93,7 @@ function Jobs() {
       const moreJobs = await getJobsByLocationAndPosition(
         selectedLocation,
         positionValue,
+        setJobsNumber,
         lastSnapshot
       );
 
@@ -109,10 +121,30 @@ function Jobs() {
   };
 
   useEffect(() => {
+    const onMountFetchData = async () => {
+      try {
+        const jobsCollection = collection(db, "job");
+        let q = query(jobsCollection);
+        const snapshot = await getCountFromServer(q);
+
+        const jobsSnapshot = await getDocs(query(q, limit(3)));
+
+        setJobsNumber(snapshot.data().count);
+        const jobsData = jobsSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }));
+        const index = jobsSnapshot.docs[jobsSnapshot.docs.length - 1].id;
+        setLastSnapshot(await getJobSnapshot(index));
+        setFilteredJobs(jobsData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    onMountFetchData();
     console.log("mounting");
-    fetchJobs();
-    setJobsNumber(0);
-  }, [fetchJobs]);
+    // fetchJobs();
+  }, []);
 
   // use effect to fetch all jobs or saved filters
 
