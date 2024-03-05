@@ -14,8 +14,7 @@ function Footer({ type }: FooterProps) {
           <div className="landing-text-body flx-col">
             <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
             <span className="txt-s4">
-              Usa nuestra plataforma para llegar a miles de
-              <span>aplicantes</span>
+              Usa nuestra plataforma para llegar a miles de aplicantes
             </span>
           </div>
           <div className="post-job-btn2-container mt-25 mb-50">

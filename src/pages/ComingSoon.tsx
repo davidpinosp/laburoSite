@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import AutocompleteLocation from "../components/AutocompleteLocation";
+// import AutocompleteLocation from "../components/AutocompleteLocation";
 import Footer from "../components/Footer";
 function ComingSoon() {
   return (

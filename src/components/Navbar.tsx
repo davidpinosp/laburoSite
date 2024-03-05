@@ -3,7 +3,7 @@ import "../assets/styles/navbar.css";
 import "../assets/styles/global.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+// import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);

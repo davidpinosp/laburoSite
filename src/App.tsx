@@ -6,6 +6,7 @@ import Jobs from "./pages/Jobs";
 import JobDescription from "./pages/JobDescription";
 import Applied from "./pages/Applied";
 import "./App.css";
+import ScrollToTop from "./components/ScrollToTop";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import JobApply from "./pages/JobApply";
 
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App" style={{ minHeight: "100vh" }}>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/jobs" element={<Jobs />} />

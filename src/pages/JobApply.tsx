@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, redirect, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { setJobData } from "../utils/jobsUtils";
 import { useNavigate } from "react-router-dom";
 
