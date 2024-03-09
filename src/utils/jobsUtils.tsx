@@ -109,7 +109,6 @@ const getJobPositionData = async (id: string) => {
         data: documentSnapshot.data(),
       };
 
-      console.log("Document data:", data);
       return data;
     }
   } catch (error) {
@@ -127,7 +126,6 @@ const setJobData = async (data: {
 }) => {
   try {
     const docRef = await addDoc(collection(db, "application"), data);
-    console.log("Document written with ID: ", docRef.id);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);

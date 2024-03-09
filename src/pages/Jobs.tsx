@@ -73,15 +73,12 @@ function Jobs() {
         // setJobPositions(jobsList);
 
         setFilteredJobs(jobsList);
-
-        console.log(selectedLocation);
       } else {
-        console.log("no results found ");
         // setJobPositions([]);
         setFilteredJobs([]);
       }
     } catch (error) {
-      console.log(error);
+      //  error
     }
   };
 
@@ -104,7 +101,7 @@ function Jobs() {
         moreJobs.forEach((element) => {
           filteredJobs?.push(element);
 
-          console.log("next job" + element.data);
+          // console.log("next job" + element.data);
         });
 
         if (filteredJobs?.length === jobsnumber) {
@@ -112,10 +109,10 @@ function Jobs() {
         }
       } else {
         // setLoadMoreText(false);
-        console.log("no more jobs");
+        // console.log("no more jobs");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -141,11 +138,11 @@ function Jobs() {
         setLastSnapshot(await getJobSnapshot(index));
         setFilteredJobs(jobsData);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     onMountFetchData();
-    console.log("mounting");
+    // console.log("mounting");
     // fetchJobs();
   }, []);
 

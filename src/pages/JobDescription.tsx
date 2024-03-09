@@ -65,7 +65,10 @@ function JobDescription() {
       </div>
 
       <div className="w100 flx-center flx mb-50">
-        <Link to={`job-apply/?id=${currJob?.id}`} className="link-style">
+        <Link
+          to={`job-apply/?id=${currJob?.id}&name=${currJob?.data.title}`}
+          className="link-style"
+        >
           <div className="aplicar-btn"> Aplicar </div>
         </Link>
       </div>

@@ -58,14 +58,11 @@ function AutocompleteLocation({
 
         setSelectedLocation(data);
         setGrayButton(false);
-        console.log(`Country: ${country}`);
-        console.log(`City: ${city}`);
       } else {
         setSelectedLocation(undefined);
       }
     } catch (err) {
       setGrayButton(true);
-      console.log(err);
     }
   }
 
