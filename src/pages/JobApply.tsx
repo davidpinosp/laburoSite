@@ -3,9 +3,11 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { setJobData } from "../utils/jobsUtils";
+import { getJobPositionData } from "../utils/jobsUtils";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RichTextEditor from "../components/RichTextEditor";
+import { DocumentData } from "firebase/firestore";
 function JobApply() {
   const [jobId, setJobId] = useState("");
   const [jobName, setJobName] = useState("");
@@ -14,9 +16,12 @@ function JobApply() {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [searchParams] = useSearchParams();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [currJob, setCurrJob] = useState<DocumentData>();
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const data = {
       name,
       number,
@@ -25,70 +30,64 @@ function JobApply() {
       description,
       jobId,
     };
-
+    // hide the from email
     const apiData = {
-      to: "davidspinosp@gmail.com",
-      from: "nidolivingsolutions@gmail.com",
+      to: process.env.REACT_APP_TO_EMAIL,
       subject: "Aplicación para la posición de " + jobName,
-      text: "asd",
-      html:
-        "<!DOCTYPE html> <html lang=`en`> <head> <meta charset=`UTF-8`> <meta http-equiv=`X-UA-Compatible` content=`IE=edge`><meta name=`viewport` content=`width=device-width, initial-scale=1.0`> <title>Recibiste una Aplicación </title> </head><body style=`font-family: 'Arial', sans-serif;`> <h2>Recibiste Una Aplicación</h2><p>Estimado/a,</p><p> Haz recibido una aplicación a través de Laburo. La aplicación es para la posición de " +
-        jobName +
-        ", publicada " +
-        data.date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }) +
-        ". <br> Estos son los detalles del aplicante:</p><ul> <li><strong>Nombre:</strong> " +
-        data.name +
-        "</li><li><strong>Email:</strong> " +
-        data.email +
-        "</li><li><strong>Numero Celular:</strong> " +
-        data.number +
-        "</li><li><strong>Descripción:</strong>" +
-        data.description +
-        "  </li></ul><p>¡Muchas Gracias por confiar en nosotros!</p><p>Suerte en su busqueda,<br>El equipo de Laburo</p></body></html>",
+      html: description,
+      name,
+      number,
+      email,
+      date: new Date().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      }),
+      description,
+      jobName: jobName,
     };
 
-    //  pass job title as param too and send to email
-
-    // axios post request to http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage
-
     const apiUrl: string =
-      "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
+      "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
 
-    if ((await setJobData(data)) === true) {
-      // turn off loading
-      navigate("/thank-you");
-      axios
-        .post(apiUrl, apiData)
-        .then(async (response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert("Unable to add");
-    }
+    axios
+      .post(apiUrl, apiData)
+      .then((response) => {
+        console.log(response.data);
+        // (await setJobData(data)) === true
+        if (true) {
+          // turn off loading
+          navigate("/thank-you");
+        } else {
+          alert("Unable to add");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     // set loading
   };
-
+  // disable button until the data is populated
   useEffect(() => {
-    const id = searchParams.get("id");
-    const name = searchParams.get("name");
     // const name = searchParams.get("name");
-    if (id) {
-      setJobId(id);
-    }
+    const fetchJobData = async () => {
+      // get the job data from aprams
+      const id = searchParams.get("id");
+      if (id) {
+        const jobData = await getJobPositionData(id);
+        setJobId(id);
+        setCurrJob(jobData);
+      }
+    };
+    const name = searchParams.get("name");
     if (name) {
       setJobName(name);
     }
+    fetchJobData();
   }, [searchParams]);
   return (
-    <div className="bg-laburo-gray">
+    <div className="bg-laburo-gray flx-col ">
       <Navbar />
 
       <div style={{ padding: "10px 0px 0px 10px" }}>
@@ -98,7 +97,10 @@ function JobApply() {
         </Link>
       </div>
 
-      <div className="flx-col flx-center w100">
+      <div
+        className="flx-col  w100"
+        style={{ minHeight: "100vh", alignItems: "center" }}
+      >
         <div className="job-des-content-apply  ">
           <div className="w100">
             <div style={{ marginBottom: "10px" }}> Nombre</div>
@@ -143,20 +145,24 @@ function JobApply() {
             </div>
           </div>
           <div className="w100">
-            <div style={{ marginBottom: "10px" }}>Descripción</div>
-            <div className=" job-des-input">
-              <textarea
+            {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
+            {/* <div className=" job-des-input"> */}
+            <RichTextEditor
+              editorName="Descripción"
+              setHTMLValue={setDescription}
+            />
+            {/* <textarea
                 className="job-des-input-pill"
                 value={description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   setDescription(e.target.value);
                 }}
-              />
-            </div>
+              /> */}
+            {/* </div> */}
           </div>
         </div>
 
-        <div className="w100 flx-center flx mb-50">
+        <div className="w100 flx-center flx mb-50 mt-25 ">
           <div className="aplicar-btn" onClick={handleSubmit}>
             {" "}
             Enviar{" "}

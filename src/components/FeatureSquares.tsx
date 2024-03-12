@@ -14,6 +14,7 @@ function FeatureSquares() {
             <img src={SchoolIcon} alt="School Icon" />
           </div>
         </div>
+
         <div className="feature-square">
           <div className="feature-square-title">Un Cambio </div>
 

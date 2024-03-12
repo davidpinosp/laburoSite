@@ -125,7 +125,7 @@ const setJobData = async (data: {
   jobId: string;
 }) => {
   try {
-    const docRef = await addDoc(collection(db, "application"), data);
+    await addDoc(collection(db, "application"), data);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);
