@@ -18,7 +18,7 @@ function PostJob() {
           </div>
 
           <div className="in-dev-txt" style={{ marginTop: "20px" }}>
-            El precio de una publicación estandar es de $39 c/u
+            El precio de una publicación estandar es de $89 c/u
           </div>
 
           <div className="in-dev-txt" style={{ marginTop: "20px" }}>
