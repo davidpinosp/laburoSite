@@ -6,6 +6,7 @@
     justify-content: center;
     flex-direction: column;
     padding-top: 80px;
+
 }
 
 .footer-menu{
@@ -23,10 +24,17 @@ margin-bottom: 50px;
 
 
 
+
+
 @media (max-width: 370px) {
     .footer-menu{
       
       flex-direction: column;
       line-height: 2;
     }
+  }
+
+
+@media (min-width: 750px) {
+   
   }

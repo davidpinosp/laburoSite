@@ -26,7 +26,7 @@ function JobDescription() {
 
   return (
     <div className="job-des-bg">
-      <Navbar />
+      <Navbar scrollPast={true} />
 
       <div style={{ padding: "10px 0px 0px 10px" }}>
         <Link to={"/jobs"} className="link-style">

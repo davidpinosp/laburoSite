@@ -47,8 +47,7 @@ function JobApply() {
       jobName: jobName,
     };
 
-    const apiUrl: string =
-      "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
+    const apiUrl: string = "";
 
     axios
       .post(apiUrl, apiData)
@@ -88,7 +87,7 @@ function JobApply() {
   }, [searchParams]);
   return (
     <div className="bg-laburo-gray flx-col ">
-      <Navbar />
+      <Navbar scrollPast={true} />
 
       <div style={{ padding: "10px 0px 0px 10px" }}>
         {/* link back to job des prior */}

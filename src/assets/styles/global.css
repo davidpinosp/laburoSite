@@ -115,14 +115,30 @@ background-color: rgba(80, 80, 80, 0.1)
 
 
 
+.hide{
+    display: none !important;
+}
+.show{
+    display: block !important ;
+}
+
+.desktop-only{
+    display: none;
+}
+
+
 
 /*  mobile */
 
 
-@media(min-width:650px){
+@media(min-width:750px){
  
     .mobile-only{
         display: none;
+    }
+
+    .desktop-only{
+        display: block;
     }
 
 
@@ -136,9 +152,4 @@ background-color: rgba(80, 80, 80, 0.1)
 
 
 
-  /* page counter  */
-
-
-
-
-  
+ 

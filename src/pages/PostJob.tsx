@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 function PostJob() {
   return (
     <div>
-      <Navbar />
+      <Navbar scrollPast={true} />
       <div className="in-dev">
         <div className="flx-col flx-center">
           <div className="in-dev-txt mb-25">

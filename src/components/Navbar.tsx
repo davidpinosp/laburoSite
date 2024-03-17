@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 // import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
-function Navbar() {
+
+interface navProps {
+  scrollPast: boolean;
+}
+function Navbar(props: navProps) {
   const [navOpen, setNavOpen] = useState(false);
   const toggleMenu = () => {
     setNavOpen(!navOpen);
@@ -15,9 +19,20 @@ function Navbar() {
     setNavOpen(false);
   };
   return (
-    <div className="nav-container">
-      <div className="txt-s5">
-        <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+    <div
+      className="nav-container"
+      style={{
+        backgroundColor: `${props.scrollPast ? "white" : ""}`,
+      }}
+    >
+      <div className="laburo-logo-txt">
+        <Link
+          to="/"
+          style={{
+            textDecoration: "none",
+            color: `${props.scrollPast ? "black" : "white"}`,
+          }}
+        >
           Laburo
         </Link>
       </div>
@@ -25,11 +40,14 @@ function Navbar() {
         className="flx space-btwn flx-center nav-inner-container"
         style={{ minWidth: "150px" }}
       >
-        <div className="bg-laburo-green post-job-btn ">
+        <div className="bg-laburo-green post-job-btn  mobile-only">
           <div>
             <Link
               to="/post-job"
-              style={{ textDecoration: "none", color: "white" }}
+              style={{
+                textDecoration: "none",
+                color: `${props.scrollPast ? "black" : "white"}`,
+              }}
             >
               Publica un Trabajo
             </Link>
@@ -38,8 +56,24 @@ function Navbar() {
         {/* <div>
           <PersonOutlineIcon style={{ fontSize: "30px" }} />
         </div> */}
-        <div onClick={toggleMenu} className="mobile-only">
-          <MenuIcon style={{ fontSize: "30px" }} />
+        <div onClick={toggleMenu} className="mobile-only ">
+          <MenuIcon style={{ fontSize: "30px", color: "white" }} />
+        </div>
+        <div className="flx " style={{ alignItems: "baseline" }}>
+          <div
+            className="txt-s4 desktop-only nav-text-desk-search"
+            style={{
+              color: `${props.scrollPast ? "black" : "white"}`,
+            }}
+          >
+            <Link to={"/jobs"}>Buscar Trabajos</Link>
+          </div>
+          <div
+            className="txt-s4 desktop-only nav-text nav-txt-desk-job"
+            style={{ marginRight: "40px" }}
+          >
+            <Link to={"post-job"}>Publicar un Trabajo</Link>
+          </div>
         </div>
       </div>
       {/* nav menu */}

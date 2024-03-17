@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/styles/landing.css";
 import "../assets/styles/global.css";
@@ -11,9 +11,26 @@ import ManDrillingpPicture from "../assets/images/man-drillling.jpg";
 import WomanLabPicture from "../assets/images/woman-lab.jpg";
 import LaunchIcon from "@mui/icons-material/Launch";
 function Landing() {
+  const [scrollPastNav, setNavColor] = useState(false);
+  const changeNav = () => {
+    if (window.scrollY > 300) {
+      setNavColor(true);
+    }
+    if (window.scrollY <= 300) {
+      setNavColor(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", changeNav);
+
+    return () => window.removeEventListener("scroll", changeNav);
+  }, []);
+
   return (
     <div>
-      <Navbar />
+      {/* add prop to change nav background and pass set */}
+      <Navbar scrollPast={scrollPastNav} />
       <div
         style={{
           display: "flex",
@@ -25,12 +42,13 @@ function Landing() {
           {/*  navbar */}
 
           {/* image */}
-          <div className="hero img-round">
-            <div className="hero-content hero-text-1">
+          <div className="hero img-round ">
+            <div className="black-cover"></div>
+            <div className="hero-content-main hero-text-1">
               ¡Tu proximo <span className="laburo-green">trabajo</span> te
               espera!
             </div>
-            <div className="hero-content">
+            <div className="hero-content ">
               <Link
                 to="/jobs"
                 style={{ textDecoration: "none", color: "black" }}
@@ -40,64 +58,102 @@ function Landing() {
             </div>
           </div>
 
-          <div className="landing-text-body flx-col ">
-            <span className="txt-s5 mb-25">Toma el control de tu futuro.</span>
-            <span className="txt-s4">
-              {" "}
-              Con nuestra plataforma puedes explorar miles de vacantes. Tenemos
-              posiciones para lo que sea que estes buscando :
-            </span>
+          {/*  */}
+          <div style={{ position: "relative" }}>
+            <div className="dr-content-container">
+              <div className="dr-content-limit">
+                <div className="dr-content-txt">
+                  <div className="dr-content-element">
+                    <div className="title-txt-size">
+                      {" "}
+                      Hecho para todos <br />
+                    </div>
+                    <div className="main-txt-size">
+                      {" "}
+                      En Laburo, creemos que todos merecen encontrar el trabajo
+                      perfecto. Desde aquellos que están buscando su primer
+                      trabajo hasta los que están listos para nuevos desafíos.
+                    </div>
+                  </div>
+                  <div className="dr-content-element">
+                    <div className="title-txt-size">En donde sea</div>
+                    <div className="main-txt-size">
+                      {" "}
+                      Con nuestra plataforma puedes explorar miles de vacantes a
+                      nivel global. Tenemos posiciones para lo que sea que estes
+                      buscando.
+                    </div>
+                  </div>
+                </div>
+
+                <FeatureSquares />
+              </div>
+            </div>
+
+            <div className="dr-black-cover"></div>
+            <div
+              className="image-container "
+              style={{
+                backgroundImage: `url(${WomanLabPicture})`,
+                zIndex: "-2",
+              }}
+            ></div>
           </div>
-          {/* 4 squares */}
-          <FeatureSquares />
-          <div className="landing-text-body flx-col mb-50">
-            <span className="txt-s5 mb-25">Hecho para todos </span>
-            <span className="txt-s4">
-              Aplica comodamente a través de nuestras integraciones multicanal.
-              Puedes acceder a todos nuestros servicios a traves de nuestra
-              pagina web o por
-              <span className="laburo-green"> whatsapp</span>
-            </span>
+
+          {/*  */}
+
+          <div className="landing-text-container flx-col mt-50">
+            <div className="landing-text-body flx-col ">
+              <span className="title-txt-size mt-50 mb-25">
+                Toma el control de tu futuro.
+              </span>
+              <span className="main-txt-size mb-50">
+                Con nuestra plataforma puedes explorar miles de vacantes.
+                Tenemos posiciones para lo que sea que estes buscando :
+              </span>
+            </div>
+            {/* 4 squares */}
+
+            <FeatureSquares />
           </div>
           {/* image 2 */}
-          <div
-            className="image-container img-round-top"
-            style={{ backgroundImage: `url(${ManDrillingpPicture})` }}
-          ></div>
-          <div
-            className="image-container img-round-bt"
-            style={{ backgroundImage: `url(${WomanLabPicture})` }}
-          ></div>
+          <div style={{ position: "relative", marginTop: "130px" }}>
+            <div
+              className="image-container"
+              style={{ backgroundImage: `url(${ManDrillingpPicture})` }}
+            >
+              {" "}
+              <div className="black-cover-secondary"></div>
+            </div>
+            <div className="landing-text-container">
+              <div
+                className="landing-text-body flx-col mb-50"
+                style={{ position: "absolute", top: "50px", color: "white" }}
+              >
+                <span className="title-txt-size mb-25">
+                  Encuentra tu siguiente aventura
+                </span>
+                <span className="main-txt-size">
+                  Cada dia añadimos nuevas{" "}
+                  <span className="laburo-green">posiciones</span> a nuestra
+                  plataforma. Trabajamos duro para brindarte una excelente
+                  experiencia de busqueda.
+                </span>
 
-          <div className="landing-text-body flx-col mb-50">
-            <span className="txt-s5 mb-25">
-              Encuentra tu siguiente aventura
-            </span>
-            <span className="txt-s4">
-              Cada dia añadimos nuevas{" "}
-              <span className="laburo-green">posiciones</span> a nuestra
-              plataforma. Trabajamos duro para brindarte una excelente
-              experiencia de busqueda.
-            </span>
-            <div className="flx-center flx ">
-              <div className="mt-25 ">
-                <Link
-                  to={"/jobs"}
-                  className="link-style laburo-green txt-s4 flx flx-center "
-                >
-                  {"¡Buscar Ahora! "}{" "}
-                  <LaunchIcon style={{ marginLeft: "5px" }} />
-                </Link>
+                <div className="flx-center flx ">
+                  <div className="mt-25 ">
+                    <Link
+                      to={"/jobs"}
+                      className="link-style laburo-green  main-txt-size flx flx-center "
+                    >
+                      {"¡Buscar Ahora! "}{" "}
+                      <LaunchIcon style={{ marginLeft: "5px" }} />
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          {/* images 3/4 */}
-          <div
-            className="image-container img-round"
-            style={{
-              backgroundImage: `url(${WomanWritingPicture})`,
-            }}
-          ></div>
 
           {/*  */}
         </div>

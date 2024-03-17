@@ -18,16 +18,28 @@
 .landing-container{
     display: flex;
   flex-direction: column;
-  
 
-   max-width: 650px;
-   /* height: 100vh;
-   width: 100vw;
-    */
+ 
 
+}
+
+.black-cover {
+
+    position: absolute ;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
    
-   
+}
 
+.black-cover-secondary{
+    position: absolute ;
+    top: 0px;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    width: 100%;
+   
 }
 
 
@@ -38,14 +50,15 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    height: 80vh;
+    height: 100vh;
     width: 100%;
-  
-    padding: 30px 0px;
+ 
+    padding: 100px 0px 60px 0px;
     /* overflow : hidden; */
     
     background-image: url("../images/hero.jpg");
     background-size: cover;
+
     background-position: center;
 
 
@@ -54,6 +67,16 @@
    
   
     max-width: 300px;
+
+    
+}
+
+.hero-content-main{
+   
+  
+    max-width: 300px;
+
+    
 }
 /* 
 .hero-image{
@@ -68,11 +91,13 @@
 
 .hero-text-1{
     font-size: 32px;
+    color: white;
+    z-index: 1;
 }
 
 
 .landing-text-body{
-    width: 100%;
+
     padding: 0px 30px;
     padding-top: 50px;
   
@@ -152,10 +177,11 @@ justify-content: center;
 
 .image-container {
     width: 100%;
-    height: 300px; /* Set the desired height for your image container */
+    height: 100vh; /* Set the desired height for your image container */
     background-size: cover;
     background-position: center;
-  
+    position: relative;
+
 
   }
 
@@ -171,20 +197,162 @@ justify-content: center;
   
 }
 
+.landing-text-container{
+    width: 100%;
+    display: flex;
+    align-items: center;justify-content: center;
+    
+}
 
-  /* make images round after exceding size  */
+.landing-text-body{
+    max-width: 1300px;
+}
+
+.main-txt-size{
+font-size: 20px;
+
+}
+.title-txt-size{
+    font-size: 30px;
+}
 
 
-  @media(min-width:650px){
-    .img-round{
-        border-radius:10px
+
+.dr-black-cover{
+ height: 100%;
+ width: 100%;
+ background-color: rgba(0, 0, 0, 0.3);
+ position: absolute;
+ top: 0;
+z-index: -1;
+}
+
+
+.dr-content-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+  width: 100%;
+  height: 100%;
+ display: flex;
+     color: white;
+    justify-content: center;
+    
+}
+.dr-content-txt{
+    width: 100%;
+    display: flex;
+}
+
+.dr-content-limit {
+
+width: 1400px;
+flex-direction: column;
+padding-top: 80px;
+display: flex;
+
+
+}
+.dr-content-element{
+    width: 100%;
+
+    padding: 0px 50px;
+}
+
+
+
+
+
+
+
+
+  @media(min-width:750px){
+
+ 
+    .landing-container{
+        max-width: none;
+        overflow-x: hidden;
     }
-    .img-round-top {
-        border-radius: 10px 10px 0px 0px;
+
+    .main-txt-size{
+        font-size: 30px;
+        }
+    .title-txt-size{
+            font-size: 56px;
+        }
+        
+  
+   
+   
+    .hero{
+ 
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../images/hero.jpg");
+    
+ 
+   background-size: 150%;
+    background-position: 10% 60%;
+        align-items: center;
+        justify-content: center;
+    flex: none;
+    background-repeat: no-repeat;
+   
+    color: white;
+
+
     }
 
-    .img-round-bt {
-        border-radius: 0px 0px 10px 10px;
+
+
+    .black-cover {
+
+        position: absolute ;
+        top: 0px;
+        background-color: rgba(0, 0, 0, 0.4);
+
+        height: 100%;
+        width: 100%;
+        
     }
 
+   
+
+    .hero-text-1{
+        font-size: 64px;
+       margin-bottom:50px;
+    }
+    /* max width */
+    .hero-content-main{
+        max-width: none;
+        text-align: center;
+        
+    }
+    .hero-content{
+        max-width: 500px;
+        text-align: center;
+        
+    }
+
+ 
+
+
+    .feature-squares-contianer{
+        display: grid;
+        grid-template-columns: repeat(4,  1fr);
+        grid-template-rows:auto ; /* Auto-fit columns with minimum width of 0 and equal distribution */
+        gap: 50px;
+        margin-top: 50px;
+        justify-content: space-between; /* Distribute grid items evenly along the row axis */
+        align-items: center;
+    }
+
+    
+
+
+    
   }
+
+
+
+

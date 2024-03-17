@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 function ComingSoon() {
   return (
     <div>
-      <Navbar />
+      <Navbar scrollPast={true} />
       <div className="in-dev">
         <div className="flx-col flx-center">
           <div

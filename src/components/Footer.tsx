@@ -8,10 +8,10 @@ interface FooterProps {
 
 function Footer({ type }: FooterProps) {
   return (
-    <div className="footer-container " style={{ paddingTop: "10px" }}>
+    <div className="footer-container ">
       {type === 1 ? (
         <div>
-          <div className="landing-text-body flx-col">
+          <div className="flx-col">
             <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
             <span className="txt-s4">
               Usa nuestra plataforma para llegar a miles de aplicantes
