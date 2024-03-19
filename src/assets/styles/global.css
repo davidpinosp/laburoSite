@@ -126,6 +126,9 @@ background-color: rgba(80, 80, 80, 0.1)
     display: none;
 }
 
+.skip-navbar-margin{
+    padding-top: 75px;
+}
 
 
 /*  mobile */

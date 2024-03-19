@@ -9,27 +9,41 @@ function FeatureSquares() {
     <div className="flx flx-center">
       <div className="feature-squares-contianer">
         <div className="feature-square">
-          <div className="feature-square-title">Primer Trabajo</div>
-          <div>
-            <img src={SchoolIcon} alt="School Icon" />
+          <div className="feature-square-title">
+            <img src={SchoolIcon} alt="School Icon" /> <div>Primer Trabajo</div>
+          </div>
+          <div style={{ textAlign: "left" }} className="feature-square-text">
+            Toma el primer paso hacia el futuro que deseas.
           </div>
         </div>
 
         <div className="feature-square">
-          <div className="feature-square-title">Un Cambio </div>
+          <div className="feature-square-title">
+            <img src={ChangeIcon} alt="School Icon" />
 
-          <img src={ChangeIcon} alt="Change Icon" />
+            <div>Un Cambio</div>
+          </div>
+
+          <div style={{ textAlign: "left" }} className="feature-square-text">
+            ¿Cansado de lo mismo? Prueba algo nuevo
+          </div>
         </div>
+
         <div className="feature-square">
-          <div className="feature-square-title">Progresar</div>
-          <div>
-            <img src={GrowthIcon} alt="Growth Icon" />
+          <div className="feature-square-title">
+            <img src={GrowthIcon} alt="School Icon" /> <div>Progresar</div>
+          </div>
+
+          <div style={{ textAlign: "left" }} className="feature-square-text">
+            ¿Cansado de lo mismo? Prueba algo nuevo
           </div>
         </div>
         <div className="feature-square">
-          <div className="feature-square-title">Todo lo demas</div>
-          <div>
-            <img src={PlanetIcon} alt="Planet Icon" />
+          <div className="feature-square-title">
+            <img src={PlanetIcon} alt="School Icon" /> <div>Progresar</div>
+          </div>
+          <div style={{ textAlign: "left" }} className="feature-square-text">
+            ¿Cansado de lo mismo? Prueba algo nuevo
           </div>
         </div>
       </div>

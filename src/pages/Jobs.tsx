@@ -152,7 +152,7 @@ function Jobs() {
     <div>
       <Navbar scrollPast={true} />
 
-      <div className="w100 flx-center flx-col">
+      <div className="w100 flx-center flx-col skip-navbar-margin">
         <div className="  flx-col flx-center job-page-container">
           <form onSubmit={handleSubmit}>
             <div className="search-container">

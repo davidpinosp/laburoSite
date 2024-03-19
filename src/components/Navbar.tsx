@@ -40,7 +40,7 @@ function Navbar(props: navProps) {
         className="flx space-btwn flx-center nav-inner-container"
         style={{ minWidth: "150px" }}
       >
-        <div className="bg-laburo-green post-job-btn  mobile-only">
+        <div className="bg-laburo-green post-job-btn flx flx-center mobile-only">
           <div>
             <Link
               to="/post-job"
@@ -49,7 +49,7 @@ function Navbar(props: navProps) {
                 color: `${props.scrollPast ? "black" : "white"}`,
               }}
             >
-              Publica un Trabajo
+              Publica
             </Link>
           </div>
         </div>
@@ -72,7 +72,7 @@ function Navbar(props: navProps) {
             className="txt-s4 desktop-only nav-text nav-txt-desk-job"
             style={{ marginRight: "40px" }}
           >
-            <Link to={"post-job"}>Publicar un Trabajo</Link>
+            <Link to={"/post-job"}>Publicar un Trabajo</Link>
           </div>
         </div>
       </div>

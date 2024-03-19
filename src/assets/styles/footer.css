@@ -6,6 +6,8 @@
     justify-content: center;
     flex-direction: column;
     padding-top: 80px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
 
 }
 
@@ -22,19 +24,28 @@ margin-bottom: 50px;
 }
 
 
+.footer-sub-container{
+  display: flex;
+  flex-direction: column;
+  
+
+}
 
 
-
-
-@media (max-width: 370px) {
-    .footer-menu{
-      
-      flex-direction: column;
-      line-height: 2;
-    }
-  }
 
 
 @media (min-width: 750px) {
+ 
+.hire-text{
+  margin-right: 100px;
+}
    
+  .footer-sub-container{
+    flex-direction: row;
+ 
+    justify-content: center;
+
+
+ 
+  }
   }

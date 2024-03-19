@@ -6,9 +6,9 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import FeatureSquares from "../components/FeatureSquares";
 import SearchJobsButton from "../components/SearchJobsButton";
-import WomanWritingPicture from "../assets/images/woman-writing.jpg";
 import ManDrillingpPicture from "../assets/images/man-drillling.jpg";
 import WomanLabPicture from "../assets/images/woman-lab.jpg";
+import waIcon from "../assets/images/icons/whatsapp.svg";
 import LaunchIcon from "@mui/icons-material/Launch";
 function Landing() {
   const [scrollPastNav, setNavColor] = useState(false);
@@ -63,7 +63,7 @@ function Landing() {
             <div className="dr-content-container">
               <div className="dr-content-limit">
                 <div className="dr-content-txt">
-                  <div className="dr-content-element">
+                  <div className="dr-content-element mb-25">
                     <div className="title-txt-size">
                       {" "}
                       Hecho para todos <br />
@@ -71,17 +71,16 @@ function Landing() {
                     <div className="main-txt-size">
                       {" "}
                       En Laburo, creemos que todos merecen encontrar el trabajo
-                      perfecto. Desde aquellos que están buscando su primer
-                      trabajo hasta los que están listos para nuevos desafíos.
+                      perfecto.
                     </div>
                   </div>
-                  <div className="dr-content-element">
-                    <div className="title-txt-size">En donde sea</div>
+                  <div className="dr-content-element mb-25">
+                    <div className="title-txt-size">Tu siguiente aventura</div>
                     <div className="main-txt-size">
                       {" "}
-                      Con nuestra plataforma puedes explorar miles de vacantes a
-                      nivel global. Tenemos posiciones para lo que sea que estes
-                      buscando.
+                      Cada dia añadimos nuevas{" "}
+                      <span className="laburo-green">posiciones</span> a nuestra
+                      plataforma.
                     </div>
                   </div>
                 </div>
@@ -102,22 +101,8 @@ function Landing() {
 
           {/*  */}
 
-          <div className="landing-text-container flx-col mt-50">
-            <div className="landing-text-body flx-col ">
-              <span className="title-txt-size mt-50 mb-25">
-                Toma el control de tu futuro.
-              </span>
-              <span className="main-txt-size mb-50">
-                Con nuestra plataforma puedes explorar miles de vacantes.
-                Tenemos posiciones para lo que sea que estes buscando :
-              </span>
-            </div>
-            {/* 4 squares */}
-
-            <FeatureSquares />
-          </div>
           {/* image 2 */}
-          <div style={{ position: "relative", marginTop: "130px" }}>
+          <div style={{ position: "relative", width: "100vw" }}>
             <div
               className="image-container"
               style={{ backgroundImage: `url(${ManDrillingpPicture})` }}
@@ -127,27 +112,26 @@ function Landing() {
             </div>
             <div className="landing-text-container">
               <div
-                className="landing-text-body flx-col mb-50"
+                className="landing-text-body drilling-content-container mb-50"
                 style={{ position: "absolute", top: "50px", color: "white" }}
               >
-                <span className="title-txt-size mb-25">
-                  Encuentra tu siguiente aventura
-                </span>
-                <span className="main-txt-size">
-                  Cada dia añadimos nuevas{" "}
-                  <span className="laburo-green">posiciones</span> a nuestra
-                  plataforma. Trabajamos duro para brindarte una excelente
-                  experiencia de busqueda.
-                </span>
-
-                <div className="flx-center flx ">
-                  <div className="mt-25 ">
-                    <Link
-                      to={"/jobs"}
-                      className="link-style laburo-green  main-txt-size flx flx-center "
-                    >
-                      {"¡Buscar Ahora! "}{" "}
-                      <LaunchIcon style={{ marginLeft: "5px" }} />
+                <div className="title-txt-size mb-25 drilling-content-title">
+                  En donde sea
+                </div>
+                <div className="main-txt-size drilling-content-text">
+                  Con nuestra plataforma puedes explorar miles de vacantes a
+                  nivel global. Tenemos posiciones para lo que sea que estes
+                  buscando. Usa nuestros servicios a través de nuestra pagina
+                  web o contactanos por WhatsApp.
+                  <div className="flx flx-center mt-25">
+                    <Link to={"/coming-soon"}>
+                      <div className="whatsapp-button-container">
+                        <img
+                          src={waIcon}
+                          style={{ height: "100%" }}
+                          alt="WhatsApp Icon"
+                        />
+                      </div>
                     </Link>
                   </div>
                 </div>

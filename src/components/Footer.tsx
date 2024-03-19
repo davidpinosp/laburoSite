@@ -10,8 +10,8 @@ function Footer({ type }: FooterProps) {
   return (
     <div className="footer-container ">
       {type === 1 ? (
-        <div>
-          <div className="flx-col">
+        <div className="footer-sub-container">
+          <div className="flx-col hire-text">
             <span className="txt-s5 mb-25"> Listo Para Contratar ? </span>
             <span className="txt-s4">
               Usa nuestra plataforma para llegar a miles de aplicantes

@@ -53,7 +53,7 @@
     height: 100vh;
     width: 100%;
  
-    padding: 100px 0px 60px 0px;
+    padding: 100px 0px 100px 0px;
     /* overflow : hidden; */
     
     background-image: url("../images/hero.jpg");
@@ -98,46 +98,66 @@
 
 .landing-text-body{
 
-    padding: 0px 30px;
+    padding: 0px 10px;
     padding-top: 50px;
   
 }
 
 
 .feature-squares-contianer{
+    
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns with equal width */
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr); 
     gap: 10px;
-    margin-top: 50px;
+    margin-top: 20px;
+   padding: 0px 10px;
+   width: 100%;
    
+
 }
 
 .feature-square{
    
     border-radius: 10px;
-    width: 150px;
-    height: 150px;
-    background-color: rgba(80, 80, 80, 0.1);
+    width: 100%;
+    height: 100px;
+    background-color: rgba(256, 256, 256, 0.6);
     display: flex;
     text-align: center;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    color: black;
     
-    padding: 10px 10px;
+    
+    padding: 20px 10px 20px 10px;
 
     font-size: 16px;
 
 
 }
 
+
 .feature-square-title{
-    margin-bottom: 10px;
+    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 18px;
+    
+    
+}
+.feature-square-title img{
+    width: 30% ;
+    max-width: 30px;
+    height: auto;
+   
 }
 
+.feature-square-text{
 
-
+    display: none;
+}
 
 .post-job-btn-container{
 background-color: var(--laburo-green);
@@ -146,7 +166,7 @@ background-color: var(--laburo-green);
 
 .post-job-btn2-container{
   
-width: 100%;
+
 
 display: flex;
 align-items: center;
@@ -188,15 +208,6 @@ justify-content: center;
 
 
 
-.feature-square-img{
-    background-image: url("../images/icons/change.svg");
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-  
-}
-
 .landing-text-container{
     width: 100%;
     display: flex;
@@ -221,7 +232,7 @@ font-size: 20px;
 .dr-black-cover{
  height: 100%;
  width: 100%;
- background-color: rgba(0, 0, 0, 0.3);
+ background-color: rgba(0, 0, 0, 0.4);
  position: absolute;
  top: 0;
 z-index: -1;
@@ -242,25 +253,76 @@ z-index: -1;
 .dr-content-txt{
     width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 .dr-content-limit {
 
 width: 1400px;
 flex-direction: column;
-padding-top: 80px;
+
 display: flex;
+justify-content: center;
+
 
 
 }
 .dr-content-element{
     width: 100%;
 
-    padding: 0px 50px;
+    padding: 0px 10px;
+   
+}
+
+
+.whatsapp-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #25D366;
+    height: 60px;
+    width: 200px;
+    border-radius: 10px;
+    padding: 10px 20px;
+ 
+}
+
+.whatsapp-button-container:hover{
+    opacity: 0.4;
 }
 
 
 
+.drilling-content-container{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.drilling-content-title{
+    
+
+}
+
+@media(min-width:590px){
+
+
+    .feature-squares-contianer{
+    
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* grid-template-rows: repeat(2, 1fr);  */
+        gap: 10px;
+        margin-top: 80px;
+       padding: 0px 10px;
+       
+    
+    }
+
+  
+
+
+}
 
 
 
@@ -268,21 +330,23 @@ display: flex;
 
   @media(min-width:750px){
 
- 
+    
+
     .landing-container{
         max-width: none;
         overflow-x: hidden;
     }
 
     .main-txt-size{
-        font-size: 30px;
+        font-size: 25px;
         }
     .title-txt-size{
-            font-size: 56px;
+            font-size: 36px;
         }
         
-  
-   
+       
+
+
    
     .hero{
  
@@ -338,17 +402,66 @@ display: flex;
 
 
     .feature-squares-contianer{
-        display: grid;
-        grid-template-columns: repeat(4,  1fr);
-        grid-template-rows:auto ; /* Auto-fit columns with minimum width of 0 and equal distribution */
-        gap: 50px;
+        /* display: flex;
+       
+        padding
         margin-top: 50px;
-        justify-content: space-between; /* Distribute grid items evenly along the row axis */
-        align-items: center;
+      
+        align-items: center; */
+        justify-content: center;
+        padding: 0px 50px;
     }
 
     
 
+
+
+    .feature-squares-contianer{
+        /* margin-top: 150px; */
+        gap: 30px;
+    }
+        
+             
+        
+    .feature-square-title{
+                 
+                    font-size: 15px; 
+    }
+
+
+    
+    .dr-content-txt{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .dr-content-element{
+        width: 100%;
+    
+        padding: 0px 50px;
+    } 
+
+
+
+/* man drilling */
+
+    .drilling-content-container{
+        margin-top: 10%;
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+
+    }
+
+    .drilling-content-title{
+
+        width: 500px;
+    }
+
+    .drilling-content-text{
+    width: 100%;
+    }
+    
 
     
   }
@@ -356,3 +469,68 @@ display: flex;
 
 
 
+  @media(min-width:1000px){
+
+
+
+
+  
+  .feature-squares-contianer{
+    display: flex;
+   
+    
+    margin-top: 50px;
+     /* Distribute grid items evenly along the row axis */
+  
+    align-items: center;
+}
+
+.feature-square{
+    width: 100%;
+    max-width: 280px;
+    height: 160px;
+    
+
+}
+
+
+
+.feature-squares-contianer{
+    margin-top: 100px;
+    gap: 30px;
+            }
+    
+    
+    
+ .feature-square-text{
+    padding-top: 10px;
+                display: block;
+padding:  10px;
+    font-size: 20px;
+            }
+            
+    
+.feature-square-title{
+                flex-direction: row;
+                font-size: 25px;
+}
+
+.feature-square-title img{
+    margin-right: 10px;
+}
+
+.title-txt-size{
+    font-size: 52px;
+}
+main-txt-size{
+font-size: 32px;
+}
+
+}
+
+/* change at 450 for squares  */
+
+
+/* change at 650 for bigger squares  */
+
+/* change at 1200 */
