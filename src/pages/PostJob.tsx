@@ -4,12 +4,12 @@ import "../assets/styles/postjobs.css";
 import PostJobPill from "../components/PostJobPill";
 import CreateJob from "../components/create-job/CreateJob";
 import ValidateJob from "../components/ValidateJob";
-import PayJob from "../components/PayJob";
+
 import Footer from "../components/Footer";
 import { JobInt } from "../typescript/interfaces/JobInterface";
-import { postJob } from "../utils/jobDescription";
+
 import PaymentPage from "../components/create-job/PaymentPage";
-import { redirect } from "react-router-dom";
+
 function PostJob() {
   const [job, setJob] = useState<JobInt>();
   const [step, setStep] = useState(1);

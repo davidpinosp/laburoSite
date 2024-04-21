@@ -9,8 +9,7 @@ import FeatureSquares from "../components/FeatureSquares";
 import SearchJobsButton from "../components/SearchJobsButton";
 import ManDrillingpPicture from "../assets/images/man-drillling.jpg";
 import WomanLabPicture from "../assets/images/woman-lab.jpg";
-import waIcon from "../assets/images/icons/whatsapp.svg";
-import LaunchIcon from "@mui/icons-material/Launch";
+
 function Landing() {
   const [scrollPastNav, setNavColor] = useState(false);
   const changeNav = () => {

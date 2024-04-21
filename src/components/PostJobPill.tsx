@@ -6,6 +6,7 @@ interface pillProps {
   step: number;
 }
 function PostJobPill(props: pillProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [step, setStep] = useState(props.step);
   // pass in which step is on
   return (

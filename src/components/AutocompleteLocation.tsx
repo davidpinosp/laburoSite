@@ -26,7 +26,7 @@ function AutocompleteLocation({
   //   const apikey = ;
   // insert the public api key
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_PLACES_API_KEY || "",
+    googleMapsApiKey: "AIzaSyB3OJgL9-g2f6rIxua7rxV0ST2hcgsqppw",
     libraries,
   });
 

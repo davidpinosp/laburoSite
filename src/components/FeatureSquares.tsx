@@ -1,10 +1,7 @@
 import React from "react";
-import SchoolIcon from "../assets/images/icons/school.svg";
-import ChangeIcon from "../assets/images/icons/change.svg";
-import PlanetIcon from "../assets/images/icons/planet.svg";
-import GrowthIcon from "../assets/images/icons/growth.svg";
+
 import HandymanOutlinedIcon from "@mui/icons-material/HandymanOutlined";
-import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import ComputerRoundedIcon from "@mui/icons-material/ComputerRounded";
 import AssignmentIcon from "@mui/icons-material/Assignment";

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Message from "../stripe/Message";
-import StripeButton from "../stripe/StripeButton";
+
 import { JobInt } from "../../typescript/interfaces/JobInterface";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link } from "react-router-dom";
 
 interface PaymentPageProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

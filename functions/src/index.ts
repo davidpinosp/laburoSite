@@ -93,6 +93,7 @@ exports.stripeCheckoutSession = onRequest(
             },
           ],
           mode: "payment",
+          allow_promotion_codes: true,
           success_url: `${"http://quierolaburo.com/post-job?success=true"}`,
           cancel_url: `${"http://quierolaburo.com/post-job?success=false"}`,
           automatic_tax: { enabled: true },

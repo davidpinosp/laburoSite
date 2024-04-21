@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { JobInt } from "../typescript/interfaces/JobInterface";
 import JobPost from "./JobPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Description } from "@mui/icons-material";
 import StripeButton from "./stripe/StripeButton";
 import LoadingWidget from "./widgets/LoadingWidget";
 interface ValidateJobProps {
@@ -12,9 +11,7 @@ interface ValidateJobProps {
 }
 function ValidateJob(props: ValidateJobProps) {
   const [loading, setLoading] = useState(false);
-  const increaseStep = () => {
-    props.setStep(3);
-  };
+
   const decreaseStep = () => {
     props.setStep(1);
   };

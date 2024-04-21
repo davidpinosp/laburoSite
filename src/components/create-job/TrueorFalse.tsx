@@ -8,6 +8,7 @@ interface tofProps {
   setResult: React.Dispatch<React.SetStateAction<boolean>>;
 }
 function TrueorFalse(props: tofProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [firstSelected, setFirstSelected] = useState(true);
   return (
     <div className="tof-container">

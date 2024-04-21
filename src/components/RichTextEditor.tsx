@@ -15,6 +15,7 @@ interface RichTextProps {
 }
 function RichTextEditor(props: RichTextProps) {
   // do this for an upper level comp
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [value, setValue] = useState("");
   return (
     <div className="wrapper">

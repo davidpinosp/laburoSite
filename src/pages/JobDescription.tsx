@@ -6,7 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
 import { DocumentData } from "firebase/firestore";
 import { getJobPositionData } from "../utils/jobsUtils";
-import { AppData } from "../typescript/interfaces/AppInterface";
+
 import LoadingWidget from "../components/widgets/LoadingWidget";
 // make the inner part of this component a components  , that way I can pass the state to it
 
@@ -15,7 +15,6 @@ function JobDescription() {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   // ------
-  const [applicationData, setapplicationData] = useState<AppData>();
 
   // hide the from email
 
@@ -99,8 +98,9 @@ function JobDescription() {
                   href={`${currJob?.data.recieveEmail}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="aplicar-btn"
                 >
-                  <div className="aplicar-btn"> Aplicar1 </div>
+                  Aplicar
                 </a>
               ) : (
                 <Link
