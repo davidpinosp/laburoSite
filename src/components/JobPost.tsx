@@ -39,9 +39,12 @@ const JobPost: React.FC<PostProps> = ({
             {position ? position : "Posición"}
           </div>
           <div className="job-post-company">
-            {company ? company : "Comapnia"}
+            {company ? company : "Compania"}
           </div>
-          <div className="job-post-location">
+          <div
+            className="job-post-location"
+            style={{ color: "rgba(0,0,0,0.5)" }}
+          >
             {location ? location : "Lugar"}
           </div>
         </div>

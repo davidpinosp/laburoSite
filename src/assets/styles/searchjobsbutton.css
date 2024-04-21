@@ -18,3 +18,16 @@ position: absolute;
 z-index: 2;
 
 }
+
+.search-jobs-btn-container:hover{
+    background-color: rgba(217, 217, 217, 0.4);
+
+}
+
+@media(min-width:750px){
+
+   
+    
+
+
+}

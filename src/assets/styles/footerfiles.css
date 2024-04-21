@@ -1,0 +1,26 @@
+.custom-list {
+    list-style-position: inside; /* This will move the bullet points inside the content box */
+    padding-left: 20px;          /* This provides indentation from the left side of the container */
+  }
+  
+  /* List item styles */
+  .pp-li {
+    padding-left: 5px;           /* Further indentation of the list item content if needed */
+  }
+
+/* Styles for list indentation */
+
+  
+  /* Styles to add space between sections */
+  .section-spacing {
+    margin: 25px 0px; /* Adds space between sections */
+  }
+
+
+    .ff-title{
+        font-size: 24px;
+    }
+
+
+  .ff-container {padding-right: 10px;
+padding-left: 10px;}

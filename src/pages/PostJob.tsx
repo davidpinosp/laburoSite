@@ -1,22 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import "../assets/styles/postjobs.css";
+import PostJobPill from "../components/PostJobPill";
+import CreateJob from "../components/create-job/CreateJob";
+import ValidateJob from "../components/ValidateJob";
+
+import Footer from "../components/Footer";
+import { JobInt } from "../typescript/interfaces/JobInterface";
+
+import PaymentPage from "../components/create-job/PaymentPage";
 
 function PostJob() {
-  return (
-    <div>
-      <Navbar />
-      <div className="in-dev">
-        <div className="flx-col flx-center">
-          <div className="in-dev-txt mb-25">
-            Disculpa! Esta pagina aun esta en desarollo...
-          </div>
+  const [job, setJob] = useState<JobInt>();
+  const [step, setStep] = useState(1);
+  const def = {
+    title: "",
+    company: "",
+    datePosted: new Date(),
+    description: "",
+    location: {
+      city: "",
+      country: "",
+      latitude: 0,
+      longitude: 0,
+    },
+    inPerson: true,
+    fullTime: true,
+    recieveViaEmail: true,
+    recieveEmail: "",
+    imageURL: "",
+    status: false,
+  };
 
-          <div className="in-dev-txt">
-            Mientras tanto puedes acceder a todos nuestros servicios a traves de
-            whatsapp
-          </div>
-        </div>
+  const Step1 = () => {
+    return (
+      <React.Fragment>
+        <PostJobPill step={1} />
+        <CreateJob setJob={setJob} job={job || def} setStep={setStep} />
+      </React.Fragment>
+    );
+  };
+
+  const Step2 = () => {
+    return (
+      <React.Fragment>
+        <PostJobPill step={2} />
+        <ValidateJob job={job || def} setStep={setStep} />
+      </React.Fragment>
+    );
+  };
+
+  const Step3 = () => {
+    return (
+      <React.Fragment>
+        <PostJobPill step={3} />
+        <PaymentPage setStep={setStep} job={job || def} />
+      </React.Fragment>
+    );
+  };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      setStep(3);
+      console.log("payment done");
+    }
+  }, []);
+  return (
+    <div
+      className="w100 flx flx-col flx-center"
+      style={{ padding: "0px 10px" }}
+    >
+      <Navbar scrollPast={true} />
+      <div className="skip-navbar-margin postjob-container ">
+        {/* top bar  */}
+
+        {step === 1 && <Step1 />}
+        {step === 2 && <Step2 />}
+        {step === 3 && <Step3 />}
+
+        {/* second bar with content */}
       </div>
+      <Footer type={2} />
     </div>
   );
 }

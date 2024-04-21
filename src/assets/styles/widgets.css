@@ -1,0 +1,23 @@
+
+:root{
+    --laburo-green : #15BC7F;
+}
+
+.loading-container{
+    margin :10px 0px; 
+}
+
+.loader {
+    border: 5px solid #f3f3f3; /* Light grey border, creates the effect of an empty section */
+    border-top: 4px solid var(--laburo-green); /* Blue part, represents the progress or loading part */
+    border-radius: 50%; /* Essential for circular shape */
+    width: 30px; /* Size of the loader */
+    height: 30px; /* Size of the loader */
+    animation: spin 2s linear infinite; /* Animation to spin the loader */
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); } /* Start position */
+    100% { transform: rotate(360deg); } /* End position, completes a full circle */
+}
