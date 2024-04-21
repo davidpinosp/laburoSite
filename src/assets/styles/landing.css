@@ -252,13 +252,14 @@ z-index: -1;
 }
 .dr-content-txt{
     width: 100%;
+    
     display: flex;
     flex-direction: column;
 }
 
 .dr-content-limit {
-
-width: 1400px;
+width: 100%;
+max-width: 1300px;
 flex-direction: column;
 
 display: flex;
@@ -271,6 +272,7 @@ justify-content: center;
     width: 100%;
 
     padding: 0px 10px;
+    
    
 }
 
@@ -284,6 +286,7 @@ justify-content: center;
     width: 200px;
     border-radius: 10px;
     padding: 10px 20px;
+
  
 }
 
@@ -296,13 +299,26 @@ justify-content: center;
 .drilling-content-container{
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
+    justify-content: space-evenly;
+   height: 100%;
 }
 
-.drilling-content-title{
-    
-
+.drilling-content-text{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
 }
+
+.drilling-subcontainer{
+    display: flex;
+ flex-direction: column;
+}
+
+
+
 
 @media(min-width:590px){
 
@@ -320,8 +336,7 @@ justify-content: center;
     }
 
   
-
-
+  
 }
 
 
@@ -330,11 +345,24 @@ justify-content: center;
 
   @media(min-width:750px){
 
-    
+    .drilling-content-text{
+      
+        display: block;
+      
+ 
+        
+    }
+    .drilling-subcontainer{
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+        gap: 50px;
+    }
 
     .landing-container{
         max-width: none;
         overflow-x: hidden;
+        
     }
 
     .main-txt-size{
@@ -433,29 +461,33 @@ justify-content: center;
     .dr-content-txt{
         width: 100%;
         display: flex;
+     
         flex-direction: row;
+        
+        
     }
     .dr-content-element{
         width: 100%;
     
-        padding: 0px 50px;
+        
     } 
 
 
 
-/* man drilling */
+
 
     .drilling-content-container{
-        margin-top: 10%;
+       padding-top: 20;
 display: flex;
-flex-direction: row;
-align-items: flex-start;
+
+
 
     }
 
     .drilling-content-title{
 
-        width: 500px;
+       white-space: nowrap;
+     
     }
 
     .drilling-content-text{
@@ -486,8 +518,7 @@ align-items: flex-start;
 }
 
 .feature-square{
-    width: 100%;
-    max-width: 280px;
+   width: 230px;
     height: 160px;
     
 
@@ -497,9 +528,11 @@ align-items: flex-start;
 
 .feature-squares-contianer{
     margin-top: 100px;
-    gap: 30px;
-            }
-    
+    padding: 0px 10px;
+    display: flex;
+    gap: 0px;
+    justify-content: space-between;
+}
     
     
  .feature-square-text{
@@ -521,16 +554,33 @@ padding:  10px;
 
 .title-txt-size{
     font-size: 52px;
+ 
+
 }
 main-txt-size{
 font-size: 32px;
 }
 
+
+
 }
 
-/* change at 450 for squares  */
+@media(min-width:1300px){
+
+/* make squares bigger */
+
+.feature-square{
+    
 
 
-/* change at 650 for bigger squares  */
+    width: 300px;
+    height: 190px;
 
-/* change at 1200 */
+}
+.feature-square-title{
+font-size: 30px;
+}
+.feature-square-text{
+font-size: 25px;
+}
+}

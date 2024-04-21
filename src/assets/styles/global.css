@@ -150,7 +150,15 @@ background-color: rgba(80, 80, 80, 0.1)
 
   }
 
+.button{
+    background-color: transparent;
+font-size: inherit;
 
+}
+
+.button:hover{
+    cursor: pointer;
+}
 
 
 

@@ -35,7 +35,7 @@ const getJobsByLocationAndPosition = async (
   try {
     const jobsCollection = collection(db, "job");
     let q = query(jobsCollection);
-
+    q = query(q, where("status", "==", true));
     if (location) {
       q = query(
         q,

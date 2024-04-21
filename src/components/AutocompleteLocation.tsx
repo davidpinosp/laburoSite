@@ -5,7 +5,8 @@ interface AutocompleteProps {
   setSelectedLocation: React.Dispatch<
     React.SetStateAction<LocationData | undefined>
   >;
-  setGrayButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setGrayButton?: React.Dispatch<React.SetStateAction<boolean>>;
+  placeholder?: string;
 }
 
 interface LocationData {
@@ -15,14 +16,15 @@ interface LocationData {
   longitude: number;
 }
 
+const libraries: Libraries = ["places"];
 function AutocompleteLocation({
   setSelectedLocation,
   setGrayButton,
+  placeholder,
 }: AutocompleteProps) {
   const [searchResult, setSearchResult] = useState<any>(null);
   //   const apikey = ;
-  const libraries: Libraries = ["places"];
-
+  // insert the public api key
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_PLACES_API_KEY || "",
     libraries,
@@ -37,7 +39,9 @@ function AutocompleteLocation({
       if (searchResult != null) {
         const place = await searchResult.getPlace();
         if (place.name === "") {
-          setGrayButton(true);
+          if (setGrayButton) {
+            setGrayButton(true);
+          }
           setSelectedLocation(undefined);
           return;
         }
@@ -57,12 +61,16 @@ function AutocompleteLocation({
         };
 
         setSelectedLocation(data);
-        setGrayButton(false);
+        if (setGrayButton) {
+          setGrayButton(false);
+        }
       } else {
         setSelectedLocation(undefined);
       }
     } catch (err) {
-      setGrayButton(true);
+      if (setGrayButton) {
+        setGrayButton(true);
+      }
     }
   }
 
@@ -77,11 +85,15 @@ function AutocompleteLocation({
         onLoad={onLoad}
         options={{
           types: ["(cities)"],
-          componentRestrictions: { country: ["ec", "co", "mx"] },
+          componentRestrictions: { country: ["ec", "ar", "co", "mx"] },
         }}
       >
         <div className="search-pill">
-          <input type="text" className="search-pill-input " />
+          <input
+            type="text"
+            className="search-pill-input "
+            placeholder={placeholder ? placeholder : ""}
+          />
         </div>
       </Autocomplete>
     </div>

@@ -5,9 +5,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
 import { getJobPositionData } from "../utils/jobsUtils";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 import axios from "axios";
 import RichTextEditor from "../components/RichTextEditor";
 import { DocumentData } from "firebase/firestore";
+import LoadingWidget from "../components/widgets/LoadingWidget";
 function JobApply() {
   const [jobId, setJobId] = useState("");
   const [jobName, setJobName] = useState("");
@@ -16,56 +18,82 @@ function JobApply() {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [searchParams] = useSearchParams();
+  const [formAlert, setformAlert] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currJob, setCurrJob] = useState<DocumentData>();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const data = {
-      name,
-      number,
-      email,
-      date: new Date(),
-      description,
-      jobId,
-    };
-    // hide the from email
-    const apiData = {
-      to: process.env.REACT_APP_TO_EMAIL,
-      subject: "Aplicación para la posición de " + jobName,
-      html: description,
-      name,
-      number,
-      email,
-      date: new Date().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
-      description,
-      jobName: jobName,
-    };
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("submit event" + formAlert);
 
-    const apiUrl: string = "";
+    if (name && number && email && description) {
+      setformAlert(false);
+      setLoading(true);
+      console.log(loading);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const data = {
+        name,
+        number,
+        email,
+        date: new Date(),
+        description,
+        jobId,
+      };
+      // hide the from email
+      const apiData = {
+        to: currJob?.data.recieveEmail,
+        subject: "Aplicación para la posición de " + jobName,
+        html: description,
+        name,
+        number,
+        email,
+        date: new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        }),
+        description,
+        jobName: jobName,
+      };
 
-    axios
-      .post(apiUrl, apiData)
-      .then((response) => {
-        console.log(response.data);
-        // (await setJobData(data)) === true
-        if (true) {
-          // turn off loading
+      const apiUrl: string =
+        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
+
+      axios
+        .post(apiUrl, apiData)
+        .then((response) => {
+          console.log(response.data);
+
           navigate("/thank-you");
-        } else {
-          alert("Unable to add");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error.message);
+          console.log(error);
+        });
+    } else {
+      setformAlert(true);
+      window.scrollTo(0, 0);
+    }
+  };
+  const showEmptyFields = () => {
+    let names = ["Nombre", "Email", "Teléfono", "Descripción"];
+    let form = [name, number, email, description];
+    return form.map((val, index) => {
+      if (!val) {
+        return <div key={index}>{names[index]}</div>;
+      }
+      return null;
+    });
+  };
 
-    // set loading
+  const handleInvalidEmail = (e: React.FormEvent<HTMLInputElement>) => {
+    // Set a custom message in Spanish
+    e.currentTarget.setCustomValidity(
+      "Por favor introduce una dirección de correo válida."
+    );
   };
   // disable button until the data is populated
   useEffect(() => {
@@ -86,90 +114,125 @@ function JobApply() {
     fetchJobData();
   }, [searchParams]);
   return (
-    <div className="bg-laburo-gray flx-col ">
+    <div className=" flx-col skip-navbar-margin ">
       <Navbar scrollPast={true} />
-
-      <div style={{ padding: "10px 0px 0px 10px" }}>
-        {/* link back to job des prior */}
-        <Link to={`/job-des/?id=${jobId}`} className="link-style">
-          <ArrowBackIcon />
-        </Link>
-      </div>
 
       <div
         className="flx-col  w100"
         style={{ minHeight: "100vh", alignItems: "center" }}
       >
-        <div className="job-des-content-apply  ">
-          <div className="w100">
-            <div style={{ marginBottom: "10px" }}> Nombre</div>
+        <form onSubmit={handleSubmit} className="flx flx-col flx-center">
+          <div className=" job-des-content-apply  ">
+            <div className="mt-25 w100 mb-25">
+              {/* link back to job des prior */}
 
-            <div className="search-pill">
-              <input
-                type="text"
-                className="search-pill-input "
-                value={name}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setName(e.target.value);
+              <Link
+                to={`/job-des/?id=${jobId}`}
+                className="link-style "
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "fit-content",
                 }}
-              />
+              >
+                <ArrowBackIcon /> Regresar
+              </Link>
             </div>
-          </div>
-          <div className="w100">
-            <div style={{ marginBottom: "10px" }}> Email</div>
+            {formAlert && (
+              <div className="w100 mb-25">
+                <Alert severity="error" style={{ borderRadius: "10px" }}>
+                  <div className="">
+                    Por favor completa estos campos: {showEmptyFields()}
+                  </div>
+                </Alert>
+              </div>
+            )}
+            <div className="w100 postjob-gray-container">
+              <div className="w100">
+                <div style={{ marginBottom: "10px", fontSize: "18px" }}>
+                  {" "}
+                  Nombre
+                </div>
 
-            <div className="search-pill">
-              <input
-                type="text"
-                className="search-pill-input "
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setEmail(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="w100">
-            <div style={{ marginBottom: "10px" }}> Telefono</div>
+                <div className="search-pill">
+                  <input
+                    type="text"
+                    className="search-pill-input "
+                    value={name}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setName(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="w100">
+                <div style={{ marginBottom: "10px", fontSize: "18px" }}>
+                  {" "}
+                  Email
+                </div>
 
-            <div className="search-pill">
-              <input
-                type="text"
-                className="search-pill-input "
-                value={number}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setNumber(e.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="w100">
-            {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
-            {/* <div className=" job-des-input"> */}
-            <RichTextEditor
-              editorName="Descripción"
-              setHTMLValue={setDescription}
-            />
-            {/* <textarea
+                <div className="search-pill">
+                  <input
+                    type="email"
+                    className="search-pill-input "
+                    onInvalid={handleInvalidEmail}
+                    value={email}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setEmail(e.target.value);
+                      e.target.setCustomValidity("");
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="w100">
+                <div style={{ marginBottom: "10px", fontSize: "18px" }}>
+                  {" "}
+                  Telefono
+                </div>
+
+                <div className="search-pill">
+                  <input
+                    type="text"
+                    className="search-pill-input "
+                    value={number}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setNumber(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="w100">
+                {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
+                {/* <div className=" job-des-input"> */}
+                <RichTextEditor
+                  editorName="Descripción"
+                  htmlValue={description}
+                  setHTMLValue={setDescription}
+                />
+                {/* <textarea
                 className="job-des-input-pill"
                 value={description}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                   setDescription(e.target.value);
                 }}
               /> */}
-            {/* </div> */}
+                {/* </div> */}
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="w100 flx-center flx mb-50 mt-25 ">
-          <div className="aplicar-btn" onClick={handleSubmit}>
-            {" "}
-            Enviar{" "}
+          <div className="w100 flx-center flx-col mb-50 mt-25 ">
+            {loading ? (
+              <LoadingWidget loading={loading} />
+            ) : (
+              <button type="submit" className="aplicar-btn" disabled={loading}>
+                Enviar
+              </button>
+            )}
           </div>
-        </div>
+        </form>
+        <Footer type={2} />
       </div>
-
-      <Footer type={2} />
     </div>
   );
 }

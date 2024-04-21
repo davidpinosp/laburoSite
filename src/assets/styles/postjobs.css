@@ -1,0 +1,242 @@
+
+:root{
+    --laburo-green : rgb(21, 188, 127);
+}
+
+.postjob-container{
+    width: 100%;
+  max-width: 800px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.postjob-gray-container{
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+background-color:  rgba(80, 80, 80, 0.1);
+border-radius: 10px;
+padding: 20px 10px;
+padding-bottom: 25px;
+}
+
+.postjob-top-pill{
+    width: 100%;
+    max-width: 800px;
+    height: 200px;
+    padding: 0px 10px;
+    background-color: rgba(80, 80, 80, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+
+.postjob-top-pill-container{
+   gap: 15px;
+
+}
+
+.postjob-top-pill-step{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ width: 100%;
+}
+
+
+
+
+.progress-bar {
+width: 100%;
+height: 10px;
+border-radius: 10px;
+background-color: white;
+}
+
+.filled-bar{
+    background-color: rgba(255, 165, 0, 0.8);
+}
+
+
+.postjob-step-number{
+ text-align: left;
+ width: 100%;
+ font-size: 15px;
+ color: rgba(0,0,0,0.4);
+}
+
+.postjob-step-name{
+ margin-top: 10px;
+}
+
+.postjob-top-pill-title{
+
+
+width: 100%;
+font-size: 28px ;
+
+
+}
+
+.postjob-container-title{
+width: 100%;
+
+font-size: 24px;
+margin-bottom: 20px;
+}
+
+.postjob-upload-logo-container{
+    display: flex;
+    margin: 30px 0px 20px;
+    justify-content: center;
+    gap: 10%;
+    align-items: center;
+}
+
+.postjob-upload-button-button{
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    padding: 10px 20px;
+    border-radius: 5px;
+   width: 200px;
+    text-align: center;
+}
+.postjob-upload-button-button:hover{
+    opacity: 0.4;
+}
+
+.postjob-createjob-button{
+    background-color: var(--laburo-green);
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 10px 20px;
+   border-radius: 10px;
+   height: 60px;
+   width: 50%;
+   font-size: 20px;
+  
+  
+}
+
+.postjob-createjob-button:hover{
+    opacity: 0.4;
+}
+
+/* True or False  */
+.tof-title{
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.tof-container{
+ width: 100%;
+ display: flex;
+ flex-direction: column;
+gap: 5px;
+margin-bottom: 20px;
+}
+
+.tof-question-box{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  
+}
+
+
+.tof-question-option{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.tof-question-dot{
+    border-radius: 100px;
+    background-color: white;
+    height: 18px;
+    width: 18px;
+  
+}
+.dot-selected{
+background-color: var(--laburo-green);
+}
+
+.tof-dot-true {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color:var(--laburo-green);
+    border-radius: 50px;
+    height: 18px;
+    width: 18px;
+    
+}
+
+.postjob-default-logo{
+    background-color: var(--laburo-green);
+    border-radius: 50px;
+    width: 60px;
+    height: 60px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+
+.postjob-logo-container{
+
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+
+.postjob-logo-image{
+
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/* validate Job */
+
+.validate-job-title{
+width: 100%;
+font-size: 24px;
+margin-bottom: 15px;
+
+}
+
+.validate-job-text{
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+
+
+
+/* Payment Page */
+
+
+/* image  */
+
+.stripe-img{
+    height: 150px;
+}
+.checkout-button{
+    background-color: var(--laburo-green);
+    border-radius: 10px;
+    height: 50px;
+   
+}
+

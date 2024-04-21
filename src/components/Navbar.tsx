@@ -41,23 +41,25 @@ function Navbar(props: navProps) {
         style={{ minWidth: "150px" }}
       >
         <div className="bg-laburo-green post-job-btn flx flx-center mobile-only">
-          <div>
-            <Link
-              to="/post-job"
-              style={{
-                textDecoration: "none",
-                color: `${props.scrollPast ? "black" : "white"}`,
-              }}
-            >
-              Publica
-            </Link>
-          </div>
+          <Link
+            to="/post-job"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <div>Publicar</div>
+          </Link>
         </div>
         {/* <div>
           <PersonOutlineIcon style={{ fontSize: "30px" }} />
         </div> */}
         <div onClick={toggleMenu} className="mobile-only ">
-          <MenuIcon style={{ fontSize: "30px", color: "white" }} />
+          <MenuIcon
+            style={{
+              fontSize: "30px",
+              color: `${props.scrollPast ? "black" : "white"}`,
+            }}
+          />
         </div>
         <div className="flx " style={{ alignItems: "baseline" }}>
           <div
@@ -68,12 +70,15 @@ function Navbar(props: navProps) {
           >
             <Link to={"/jobs"}>Buscar Trabajos</Link>
           </div>
-          <div
-            className="txt-s4 desktop-only nav-text nav-txt-desk-job"
-            style={{ marginRight: "40px" }}
+          <Link
+            to={"/post-job"}
+            className="txt-s4 desktop-only nav-text nav-txt-desk-job link-style"
+            style={{
+              marginRight: "40px",
+            }}
           >
-            <Link to={"/post-job"}>Publicar un Trabajo</Link>
-          </div>
+            Publicar un Trabajo
+          </Link>
         </div>
       </div>
       {/* nav menu */}

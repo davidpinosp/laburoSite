@@ -7,7 +7,7 @@ function ComingSoon() {
   return (
     <div>
       <Navbar scrollPast={true} />
-      <div className="in-dev">
+      <div className="in-dev skip-navbar-margin">
         <div className="flx-col flx-center">
           <div className="in-dev-txt mb-25">
             Disculpa! Esta pagina aun esta en desarollo...

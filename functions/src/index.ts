@@ -1,13 +1,39 @@
 import * as functions from "firebase-functions";
-// const {logger} = require("firebase-functions");
+import { default as StripePackage } from "stripe";
+import * as admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
-// const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 import sgMail = require("@sendgrid/mail");
-
 import { initializeApp } from "firebase-admin/app";
-// const {getFirestore} = require("firebase-admin/firestore");
+import { postPaymentConfirmation } from "./ConfirmOrder";
+import { recievedContactUsMail } from "./ContactUs";
+// import cors from "cors";
+// const corsHandler = cors({ origin: true });
+
+interface JobInt {
+  title: string;
+  company: string;
+  datePosted: Date;
+  description: string;
+  location: {
+    city: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  };
+  inPerson: boolean;
+  fullTime: boolean;
+  recieveViaEmail: boolean;
+  recieveEmail: string;
+  imageURL?: string | undefined;
+}
+
 initializeApp();
+
+const db = admin.firestore();
+const stripeKey = process.env.STRIPE_TEST_KEY as string;
+const stripe = new StripePackage(stripeKey);
 exports.sendmessage = onRequest(
+  { cors: true, enforceAppCheck: true },
   async (req: functions.Request, res: functions.Response) => {
     // Grab the text parameter.
 
@@ -38,11 +64,156 @@ exports.sendmessage = onRequest(
 
       await sgMail.send(msg);
 
-      console.log("Email sent");
       res.status(200).json({ result: "Email Sent" });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ result: "Error" + " " + error });
     }
   },
 );
+
+exports.stripeCheckoutSession = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    // corsHandler(req, res, async () => {
+
+    try {
+      if (req.method === "OPTIONS") {
+        res.status(200).send(); // Respond to preflight requests
+        return;
+      } else if (req.method !== "POST") {
+        res.status(405).send("Method Not Allowed");
+        return;
+      } else {
+        const id = await createTempPosition(req.body);
+        const session = await stripe.checkout.sessions.create({
+          line_items: [
+            {
+              price: process.env.PRICE_PRODUCT_STRIPE as string,
+              quantity: 1,
+            },
+          ],
+          mode: "payment",
+          success_url: `${"http://quierolaburo.com/post-job?success=true"}`,
+          cancel_url: `${"http://quierolaburo.com/post-job?success=false"}`,
+          automatic_tax: { enabled: true },
+          metadata: {
+            jobData: id,
+          },
+        });
+        // functions.logger.log(req.body);
+
+        // res.redirect(303, session.url as string);
+        res.status(200).json({ url: session.url as string });
+      }
+    } catch (error) {
+      functions.logger.error("Error encountered in stripe checkout", error);
+      console.error("Error creating Checkout session:", error);
+      res.status(500).send("Error creating Checkout session");
+    }
+    // });
+  },
+);
+
+exports.eventHandler = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    const endpointSecret = process.env.ENDPOINT_SECRET || "";
+    const sig = req.headers["stripe-signature"];
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(
+        req.rawBody,
+        sig as string,
+        endpointSecret,
+      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        res.status(400).send(`Webhook Error: ${err.message}`);
+      } else {
+        res.status(400).send(`Webhook Error: ${String(err)}`);
+      }
+    }
+
+    if (event?.type === "checkout.session.completed") {
+      const checkoutSession = event.data.object.metadata;
+      const payload: string = checkoutSession?.jobData as string;
+      const receiveAddress = event.data.object.customer_details
+        ?.email as string;
+
+      // Fulfill the purchase...
+      try {
+        const result = await fulfillOrder(payload, receiveAddress);
+        if (result === true) {
+          res.status(200).end();
+        } else {
+          res.status(400).send("Could not create record ");
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          res.status(400).send(`Document Creation Error: ${err.message}`);
+
+          functions.logger.error("Error encountered in event handler", err);
+        } else {
+          res.status(400).send(`Document Creation Error: ${String(err)}`);
+          functions.logger.error("Error encountered in event  handler", err);
+        }
+      }
+    }
+
+    res.status(200).end();
+  },
+);
+
+exports.customerSupport = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      recievedContactUsMail(req.body);
+      res.status(200).json({ result: "Email Sent" });
+    } catch (err) {
+      res.status(500).json({ result: "Email Error " + err });
+    }
+  },
+);
+
+// create job
+
+const createTempPosition = async (payload: JobInt) => {
+  try {
+    const doc = await db.collection("job").add(payload);
+
+    return doc.id.toString();
+  } catch (err) {
+    functions.logger.log("error getting id" + err);
+  }
+  return "";
+};
+
+//  edit to make the thing valid
+const fulfillOrder = async (payload: string, recieveAdrress: string) => {
+  // TODO: get the metadata from the transaction and create the posting with the jobid
+  try {
+    const docRef = db.collection("job").doc(payload);
+    try {
+      await docRef.update({
+        status: true,
+      });
+
+      functions.logger.log(" Document Successfully created");
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+
+    // edit to make temporary active
+
+    await postPaymentConfirmation(recieveAdrress);
+
+    functions.logger.log("Successfully created");
+
+    return true;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+    throw error;
+  }
+};

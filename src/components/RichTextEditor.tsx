@@ -10,6 +10,7 @@ import "../assets/styles/richtext.css";
 import "react-quill/dist/quill.snow.css";
 interface RichTextProps {
   editorName: string;
+  htmlValue: string;
   setHTMLValue: React.Dispatch<React.SetStateAction<string>>;
 }
 function RichTextEditor(props: RichTextProps) {
@@ -17,23 +18,30 @@ function RichTextEditor(props: RichTextProps) {
   const [value, setValue] = useState("");
   return (
     <div className="wrapper">
-      <label className="label">{props.editorName}</label>
+      <label className="label" style={{ fontSize: "18px" }}>
+        {props.editorName}
+      </label>
       <QuillEditor
         className="editor"
         theme="snow"
-        value={value}
+        value={props.htmlValue}
         onChange={(value) => {
           setValue(value);
           props.setHTMLValue(value);
-          console.log(value);
         }}
         modules={{
           toolbar: [
             [{ size: ["small", false, "large"] }],
             ["bold", "italic", "underline"],
+            [
+              { list: "ordered" },
+              { list: "bullet" },
+              { indent: "-1" },
+              { indent: "+1" },
+            ],
           ],
         }}
-        style={{ fontSize: "20px" }}
+        style={{ fontSize: "30px" }}
       />
     </div>
   );
