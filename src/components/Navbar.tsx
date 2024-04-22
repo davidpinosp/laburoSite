@@ -40,16 +40,16 @@ function Navbar(props: navProps) {
         className="flx space-btwn flx-center nav-inner-container"
         style={{ minWidth: "150px" }}
       >
-        <div className="bg-laburo-green post-job-btn flx flx-center mobile-only">
-          <Link
-            to="/post-job"
-            style={{
-              textDecoration: "none",
-            }}
-          >
+        <Link
+          to="/post-job"
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <div className="bg-laburo-green post-job-btn flx flx-center mobile-only">
             <div>Publicar</div>
-          </Link>
-        </div>
+          </div>
+        </Link>
         {/* <div>
           <PersonOutlineIcon style={{ fontSize: "30px" }} />
         </div> */}

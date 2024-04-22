@@ -9,11 +9,6 @@ import { JobInt } from "../../typescript/interfaces/JobInterface";
 
 import { Alert } from "@mui/material";
 
-// missing for tomorrow
-// pass html to job description and innerhtml
-// finish validate screen and payment
-//  make sure email is working on backend and add safety
-
 interface CreateJobProps {
   job: JobInt;
   setJob: React.Dispatch<React.SetStateAction<JobInt | undefined>>;
@@ -44,6 +39,7 @@ function CreateJob(props: CreateJobProps) {
       title,
       company,
       description,
+      location: selectedLocation as LocationData,
       inPerson,
       fullTime,
       recieveViaEmail,
@@ -69,6 +65,7 @@ function CreateJob(props: CreateJobProps) {
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(selectedLocation);
     if (title && company && description && selectedLocation && destination) {
       increaseStep();
     } else {
@@ -144,7 +141,6 @@ function CreateJob(props: CreateJobProps) {
 
             <div className="w100">
               <div style={{ marginBottom: "10px", fontSize: "18px" }}>
-                {" "}
                 Ubicación
               </div>
 
