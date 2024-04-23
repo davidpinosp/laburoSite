@@ -56,8 +56,8 @@ function AutocompleteLocation({
         const data: LocationData = {
           city: city,
           country: country,
-          latitude: 123,
-          longitude: 123,
+          latitude: 0,
+          longitude: 0,
         };
 
         setSelectedLocation(data);

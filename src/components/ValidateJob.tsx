@@ -39,7 +39,7 @@ function ValidateJob(props: ValidateJobProps) {
           <div className="validate-job-text"> {props.job.company}</div>
           <div className="validate-job-text">
             {" "}
-            {props.job.location.city + "," + props.job.location.country}
+            {props.job.location.city + ", " + props.job.location.country}
           </div>
           <div
             dangerouslySetInnerHTML={{ __html: props.job.description }}

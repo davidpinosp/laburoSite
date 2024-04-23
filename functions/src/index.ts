@@ -125,7 +125,7 @@ exports.eventHandler = onRequest(
     try {
       event = stripe.webhooks.constructEvent(
         req.rawBody,
-        sig as string,
+        sig as string | string[],
         endpointSecret,
       );
     } catch (err: unknown) {
