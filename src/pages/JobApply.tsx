@@ -46,6 +46,7 @@ function JobApply() {
         to: currJob?.data.recieveEmail,
         subject: "Aplicación para la posición de " + jobName,
         html: description,
+        company: currJob?.data.company,
         name,
         number,
         email,
@@ -55,7 +56,7 @@ function JobApply() {
       };
 
       const apiUrl: string =
-        "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
+        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
 
       axios
         .post(apiUrl, apiData)

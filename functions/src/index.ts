@@ -6,6 +6,7 @@ import sgMail = require("@sendgrid/mail");
 import { initializeApp } from "firebase-admin/app";
 import { postPaymentConfirmation } from "./ConfirmOrder";
 import { recievedContactUsMail } from "./ContactUs";
+import { postApplicationConfirmation } from "./ConfirmApplication";
 // import cors from "cors";
 // const corsHandler = cors({ origin: true });
 
@@ -69,6 +70,13 @@ exports.sendmessage = onRequest(
       };
 
       await sgMail.send(msg);
+
+      await postApplicationConfirmation(
+        data.name,
+        data.jobName,
+        data.company,
+        data.email,
+      );
 
       res.status(200).json({ result: "Email Sent" });
     } catch (error) {
