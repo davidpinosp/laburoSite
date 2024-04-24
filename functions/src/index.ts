@@ -40,6 +40,12 @@ exports.sendmessage = onRequest(
     try {
       sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
       const data = req.body;
+      const date = new Date(data.date);
+      const formattedDate = date.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
       const msg = {
         to: data.to,
         from: process.env.SENDER_EMAIL || "",
@@ -49,8 +55,8 @@ exports.sendmessage = onRequest(
           "<!DOCTYPE html> <html lang=`en`> <head> <meta charset=`UTF-8`> <meta http-equiv=`X-UA-Compatible` content=`IE=edge`><meta name=`viewport` content=`width=device-width, initial-scale=1.0`> <title>Recibiste una Aplicación" +
           " </title> </head><body style=`font-family: 'Arial', sans-serif;`> <h2>Recibiste Una Aplicación</h2><p>Estimado/a,</p><p> Haz recibido una aplicación a través de Laburo. La aplicación es para la posición de " +
           data.jobName +
-          ", publicada " +
-          data.date +
+          ", publicada el " +
+          formattedDate +
           ". <br> Estos son los detalles del aplicante:</p><ul> <li><strong>Nombre:</strong> " +
           data.name +
           "</li><li><strong>Email:</strong> " +
@@ -59,7 +65,7 @@ exports.sendmessage = onRequest(
           data.number +
           "</li><li><strong>Descripción:</strong>" +
           data.html +
-          "  </li></ul><p>¡Muchas Gracias por confiar en nosotros!</p><p>Suerte en su busqueda,<br>El equipo de Laburo</p></body></html>",
+          "  </li></ul><p>¡Muchas Gracias por confiar en nosotros!</p><p>Suerte en su búsqueda,<br>El equipo de Laburo</p></body></html>",
       };
 
       await sgMail.send(msg);

@@ -49,17 +49,13 @@ function JobApply() {
         name,
         number,
         email,
-        date: new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
+        date: new Date(),
         description,
         jobName: jobName,
       };
 
       const apiUrl: string =
-        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
+        "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
 
       axios
         .post(apiUrl, apiData)

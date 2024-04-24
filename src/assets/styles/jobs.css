@@ -236,7 +236,7 @@ overflow: hidden;
     align-items: center;
     display: flex;
     justify-content: center;
- 
+ color: black;
     background-color: var(--laburo-green);
     border-radius: 10px;
     width: 50%;

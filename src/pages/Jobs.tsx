@@ -73,7 +73,7 @@ function Jobs() {
       }
 
       setLoading(false);
-      if (jobsList.length > 0) {
+      if (jobsList.length > 20) {
         setLoadMoreText(true);
       } else {
         setLoadMoreText(false);

@@ -6,15 +6,12 @@ import {
   addDoc,
   collection,
   doc,
-  endAt,
   getCountFromServer,
   getDoc,
   getDocs,
   limit,
-  orderBy,
   query,
   startAfter,
-  startAt,
   where,
 } from "firebase/firestore";
 
@@ -24,6 +21,7 @@ interface LocationData {
   latitude: number;
   longitude: number;
 }
+// ToDo : improve search algorithm
 
 const getJobsByLocationAndPosition = async (
   location?: LocationData,
@@ -45,16 +43,21 @@ const getJobsByLocationAndPosition = async (
     }
 
     if (position) {
-      // q = query(q, where("position", "==", position));
-
+      position = position.charAt(0).toUpperCase();
       q = query(
         q,
-
-        orderBy("title"),
-        orderBy("datePosted", "desc"),
-        startAt(position),
-        endAt(position + "\uf8ff")
+        where("title", ">=", position),
+        where("title", "<=", position + "\uf8ff")
       );
+
+      //   q = query(
+      //     q,
+
+      //     orderBy("title"),
+      //     orderBy("datePosted", "desc"),
+      //     startAt(position),
+      //     endAt(position + "\uf8ff")
+      //   );
     }
 
     const snapshot = await getCountFromServer(q);

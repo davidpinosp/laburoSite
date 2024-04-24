@@ -113,7 +113,7 @@ margin-bottom: 20px;
 
 .postjob-createjob-button{
     background-color: var(--laburo-green);
-
+color: black;
    display: flex;
    align-items: center;
    justify-content: center;
