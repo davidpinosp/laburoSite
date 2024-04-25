@@ -13,10 +13,10 @@ import WomanLabPicture from "../assets/images/woman-lab.jpg";
 function Landing() {
   const [scrollPastNav, setNavColor] = useState(false);
   const changeNav = () => {
-    if (window.scrollY > 300) {
+    if (window.scrollY > 35) {
       setNavColor(true);
     }
-    if (window.scrollY <= 300) {
+    if (window.scrollY <= 35) {
       setNavColor(false);
     }
   };

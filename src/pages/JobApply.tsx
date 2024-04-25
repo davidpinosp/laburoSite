@@ -46,14 +46,11 @@ function JobApply() {
         to: currJob?.data.recieveEmail,
         subject: "Aplicación para la posición de " + jobName,
         html: description,
+        company: currJob?.data.company,
         name,
         number,
         email,
-        date: new Date().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
+        date: new Date(),
         description,
         jobName: jobName,
       };

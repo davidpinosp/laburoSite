@@ -23,12 +23,12 @@ function AboutUs() {
         >
           <div className="w100 ff-title">Vision</div>
           <div className="section-spacing">
-            Trabajo para Todos En Laburo, nuestra visión es diseñar y construir
-            productos para todos. Estamos comprometidos con hacer que los
-            beneficios de la tecnología sean accesibles a toda la comunidad.
-            Nuestro enfoque está en democratizar la tecnología para garantizar
-            que cada persona pueda disfrutar de sus ventajas, independientemente
-            de su ubicación o contexto.
+            En Laburo, nuestra visión es diseñar y construir productos para
+            todos. Estamos comprometidos con hacer que los beneficios de la
+            tecnología sean accesibles a toda la comunidad. Nuestro enfoque está
+            en democratizar la tecnología para garantizar que cada persona pueda
+            disfrutar de sus ventajas, independientemente de su ubicación o
+            contexto.
           </div>
           <div className="w100 ff-title">Misión </div>
 
@@ -37,9 +37,8 @@ function AboutUs() {
             tecnológico de América Latina. Nuestro objetivo principal es
             potenciar la región a través de la creación de empleo y la
             exportación de servicios tecnológicos a nivel global. Nos esforzamos
-            por ser líderes en la innovación y en la promoción del desarrollo
-            sostenible, contribuyendo significativamente al progreso tecnológico
-            de América Latina.
+            por ser líderes en la innovación, contribuyendo significativamente
+            al progreso tecnológico y economico de América Latina.
           </div>
         </div>
       </div>

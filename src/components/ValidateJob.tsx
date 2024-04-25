@@ -35,12 +35,13 @@ function ValidateJob(props: ValidateJobProps) {
         {/* imagen */}
         <div className="w100">
           <div className="validate-job-text"> </div>{" "}
-          <div className="validate-job-text"> {props.job.title}</div>
-          <div className="validate-job-text"> {props.job.company}</div>
+          <div className="validate-job-text"> Posición: {props.job.title}</div>
+          <div className="validate-job-text"> Empresa: {props.job.company}</div>
           <div className="validate-job-text">
-            {" "}
+            Ubicación:
             {props.job.location.city + ", " + props.job.location.country}
           </div>
+          <div className="validate-job-text">Descripción: </div>
           <div
             dangerouslySetInnerHTML={{ __html: props.job.description }}
             className="validate-job-text ql-editor"

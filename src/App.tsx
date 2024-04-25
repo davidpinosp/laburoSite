@@ -24,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/jobs" element={<Jobs />} />
+
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/job-des" element={<JobDescription />} />
