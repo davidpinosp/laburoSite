@@ -1,15 +1,17 @@
 import * as functions from "firebase-functions";
+
 import { default as StripePackage } from "stripe";
 import * as admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
 import sgMail = require("@sendgrid/mail");
 import { initializeApp } from "firebase-admin/app";
-import { postPaymentConfirmation } from "./ConfirmOrder";
-import { recievedContactUsMail } from "./ContactUs";
-import { postApplicationConfirmation } from "./ConfirmApplication";
-// import cors from "cors";
-// const corsHandler = cors({ origin: true });
+import { postPaymentConfirmation } from "./ConfirmOrder.js";
+import { recievedContactUsMail } from "./ContactUs.js";
+import { postApplicationConfirmation } from "./ConfirmApplication.js";
+import { sendDocument } from "./SendDocument.js";
 
+// const corsHandler = cors({ origin: true });
+// import { fileTypeFromBuffer } from "file-type";
 interface JobInt {
   title: string;
   company: string;
@@ -33,44 +35,15 @@ initializeApp();
 const db = admin.firestore();
 const stripeKey = process.env.STRIPE_TEST_KEY as string;
 const stripe = new StripePackage(stripeKey);
+
 exports.sendmessage = onRequest(
   { cors: true, enforceAppCheck: true },
   async (req: functions.Request, res: functions.Response) => {
-    // Grab the text parameter.
-
     try {
       sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
       const data = req.body;
-      const date = new Date(data.date);
-      const formattedDate = date.toLocaleDateString("es-ES", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-      const msg = {
-        to: data.to,
-        from: process.env.SENDER_EMAIL || "",
-        subject: data.subject,
-        text: "Laburo",
-        html:
-          "<!DOCTYPE html> <html lang=`en`> <head> <meta charset=`UTF-8`> <meta http-equiv=`X-UA-Compatible` content=`IE=edge`><meta name=`viewport` content=`width=device-width, initial-scale=1.0`> <title>Recibiste una Aplicación" +
-          " </title> </head><body style=`font-family: 'Arial', sans-serif;`> <h2>Recibiste Una Aplicación</h2><p>Estimado/a,</p><p> Haz recibido una aplicación a través de Laburo. La aplicación es para la posición de " +
-          data.jobName +
-          ", publicada el " +
-          formattedDate +
-          ". <br> Estos son los detalles del aplicante:</p><ul> <li><strong>Nombre:</strong> " +
-          data.name +
-          "</li><li><strong>Email:</strong> " +
-          data.email +
-          "</li><li><strong>Numero Celular:</strong> " +
-          data.number +
-          "</li><li><strong>Descripción:</strong>" +
-          data.html +
-          "  </li></ul><p>¡Muchas Gracias por confiar en nosotros!</p><p>Suerte en su búsqueda,<br>El equipo de Laburo</p></body></html>",
-      };
-
-      await sgMail.send(msg);
-
+      const result = await sendDocument(req);
+      console.log(result);
       await postApplicationConfirmation(
         data.name,
         data.jobName,
@@ -78,7 +51,7 @@ exports.sendmessage = onRequest(
         data.email,
       );
 
-      res.status(200).json({ result: "Email Sent" });
+      res.status(200).json({ result: "Emails Sent Succesfully" });
     } catch (error) {
       res.status(500).json({ result: "Error" + " " + error });
     }
@@ -88,8 +61,6 @@ exports.sendmessage = onRequest(
 exports.stripeCheckoutSession = onRequest(
   { cors: true, enforceAppCheck: true },
   async (req, res) => {
-    // corsHandler(req, res, async () => {
-
     try {
       if (req.method === "OPTIONS") {
         res.status(200).send(); // Respond to preflight requests
@@ -115,9 +86,7 @@ exports.stripeCheckoutSession = onRequest(
             jobData: id,
           },
         });
-        // functions.logger.log(req.body);
 
-        // res.redirect(303, session.url as string);
         res.status(200).json({ url: session.url as string });
       }
     } catch (error) {
