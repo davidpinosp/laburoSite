@@ -1,0 +1,26 @@
+.uploader-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+width: 100%;
+border: 2px solid black ;
+border-radius: 10px;
+padding: 10px 20px;
+font-size: 18px;
+color: black
+}
+
+.uploader-container:hover{
+    opacity: 0.4;
+    cursor: pointer;
+
+}
+
+.erase-doc-button{
+    margin-left: 5px;
+   color :red;
+}
+
+.erase-doc-button:hover{
+    cursor: pointer;
+}

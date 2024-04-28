@@ -10,7 +10,16 @@ import axios from "axios";
 import RichTextEditor from "../components/RichTextEditor";
 import { DocumentData } from "firebase/firestore";
 import LoadingWidget from "../components/widgets/LoadingWidget";
+import ResumeUploader from "../components/resume/ResumeUploader";
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
+
 function JobApply() {
+  const storage = getStorage();
   const [jobId, setJobId] = useState("");
   const [jobName, setJobName] = useState("");
   const [name, setName] = useState("");
@@ -19,29 +28,133 @@ function JobApply() {
   const [description, setDescription] = useState("");
   const [searchParams] = useSearchParams();
   const [formAlert, setformAlert] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currJob, setCurrJob] = useState<DocumentData>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [resume, setResume] = useState<File>();
+  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   console.log("submit event" + formAlert);
 
+  //   if (name && number && email && description) {
+  //     setformAlert(false);
+  //     setLoading(true);
+  //     console.log(loading);
+  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //     const data = {
+  //       name,
+  //       number,
+  //       email,
+  //       date: new Date(),
+  //       description,
+  //       jobId,
+  //     };
+
+  //     const storageRef = ref(storage, `/files/${jobId}`);
+
+  //     // progress can be paused and resumed. It also exposes progress updates.
+  //     // Receives the storage reference and the file to upload.
+  //     let url;
+  //     if (resume instanceof File) {
+  //       const uploadTask = uploadBytesResumable(storageRef, resume);
+  //       // Further code to handle upload
+
+  //       uploadTask.on(
+  //         "state_changed",
+  //         (snapshot) => {
+  //           console.log("uploading");
+  //           var percent =
+  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //           console.log(percent + "% done");
+  //         },
+  //         (err) => console.log(err)
+  //       );
+
+  //       // download url
+  //       url = await getDownloadURL(uploadTask.snapshot.ref);
+  //     }
+  //     // hide the from email
+  //     const apiData = {
+  //       to: currJob?.data.recieveEmail,
+  //       subject: "Aplicación para la posición de " + jobName,
+  //       html: description,
+  //       company: currJob?.data.company,
+  //       name,
+  //       number,
+  //       email,
+  //       date: new Date(),
+  //       description,
+  //       jobName: jobName,
+  //       resume,
+  //       imgUrl: url,
+  //     };
+
+  //     const apiUrl: string =
+  //       "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
+
+  //     axios
+  //       .post(apiUrl, apiData)
+  //       .then((response) => {
+  //         console.log(response.data);
+
+  //         navigate("/thank-you");
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         alert("failes to send application");
+  //         setLoading(false);
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     setformAlert(true);
+  //     setLoading(false);
+  //     window.scrollTo(0, 0);
+  //   }
+  // };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("submit event" + formAlert);
-
     if (name && number && email && description) {
       setformAlert(false);
       setLoading(true);
-      console.log(loading);
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const data = {
-        name,
-        number,
-        email,
-        date: new Date(),
-        description,
-        jobId,
-      };
-      // hide the from email
+
+      let url = ""; // Default to empty string if no file is uploaded
+
+      if (resume instanceof File) {
+        // Proceed with the file upload
+        const storageRef = ref(
+          storage,
+          `/files/${new Date().getTime()}__${jobId}_${name}`
+        );
+        const uploadTask = uploadBytesResumable(storageRef, resume);
+
+        try {
+          await new Promise((resolve, reject) => {
+            uploadTask.on(
+              "state_changed",
+              (snapshot) => {
+                const percent =
+                  (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setUploadStatus(percent);
+                console.log(percent + "% done");
+              },
+              (err) => reject(err),
+              () => resolve(uploadTask.snapshot.ref)
+            );
+          });
+
+          url = await getDownloadURL(uploadTask.snapshot.ref);
+          console.log("Download URL:", url);
+        } catch (err) {
+          console.error("Upload or URL retrieval failed:", err);
+          alert("Upload failed: " + err);
+          setLoading(false);
+          return; // Stop further execution on error
+        }
+      }
+
+      // Prepare data to send, regardless of whether a file was uploaded
       const apiData = {
         to: currJob?.data.recieveEmail,
         subject: "Aplicación para la posición de " + jobName,
@@ -53,26 +166,27 @@ function JobApply() {
         date: new Date(),
         description,
         jobName: jobName,
+        resume,
+        imgUrl: url, // This will be an empty string if no file was uploaded
       };
 
-      const apiUrl: string =
-        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
+      const apiUrl =
+        "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
 
-      axios
-        .post(apiUrl, apiData)
-        .then((response) => {
-          console.log(response.data);
-
-          navigate("/thank-you");
-          setLoading(false);
-        })
-        .catch((error) => {
-          alert(error.message);
-          console.log(error);
-        });
+      try {
+        const response = await axios.post(apiUrl, apiData);
+        console.log(response.data);
+        navigate("/thank-you");
+      } catch (error) {
+        console.error("Failed to send application: ", error);
+        alert("Failed to send application: " + error);
+      } finally {
+        setLoading(false);
+      }
     } else {
       setformAlert(true);
       window.scrollTo(0, 0);
+      setLoading(false);
     }
   };
   const showEmptyFields = () => {
@@ -145,7 +259,9 @@ function JobApply() {
               </div>
             )}
             <div className="w100 postjob-gray-container">
-              <div className="w100">
+              <ResumeUploader setResume={setResume} status={uploadStatus} />
+
+              <div className="w100 mt-25">
                 <div style={{ marginBottom: "10px", fontSize: "18px" }}>
                   {" "}
                   Nombre
@@ -202,7 +318,7 @@ function JobApply() {
                 {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
                 {/* <div className=" job-des-input"> */}
                 <RichTextEditor
-                  editorName="Descripción"
+                  editorName="Información Adicional"
                   htmlValue={description}
                   setHTMLValue={setDescription}
                 />

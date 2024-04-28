@@ -19,7 +19,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Link } from "react-router-dom";
 import AutocompleteLocation from "../components/AutocompleteLocation";
 import { db } from "../firebase";
 import LoadingWidget from "../components/widgets/LoadingWidget";
@@ -153,6 +152,7 @@ function Jobs() {
     };
 
     onMountFetchData(setLoading);
+    document.title = "Buscar Trabajos";
 
     // console.log("mounting");
     // fetchJobs();
@@ -227,8 +227,10 @@ function Jobs() {
               )}
 
               {filteredJobs?.map((job, index) => (
-                <Link
-                  to={`/job-des/?id=${job.id}`}
+                <a
+                  href={`/job-des/?id=${job.id}`}
+                  target="_blank" // Opens the link in a new tab
+                  rel="noopener noreferrer" // Security measure for links to open in a new tab
                   key={index}
                   className="link-style"
                 >
@@ -243,7 +245,7 @@ function Jobs() {
                         : " "
                     }
                   />
-                </Link>
+                </a>
               ))}
             </div>
 

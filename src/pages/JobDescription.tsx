@@ -28,6 +28,7 @@ function JobDescription() {
       if (id) {
         const jobData = await getJobPositionData(id);
         setCurrJob(jobData);
+        document.title = `${jobData?.data.title} - ${jobData?.data.company}`;
       }
       setLoading(false);
     };
