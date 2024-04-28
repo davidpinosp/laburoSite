@@ -65,6 +65,7 @@ function PostJob() {
       setStep(3);
       console.log("payment done");
     }
+    document.title = "Publicar Trabajo";
   }, []);
   return (
     <div

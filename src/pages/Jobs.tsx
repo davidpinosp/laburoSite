@@ -153,6 +153,7 @@ function Jobs() {
     };
 
     onMountFetchData(setLoading);
+    document.title = "Buscar Trabajos";
 
     // console.log("mounting");
     // fetchJobs();
@@ -227,8 +228,10 @@ function Jobs() {
               )}
 
               {filteredJobs?.map((job, index) => (
-                <Link
-                  to={`/job-des/?id=${job.id}`}
+                <a
+                  href={`/job-des/?id=${job.id}`}
+                  target="_blank" // Opens the link in a new tab
+                  rel="noopener noreferrer" // Security measure for links to open in a new tab
                   key={index}
                   className="link-style"
                 >
@@ -243,7 +246,7 @@ function Jobs() {
                         : " "
                     }
                   />
-                </Link>
+                </a>
               ))}
             </div>
 
