@@ -19,7 +19,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Link } from "react-router-dom";
 import AutocompleteLocation from "../components/AutocompleteLocation";
 import { db } from "../firebase";
 import LoadingWidget from "../components/widgets/LoadingWidget";

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import StoreIcon from "@mui/icons-material/Store";
 
 interface PostProps {
