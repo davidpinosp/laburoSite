@@ -177,6 +177,30 @@ overflow: hidden;
 }
 
 
+/* job post flags */
+
+.flag-container{
+    margin-top: 5px ;
+    margin-bottom: 5px;
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.info-flag{
+   background-color:  rgb(21, 188, 127,0.4);
+   border-radius: 3px;
+   padding: 2px 4px;
+}
+
+.days-ago{
+    color: rgba(0, 0, 0, 0.4);
+    gap: 3px;
+}
+
+
+
 
 
 .job-des-bg{
@@ -343,3 +367,7 @@ form{
             padding-left: 10px;
         }
       }
+
+
+
+

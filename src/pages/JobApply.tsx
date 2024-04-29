@@ -202,9 +202,9 @@ function JobApply() {
 
   const handleInvalidEmail = (e: React.FormEvent<HTMLInputElement>) => {
     // Set a custom message in Spanish
-    e.currentTarget.setCustomValidity(
-      "Por favor introduce una dirección de correo válida."
-    );
+    // e.currentTarget.setCustomValidity(
+    //   "Por favor introduce una dirección de correo válida."
+    // );
   };
   // disable button until the data is populated
   useEffect(() => {

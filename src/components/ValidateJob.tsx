@@ -41,7 +41,16 @@ function ValidateJob(props: ValidateJobProps) {
             Ubicación:
             {props.job.location.city + ", " + props.job.location.country}
           </div>
-          <div className="validate-job-text">Descripción: </div>
+          {props.job.recieveViaEmail ? (
+            <div className="validate-job-text">Descripción: </div>
+          ) : (
+            <div className="validate-job-text">
+              {" "}
+              Los aplicantes seran redireccionados a {
+                props.job.recieveEmail
+              }{" "}
+            </div>
+          )}
           <div
             dangerouslySetInnerHTML={{ __html: props.job.description }}
             className="validate-job-text ql-editor"
@@ -51,15 +60,7 @@ function ValidateJob(props: ValidateJobProps) {
       </div>
       <div>
         {" "}
-        <JobPost
-          position={props.job.title}
-          company={props.job.company}
-          location={
-            props.job.location.city
-              ? props.job.location.city + ", " + props.job.location.country
-              : " "
-          }
-        />{" "}
+        <JobPost currJob={props.job} />{" "}
       </div>
 
       <div className=" flx flx-center ">

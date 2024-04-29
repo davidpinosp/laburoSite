@@ -22,6 +22,7 @@ import {
 import AutocompleteLocation from "../components/AutocompleteLocation";
 import { db } from "../firebase";
 import LoadingWidget from "../components/widgets/LoadingWidget";
+import { JobInt } from "../typescript/interfaces/JobInterface";
 
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
@@ -234,17 +235,7 @@ function Jobs() {
                   key={index}
                   className="link-style"
                 >
-                  <JobPost
-                    position={job.data.title}
-                    company={job.data.company}
-                    location={
-                      job.data.location.city
-                        ? job.data.location.city +
-                          ", " +
-                          job.data.location.country
-                        : " "
-                    }
-                  />
+                  <JobPost currJob={job.data as JobInt} />
                 </a>
               ))}
             </div>

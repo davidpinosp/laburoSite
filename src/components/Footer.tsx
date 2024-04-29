@@ -82,11 +82,23 @@ function Footer({ type }: FooterProps) {
         ></div>
       )}
       <div style={{ paddingTop: "10px" }}>
-        <div style={{ fontSize: "12px", marginBottom: "45px" }}>
-          <div className="flx flx-center" style={{ fontSize: "14px" }}>
-            <div> Made with </div>{" "}
-            <span style={{ fontSize: "10px", margin: "0px 3px" }}> ❤️ </span>
-            <div>in Ecuador</div>
+        <div style={{ fontSize: "12px", marginBottom: "15px" }}>
+          <div
+            className="flx flx-center"
+            style={{ fontSize: "14px", alignItems: "baseline" }}
+          >
+            <div> Hecho con </div>{" "}
+            <div style={{ fontSize: "12px", margin: "0px 3px" }}> ❤️ </div>
+            <div>en </div>
+            <div
+              className="flx "
+              style={{
+                fontSize: "14px",
+                margin: "0px 3px",
+              }}
+            >
+              Ecuador
+            </div>
           </div>
           Humm Labs. Reservados todos los Derechos 2024
         </div>
