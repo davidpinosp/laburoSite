@@ -48,8 +48,13 @@ function CreateJob(props: CreateJobProps) {
     props.setStep(2);
   };
   const showEmptyFields = () => {
-    let names = ["Posición", "Empresa", "Lugar", "Descripción", "Email"];
-    let form = [title, company, selectedLocation, description, destination];
+    let names = ["Posición", "Empresa", "Lugar", "Destino"];
+    let form = [title, company, selectedLocation, destination];
+    if (recieveViaEmail) {
+      names.push("Descripción");
+      form.push(description);
+    }
+
     return form.map((val, index) => {
       if (!val) {
         return <div key={index}>{names[index]}</div>;
@@ -59,14 +64,23 @@ function CreateJob(props: CreateJobProps) {
   };
   const handleInvalidEmail = (e: React.FormEvent<HTMLInputElement>) => {
     // Set a custom message in Spanish
-    e.currentTarget.setCustomValidity(
-      "Por favor introduce una dirección de correo válida."
-    );
+    // e.currentTarget.setCustomValidity(
+    //   "Por favor introduce una dirección de correo válida."
+    // );
   };
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(selectedLocation);
-    if (title && company && description && selectedLocation && destination) {
+
+    // check if description needed
+    let descriptionReq;
+    if (recieveViaEmail && !description) {
+      descriptionReq = false;
+    } else {
+      descriptionReq = true;
+    }
+
+    if (title && company && selectedLocation && destination && descriptionReq) {
       increaseStep();
     } else {
       window.scrollTo(0, 0);
@@ -83,8 +97,8 @@ function CreateJob(props: CreateJobProps) {
           Detalles
         </div>
         <div>
-          ¡Dale un impulso a tus ofertas de trabajo con nuestra oferta especial!
-          Por solo $89 dólares (USD) antes de impuestos, tu vacante estará en
+          ¡Dale un impulso a tus publicaciones con nuestra oferta especial! Por
+          solo $89 dólares (USD) antes de impuestos, tu vacante estará en
           nuestra lista destacada durante 45 días completos. Es tu mejor
           oportunidad para encontrar al candidato perfecto para tu equipo.
         </div>
@@ -99,6 +113,41 @@ function CreateJob(props: CreateJobProps) {
         </div>
       )}
       <form onSubmit={handleSubmit}>
+        <div className="postjob-gray-container mt-25 mb-25">
+          <div className="postjob-container-title">Destino</div>
+
+          {/* manage the input so that it clears if button switches  */}
+          <TrueorFalse
+            name="Como deseas manejar las aplicaciones ?"
+            value={recieveViaEmail}
+            optionA="Correo"
+            optionB="Redireccionar a tu / otra  pagina"
+            setResult={setRecieveViaEmail}
+          />
+
+          <div className="w100">
+            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+              {recieveViaEmail
+                ? "Correo Para Recibir Aplicaciones "
+                : "URL Para Redireccionar Aplicantes"}{" "}
+            </div>
+
+            <div className="search-pill">
+              {/* if input type email then email otherwise url */}
+              <input
+                type={recieveViaEmail ? "email" : "url"}
+                className="search-pill-input "
+                value={destination}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setDestination(e.target.value);
+                  e.target.setCustomValidity("");
+                }}
+                onInvalid={handleInvalidEmail}
+              />
+            </div>
+          </div>
+        </div>
+
         <div className="postjob-gray-container">
           <div className="w100">
             <div className="postjob-container-title">Información</div>
@@ -185,11 +234,13 @@ function CreateJob(props: CreateJobProps) {
           </div> */}
 
             {/*  Set descritpion*/}
-            <RichTextEditor
-              setHTMLValue={setDescription}
-              htmlValue={description}
-              editorName="Descripción"
-            />
+            {recieveViaEmail && (
+              <RichTextEditor
+                setHTMLValue={setDescription}
+                htmlValue={description}
+                editorName="Descripción"
+              />
+            )}
           </div>
         </div>
 
@@ -212,39 +263,6 @@ function CreateJob(props: CreateJobProps) {
           />
         </div>
 
-        <div className="postjob-gray-container mt-25">
-          <div className="postjob-container-title">Destino</div>
-
-          {/* manage the input so that it clears if button switches  */}
-          <TrueorFalse
-            name="Como deseas manejar las aplicaciones ?"
-            value={recieveViaEmail}
-            optionA="Correo"
-            optionB="Redireccionar a tu / otra  pagina"
-            setResult={setRecieveViaEmail}
-          />
-
-          <div className="w100">
-            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
-              {recieveViaEmail
-                ? "Correo Para Recibir Aplicaciones "
-                : "URL para redireccionar aplicantes"}{" "}
-            </div>
-
-            <div className="search-pill">
-              <input
-                type="email"
-                className="search-pill-input "
-                value={destination}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setDestination(e.target.value);
-                  e.target.setCustomValidity("");
-                }}
-                onInvalid={handleInvalidEmail}
-              />
-            </div>
-          </div>
-        </div>
         <div className=" flx flx-center mt-25">
           <button type="submit" className="postjob-createjob-button">
             Validar

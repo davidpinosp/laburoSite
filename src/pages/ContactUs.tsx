@@ -57,9 +57,9 @@ function ContactForm() {
   };
 
   const handleInvalidEmail = (e: any) => {
-    e.currentTarget.setCustomValidity(
-      "Por favor introduce una dirección de correo válida."
-    );
+    // e.currentTarget.setCustomValidity(
+    //   "Por favor introduce una dirección de correo válida."
+    // );
   };
 
   return (
