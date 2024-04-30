@@ -19,8 +19,11 @@ color: black
 .erase-doc-button{
     margin-left: 5px;
    color :red;
+   background-color: transparent;
 }
 
 .erase-doc-button:hover{
     cursor: pointer;
+    opacity: 0.4;
+
 }

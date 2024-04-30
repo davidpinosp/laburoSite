@@ -46,8 +46,7 @@ const JobPost = (data: postProps) => {
                 className="flx days-ago "
                 style={{ marginRight: "15px", width: "auto" }}
               >
-                <span>hace </span> <span> {checkTimeDif()}</span>{" "}
-                <span> dias </span>
+                <span> {checkTimeDif()}</span> <span> dias </span>
               </div>
             )}
           </div>
@@ -63,9 +62,9 @@ const JobPost = (data: postProps) => {
               : "Lugar"}
           </div>
           <div className="flag-container">
-            {checkTimeDif() < 10 && <InfoFlag name={"New"} />}
+            {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />}
             {!props.inPerson && <InfoFlag name={"Remoto"} />}
-            {!props.fullTime && <InfoFlag name={"Medio Tiempo"} />}
+            {!props.fullTime && <InfoFlag name={"Medio Tiempo "} />}
           </div>
         </div>
       </div>

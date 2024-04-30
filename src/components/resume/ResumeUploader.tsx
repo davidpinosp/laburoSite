@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "../../assets/styles/resumeUploader.css";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 interface ResumeUploaderProps {
   setResume: React.Dispatch<React.SetStateAction<File | undefined>>;
-  // setStatus: React.Dispatch<React.SetStateAction<number>>;
   status: number;
 }
+
 function ResumeUploader(props: ResumeUploaderProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [file, setFile] = useState<File>();
-  // const [status, setStatus] = useState(0);
-  const handleFileChange = (event: any) => {
-    // Set the selected file to state
-    setFile(event.target.files[0]);
-    props.setResume(event.target.files[0]);
-    console.log(event.target.files[0]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files ? event.target.files[0] : undefined;
+    setFile(selectedFile);
+    props.setResume(selectedFile);
+    console.log(selectedFile);
   };
 
-  const handleClick = (event: any) => {
-    // Prevent form submission
-    event.preventDefault();
-    // Trigger the hidden file input
-    document.getElementById("fileInput")?.click();
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleRemove = () => {
+    // Clear the internal state and prop
+    setFile(undefined);
+    props.setResume(undefined);
+    // Reset the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -30,6 +37,7 @@ function ResumeUploader(props: ResumeUploaderProps) {
       <input
         type="file"
         id="fileInput"
+        ref={fileInputRef}
         style={{ display: "none" }}
         onChange={handleFileChange}
         accept=".pdf,.doc,.docx,.txt"
@@ -39,30 +47,26 @@ function ResumeUploader(props: ResumeUploaderProps) {
         onClick={handleClick}
         className="uploader-container"
         style={file ? { opacity: "0.4" } : {}}
-        disabled={file ? true : false}
+        disabled={!!file}
       >
-        {props.status > 0 ? (
-          props.status
-        ) : (
-          <React.Fragment>
-            Subir CV <AutoAwesomeIcon style={{ marginLeft: "10px" }} />
-          </React.Fragment>
-        )}
+        <React.Fragment>
+          Subir CV <AutoAwesomeIcon style={{ marginLeft: "10px" }} />
+        </React.Fragment>
       </button>
-      <div
-        style={{ marginTop: "5px", display: "flex", alignItems: "baseline" }}
-        onClick={() => {
-          props.setResume(undefined);
-          setFile(undefined);
-        }}
-      >
-        {file?.name}{" "}
-        {file && (
-          <button type="button" className="erase-doc-button laburo-green">
+      {file && (
+        <div
+          style={{ marginTop: "5px", display: "flex", alignItems: "baseline" }}
+        >
+          {file.name}
+          <button
+            type="button"
+            className="erase-doc-button laburo-green"
+            onClick={handleRemove}
+          >
             eliminar
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </React.Fragment>
   );
 }

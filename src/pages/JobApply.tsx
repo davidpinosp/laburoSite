@@ -34,7 +34,7 @@ function JobApply() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [resume, setResume] = useState<File>();
-  // const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+
   //   event.preventDefault();
   //   console.log("submit event" + formAlert);
 
