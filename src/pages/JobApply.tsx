@@ -171,7 +171,7 @@ function JobApply() {
       };
 
       const apiUrl =
-        "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
+        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
 
       try {
         const response = await axios.post(apiUrl, apiData);
