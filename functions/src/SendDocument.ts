@@ -85,7 +85,8 @@ export const sendDocument = async (req: functions.Request) => {
       if (attachment) {
         msg = {
           to: data.to,
-          from: process.env.SENDER_EMAIL || "",
+          from: `Laburo <${process.env.SENDER_EMAIL as string}>`,
+
           subject: data.subject,
           text: "Laburo",
           attachments: [
@@ -106,7 +107,7 @@ export const sendDocument = async (req: functions.Request) => {
       // res.send("No file type detected or file is too short to determine.");
       msg = {
         to: data.to,
-        from: process.env.SENDER_EMAIL || "",
+        from: `Laburo  <${process.env.SENDER_EMAIL as string}>`,
         subject: data.subject,
         text: "Laburo",
 

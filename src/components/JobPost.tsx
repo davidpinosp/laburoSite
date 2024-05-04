@@ -25,6 +25,24 @@ const JobPost = (data: postProps) => {
 
     return Math.floor((utc1 - utc2) / _MS_PER_DAY);
   };
+
+  const getDaysDisplay = () => {
+    let daysDiff = checkTimeDif();
+
+    if (daysDiff > 2) {
+      return (
+        <React.Fragment>
+          <span> {checkTimeDif()}</span> <span> días </span>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <span> hoy </span>
+        </React.Fragment>
+      );
+    }
+  };
   return (
     <div className="job-post-container">
       {/* image  */}
@@ -46,7 +64,7 @@ const JobPost = (data: postProps) => {
                 className="flx days-ago "
                 style={{ marginRight: "15px", width: "auto" }}
               >
-                <span> {checkTimeDif()}</span> <span> dias </span>
+                {getDaysDisplay()}
               </div>
             )}
           </div>

@@ -17,7 +17,7 @@ const recievedContactUsMail = async (payload: {
 
     const msg = {
       to: "support@quierolaburo.com",
-      from: process.env.SENDER_EMAIL || "",
+      from: `Laburo <${process.env.SENDER_EMAIL as string}>`,
 
       subject: "CUSTOMER SUPPORT QUESTION",
       text: "Laburo",
