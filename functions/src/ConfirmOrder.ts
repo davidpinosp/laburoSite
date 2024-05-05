@@ -23,7 +23,7 @@ const postPaymentConfirmation = async (destination: string) => {
 
     const msg = {
       to: destination,
-      from: process.env.SENDER_EMAIL || "",
+      from: `Laburo <${process.env.SENDER_EMAIL as string}>`,
 
       subject: "Gracias Por Confiar en Nosotros ",
       text: "Laburo",
@@ -37,7 +37,7 @@ const postPaymentConfirmation = async (destination: string) => {
 <body>
     <div style='font-family: Arial, sans-serif; margin: 20px; color: #333;'>
         <h1>Laburo</h1>
-        <h2>Factura de Compra</h2>
+        <h2>Resumen de Compra</h2>
         <p>Estimado cliente,</p>
         <p>Te agradecemos por confiar en Laburo. Ahora estás un paso más cerca de encontrar al mejor talento para tu empresa. Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos a nuestro correo <a href='mailto:support@quierolaburo.com'>support@quierolaburo.com</a>.</p>
         <p>Esperamos verte de nuevo. ¡Siempre a tu servicio!</p>

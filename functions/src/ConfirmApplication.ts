@@ -28,7 +28,7 @@ const postApplicationConfirmation = async (
 
     const msg = {
       to: destination,
-      from: process.env.SENDER_EMAIL || "",
+      from: `Laburo <${process.env.SENDER_EMAIL as string}>`,
 
       subject: "Tu aplicación ha sido enviada ",
       text: "Laburo",
