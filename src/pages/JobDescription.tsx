@@ -69,7 +69,7 @@ function JobDescription() {
                 className="txt-s3 mt-25"
                 style={{ color: "rgba(0,0,0,0.5)" }}
               >
-                {currJob
+                {currJob?.data.location.city && currJob?.data.location.country
                   ? currJob.data.location.city +
                     "," +
                     currJob.data.location.country

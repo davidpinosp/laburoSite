@@ -75,9 +75,9 @@ const JobPost = (data: postProps) => {
             className="job-post-location"
             style={{ color: "rgba(0,0,0,0.5)" }}
           >
-            {props.location
+            {props.location.city && props.location.country
               ? props.location.city + ", " + props.location.country
-              : "Lugar"}
+              : ""}
           </div>
           <div className="flag-container">
             {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />}
