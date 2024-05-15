@@ -4,14 +4,15 @@ import Footer from "../components/Footer";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { DocumentData } from "firebase/firestore";
-import { getJobPositionData } from "../utils/jobsUtils";
+
+import { getJobById } from "../utils/jobsUtils";
 
 import LoadingWidget from "../components/widgets/LoadingWidget";
+import { JobInt } from "../typescript/interfaces/JobInterface";
 // make the inner part of this component a components  , that way I can pass the state to it
 
 function JobDescription() {
-  const [currJob, setCurrJob] = useState<DocumentData>();
+  const [currJob, setCurrJob] = useState<JobInt>();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   // ------
@@ -26,9 +27,11 @@ function JobDescription() {
 
       const id = searchParams.get("id");
       if (id) {
-        const jobData = await getJobPositionData(id);
+        const jobData = await getJobById(id);
+        console.log(jobData);
+
         setCurrJob(jobData);
-        document.title = `${jobData?.data.title} - ${jobData?.data.company}`;
+        document.title = `${jobData?.title} - ${jobData?.company}`;
       }
       setLoading(false);
     };
@@ -61,18 +64,16 @@ function JobDescription() {
                   <ArrowBackIcon /> Regresar
                 </Link>
               </div>
-              <div className="txt-s5 ">{currJob ? currJob.data.title : ""}</div>
+              <div className="txt-s5 ">{currJob ? currJob.title : ""}</div>
               <div className="txt-s4 mt-25">
-                {currJob ? currJob.data.company : ""}
+                {currJob ? currJob.company : ""}
               </div>
               <div
                 className="txt-s3 mt-25"
                 style={{ color: "rgba(0,0,0,0.5)" }}
               >
                 {currJob
-                  ? currJob.data.location.city +
-                    "," +
-                    currJob.data.location.country
+                  ? currJob.location.city + "," + currJob.location.country
                   : ""}
               </div>
               <div className="txt-s3 mt-25">
@@ -80,7 +81,7 @@ function JobDescription() {
                   <div
                     className="job-des-html ql-editor"
                     dangerouslySetInnerHTML={{
-                      __html: currJob.data.description,
+                      __html: currJob.description,
                     }}
                     style={{ maxHeight: "none" }}
                   />
@@ -94,9 +95,9 @@ function JobDescription() {
           </div>
           <div className="w100 flx flx-center  mb-50">
             <div className="w100 flx flx-center">
-              {!currJob?.data.recieveViaEmail ? (
+              {!currJob?.recieveViaEmail ? (
                 <a
-                  href={`${currJob?.data.recieveEmail}`}
+                  href={`${currJob?.recieveEmail}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="aplicar-btn"
@@ -105,7 +106,7 @@ function JobDescription() {
                 </a>
               ) : (
                 <Link
-                  to={`job-apply/?id=${currJob?.id}&name=${currJob?.data.title}`}
+                  to={`job-apply/?id=${currJob?._id}&name=${currJob?.title}`}
                   className="link-style aplicar-btn"
                 >
                   Aplicar

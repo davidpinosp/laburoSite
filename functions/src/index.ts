@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 
 import { default as StripePackage } from "stripe";
-import * as admin from "firebase-admin";
+// import * as admin from "firebase-admin";
 import { onRequest } from "firebase-functions/v2/https";
 import sgMail = require("@sendgrid/mail");
 import { initializeApp } from "firebase-admin/app";
@@ -9,30 +9,22 @@ import { postPaymentConfirmation } from "./ConfirmOrder.js";
 import { recievedContactUsMail } from "./ContactUs.js";
 import { postApplicationConfirmation } from "./ConfirmApplication.js";
 import { sendDocument } from "./SendDocument.js";
-
+import getJobsByLocationAndPosition from "./mongoDB/JobPostings/getByLocationAndPosition.js";
+import { LocationData } from "./interface/LocationData.js";
+import { getDbLengthJobsByLocationAndPosition } from "./mongoDB/DbUtils/GetDBLength.js";
+import getSingleJob from "./mongoDB/JobPostings/getSingleJob.js";
+import {
+  addJobPost,
+  updateJopPostStatus,
+} from "./mongoDB/JobPostings/postJob.js";
 // const corsHandler = cors({ origin: true });
 // import { fileTypeFromBuffer } from "file-type";
-interface JobInt {
-  title: string;
-  company: string;
-  datePosted: Date;
-  description: string;
-  location: {
-    city: string;
-    country: string;
-    latitude: number;
-    longitude: number;
-  };
-  inPerson: boolean;
-  fullTime: boolean;
-  recieveViaEmail: boolean;
-  recieveEmail: string;
-  imageURL?: string | undefined;
-}
 
 initializeApp();
 
-const db = admin.firestore();
+// todo: length is not working properly, just get it from the results of db dumbass you only need the other funct for total length
+
+// const db = admin.firestore();
 const stripeKey = process.env.STRIPE_TEST_KEY as string;
 const stripe = new StripePackage(stripeKey);
 
@@ -42,8 +34,8 @@ exports.sendmessage = onRequest(
     try {
       sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
       const data = req.body;
-      const result = await sendDocument(req);
-      console.log(result);
+      await sendDocument(req);
+
       await postApplicationConfirmation(
         data.name,
         data.jobName,
@@ -69,7 +61,8 @@ exports.stripeCheckoutSession = onRequest(
         res.status(405).send("Method Not Allowed");
         return;
       } else {
-        const id = await createTempPosition(req.body);
+        const id = await addJobPost(req.body);
+
         const session = await stripe.checkout.sessions.create({
           line_items: [
             {
@@ -161,28 +154,132 @@ exports.customerSupport = onRequest(
   },
 );
 
+// mongoDB
+// description : function to get job position based on filters , position and title
+interface JobFilters {
+  [key: string]: string | number | Date | boolean; // Depending on your specific needs
+}
+interface GetJobsOptions {
+  location: LocationData;
+  title: string;
+  pageSize?: number;
+  lastId?: string;
+  filters?: JobFilters;
+}
+
+// get jobs by multiple filters
+exports.getJobs = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const {
+        location,
+        title,
+        pageSize = 10,
+        lastId,
+        filters,
+      } = req.body as GetJobsOptions;
+      const results = await getJobsByLocationAndPosition(
+        location,
+        title,
+        pageSize,
+        filters,
+        lastId,
+      );
+
+      res.status(200).json({ results: results.jobs, length: results.length }); // Ensure proper method chaining for setting status
+    } catch (error) {
+      console.log(error);
+
+      res;
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
+// find single job by id
+exports.findJob = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const id = req.body.id;
+      const results = await getSingleJob(id);
+
+      res.status(200).json({ results }); // Ensure proper method chaining for setting status
+    } catch (error) {
+      console.log(error);
+
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
+// function that gets the length of the estimated number of jobs base on a query
+
+exports.getDbLength = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const { location, title } = req.body;
+      const results = await getDbLengthJobsByLocationAndPosition(
+        location as LocationData,
+        title as string,
+      );
+
+      res.status(200).json({ results }); // Ensure proper method chaining for setting status
+    } catch (error) {
+      console.log(error);
+
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
+// function to post job
+exports.postJob = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const data = req.body;
+
+      await addJobPost(data);
+      res.status(200).json({ message: "Record Created Succesfully" });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
+// ------------------------------------
 // create job
 
-const createTempPosition = async (payload: JobInt) => {
-  try {
-    const doc = await db.collection("job").add(payload);
+// const createTempPosition = async (payload: JobInt) => {
+//   try {
+//     const doc = await db.collection("job").add(payload);
 
-    return doc.id.toString();
-  } catch (err) {
-    functions.logger.log("error getting id" + err);
-  }
-  return "";
-};
+//     return doc.id.toString();
+//   } catch (err) {
+//     functions.logger.log("error getting id" + err);
+//   }
+//   return "";
+// };
 
 //  edit to make the thing valid
 const fulfillOrder = async (payload: string, recieveAdrress: string) => {
   // TODO: get the metadata from the transaction and create the posting with the jobid
   try {
-    const docRef = db.collection("job").doc(payload);
+    // const docRef = db.collection("job").doc(payload);
     try {
-      await docRef.update({
-        status: true,
-      });
+      await updateJopPostStatus(payload);
 
       functions.logger.log(" Document Successfully created");
     } catch (error) {

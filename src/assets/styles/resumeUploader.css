@@ -7,12 +7,15 @@ border: 2px solid black ;
 border-radius: 10px;
 padding: 10px 20px;
 font-size: 18px;
-color: black
+color: black;
+background-color: transparent
 }
 
 .uploader-container:hover{
     opacity: 0.4;
     cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1
+    );
 
 }
 

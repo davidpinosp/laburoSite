@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface JobInt {
   title: string;
   company: string;
@@ -15,6 +17,6 @@ export interface JobInt {
   recieveEmail: string;
   imageURL?: string | undefined;
   status: boolean;
-  _id: string | undefined;
+  _id: ObjectId | undefined;
   editKey: string | undefined;
 }

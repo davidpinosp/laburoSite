@@ -4,23 +4,11 @@ import Footer from "../components/Footer";
 import "../assets/styles/jobs.css";
 import JobPost from "../components/JobPost";
 // import TuneIcon from "@mui/icons-material/Tune";
-import {
-  getJobSnapshot,
-  getJobsByLocationAndPosition,
-} from "../utils/jobsUtils";
+import { getDbLength, getJobs } from "../utils/jobsUtils";
 import { LocationData } from "../typescript/interfaces/Location";
-import {
-  DocumentData,
-  DocumentSnapshot,
-  collection,
-  getCountFromServer,
-  getDocs,
-  limit,
-  query,
-  where,
-} from "firebase/firestore";
+
 import AutocompleteLocation from "../components/AutocompleteLocation";
-import { db } from "../firebase";
+
 import LoadingWidget from "../components/widgets/LoadingWidget";
 import { JobInt } from "../typescript/interfaces/JobInterface";
 
@@ -32,11 +20,11 @@ function Jobs() {
   const [grayButton, setGrayButton] = useState(true);
   const [positionValue, setPositionValue] = useState("");
 
-  const [lastSnapshot, setLastSnapshot] =
-    useState<DocumentSnapshot<DocumentData, DocumentData>>();
-
-  const [filteredJobs, setFilteredJobs] =
-    useState<{ data: DocumentData; id: string }[]>();
+  // refactor   -----------------------
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [pageSize, setPageSize] = useState(0);
+  const [jobsToDisplay, setJobsToDisplay] = useState<JobInt[]>();
+  const [lastId, setLastId] = useState("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -46,40 +34,44 @@ function Jobs() {
     // setLoadMoreText(true);
     setGrayButton(true);
   };
+
   const getJobsToDisplay = async () => {
     setLoading(true);
 
     try {
-      // get jobs with filters
-      const jobsList = await getJobsByLocationAndPosition(
+      // ---------refactor------------
+
+      // get jobs
+      let jobResults;
+
+      jobResults = await getJobs(
         selectedLocation,
         positionValue,
+        undefined,
+        undefined,
+        pageSize,
         setJobsNumber
       );
-      // set length
+      // const jobLength = await getDbLength(selectedLocation, positionValue);
 
-      if (jobsList.length > 0) {
-        const lastIndex = jobsList[jobsList.length - 1].id;
-
-        // get the length from function directly
-        setLastSnapshot(await getJobSnapshot(lastIndex));
-
-        // setJobPositions(jobsList);
-
-        setFilteredJobs(jobsList);
-      } else {
-        // setJobPositions([]);
-        setFilteredJobs([]);
+      // setJobsNumber(jobLength);
+      // get last id
+      if (jobResults.length > 0) {
+        setLastId(jobResults[jobResults.length - 1]._id);
       }
+      setJobsToDisplay(jobResults);
 
       setLoading(false);
-      if (jobsList.length > 20) {
+      if (jobResults.length > pageSize) {
         setLoadMoreText(true);
       } else {
         setLoadMoreText(false);
       }
     } catch (error) {
       //  error
+
+      console.log(error);
+      setLoading(false);
     }
   };
 
@@ -87,25 +79,23 @@ function Jobs() {
     // pass last job
     setLoading(true);
     try {
-      const moreJobs = await getJobsByLocationAndPosition(
+      const moreJobs: JobInt[] = await getJobs(
         selectedLocation,
         positionValue,
-        setJobsNumber,
-        lastSnapshot
+        lastId,
+        pageSize
       );
 
-      if (moreJobs.length > 0) {
-        const lastIndex = moreJobs[moreJobs.length - 1].id;
-
-        setLastSnapshot(await getJobSnapshot(lastIndex));
+      ///---
+      const lastIndex = moreJobs[moreJobs.length - 1]._id;
+      if (moreJobs.length > 0 && lastIndex) {
+        setLastId(lastIndex);
 
         moreJobs.forEach((element) => {
-          filteredJobs?.push(element);
-
-          // console.log("next job" + element.data);
+          jobsToDisplay?.push(element);
         });
 
-        if ((filteredJobs?.length as number) < jobsnumber) {
+        if ((jobsToDisplay?.length as number) < jobsnumber) {
           setLoadMoreText(true);
         }
       } else {
@@ -124,28 +114,32 @@ function Jobs() {
     ) => {
       try {
         setLoading(true);
-        const jobsCollection = collection(db, "job");
-        let q = query(jobsCollection);
-        q = query(q, where("status", "==", true));
-        const snapshot = await getCountFromServer(q);
+        const pageSize = 20;
+        setPageSize(pageSize);
+        // get initial jobs
+        //  get count of jobs
 
-        const jobsSnapshot = await getDocs(query(q, limit(20)));
-        const totalCount = snapshot.data().count;
+        const totalCount = await getDbLength();
+        const jobs = await getJobs(
+          undefined,
+          undefined,
+          undefined,
+          undefined,
+          pageSize
+        );
+        let lastIndex;
         // if (totalCount === jobsSnapshot.docs.length) {
         //   setLoadMoreText(false);
         // }
-        if (totalCount > 20) {
+        if (totalCount > jobs.length) {
           setLoadMoreText(true);
         }
-        setJobsNumber(totalCount);
-        const jobsData = jobsSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data(),
-        }));
-        const index = jobsSnapshot.docs[jobsSnapshot.docs.length - 1].id;
 
-        setLastSnapshot(await getJobSnapshot(index));
-        setFilteredJobs(jobsData);
+        setJobsNumber(totalCount);
+        setJobsToDisplay(jobs);
+        lastIndex = jobs[jobs.length - 1]._id;
+
+        setLastId(lastIndex);
       } catch (error) {
         // console.log(error);
       }
@@ -218,7 +212,7 @@ function Jobs() {
             </div>
             {/* positions here  */}
             <div className="w100 mb-25">
-              {filteredJobs?.length === 0 && (
+              {jobsToDisplay?.length === 0 && (
                 <div className="flx flx-center mt-25 ">
                   <div style={{ fontSize: "18px", textAlign: "center" }}>
                     😔 Lo sentimos, no pudimos encontrar nada con tu búsqueda.
@@ -227,15 +221,15 @@ function Jobs() {
                 </div>
               )}
 
-              {filteredJobs?.map((job, index) => (
+              {jobsToDisplay?.map((job, index) => (
                 <a
-                  href={`/job-des/?id=${job.id}`}
+                  href={`/job-des/?id=${job._id}`}
                   target="_blank" // Opens the link in a new tab
                   rel="noopener noreferrer" // Security measure for links to open in a new tab
                   key={index}
                   className="link-style"
                 >
-                  <JobPost currJob={job.data as JobInt} />
+                  <JobPost currJob={job as JobInt} />
                 </a>
               ))}
             </div>

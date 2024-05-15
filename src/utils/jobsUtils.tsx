@@ -14,6 +14,7 @@ import {
   startAfter,
   where,
 } from "firebase/firestore";
+import axios from "axios";
 
 interface LocationData {
   city: string;
@@ -148,6 +149,75 @@ const getCollectionLength = async () => {
   }
 };
 
+// ----------refactor ---------
+
+const getJobs = async (
+  location?: LocationData,
+  position?: string,
+  lastIndex?: string,
+  filters?: {},
+  pageSize?: number,
+  setLength?: React.Dispatch<React.SetStateAction<number>>
+) => {
+  // return array of jobs with last one with id
+  console.log(pageSize);
+  const reqData = {
+    location: location || {
+      city: "",
+      country: "",
+      latitude: 0,
+      longitude: 0,
+    },
+    title: position,
+    pageSize: pageSize,
+    lastId: lastIndex,
+    filters: {},
+  };
+  const result = await axios.post(
+    "https://getjobs-gi2cautoja-uc.a.run.app",
+    reqData
+  );
+  console.log(result.data);
+  if (setLength) {
+    setLength(result.data.length);
+  }
+  return result.data.results;
+};
+
+const getDbLength = async (location?: LocationData, position?: string | "") => {
+  const reqData = {
+    location: location || {
+      city: "",
+      country: "",
+      latitude: 0,
+      longitude: 0,
+    },
+    title: position,
+  };
+  const result = await axios.post(
+    "https://getdblength-gi2cautoja-uc.a.run.app",
+    reqData
+  );
+  return result.data.results;
+};
+
+const getJobById = async (jobId: string) => {
+  const data = {
+    id: jobId,
+  };
+  try {
+    const result = await axios.post(
+      "https://findjob-gi2cautoja-uc.a.run.app",
+      data
+    );
+
+    return result.data.results;
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    throw error;
+  }
+};
+
 // use places api to store place and coordinates
 // for retrieval use autocomplete and also get coordinates so that then we can query db using geojson
 
@@ -157,4 +227,7 @@ export {
   getCollectionLength,
   getJobSnapshot,
   getJobsByLocationAndPosition,
+  getJobs,
+  getDbLength,
+  getJobById,
 };
