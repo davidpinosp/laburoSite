@@ -3,12 +3,12 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { getJobById, getJobPositionData } from "../utils/jobsUtils";
+import { getJobById } from "../utils/jobsUtils";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import RichTextEditor from "../components/RichTextEditor";
-import { DocumentData } from "firebase/firestore";
+
 import LoadingWidget from "../components/widgets/LoadingWidget";
 import ResumeUploader from "../components/resume/ResumeUploader";
 import {

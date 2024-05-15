@@ -4,8 +4,8 @@ import Footer from "../components/Footer";
 
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { DocumentData } from "firebase/firestore";
-import { getJobById, getJobPositionData } from "../utils/jobsUtils";
+
+import { getJobById } from "../utils/jobsUtils";
 
 import LoadingWidget from "../components/widgets/LoadingWidget";
 import { JobInt } from "../typescript/interfaces/JobInterface";
