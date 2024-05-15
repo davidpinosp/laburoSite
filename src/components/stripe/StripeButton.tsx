@@ -15,7 +15,7 @@ function StripeButton(props: StripeButtonProps) {
     console.log(JSON.stringify(props.body));
 
     const response = await fetch(
-      "https://us-central1-hrbot-e8686.cloudfunctions.net/stripeCheckoutSession",
+      "https://stripecheckoutsession-gi2cautoja-uc.a.run.app",
       {
         method: "POST",
         redirect: "manual",

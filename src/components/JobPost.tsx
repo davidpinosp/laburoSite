@@ -38,7 +38,7 @@ const JobPost = (data: postProps) => {
     } else {
       return (
         <React.Fragment>
-          <span> hoy </span>
+          <span> reciente </span>
         </React.Fragment>
       );
     }

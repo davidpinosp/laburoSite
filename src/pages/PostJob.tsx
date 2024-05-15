@@ -30,6 +30,8 @@ function PostJob() {
     recieveEmail: "",
     imageURL: "",
     status: false,
+    _id: undefined,
+    editKey: undefined,
   };
 
   const Step1 = () => {

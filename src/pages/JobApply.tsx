@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link, useSearchParams } from "react-router-dom";
-import { getJobPositionData } from "../utils/jobsUtils";
+import { getJobById, getJobPositionData } from "../utils/jobsUtils";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
@@ -17,6 +17,7 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+import { JobInt } from "../typescript/interfaces/JobInterface";
 
 function JobApply() {
   const storage = getStorage();
@@ -30,89 +31,11 @@ function JobApply() {
   const [formAlert, setformAlert] = useState(false);
   const [uploadStatus, setUploadStatus] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [currJob, setCurrJob] = useState<DocumentData>();
+  const [currJob, setCurrJob] = useState<JobInt>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [resume, setResume] = useState<File>();
 
-  //   event.preventDefault();
-  //   console.log("submit event" + formAlert);
-
-  //   if (name && number && email && description) {
-  //     setformAlert(false);
-  //     setLoading(true);
-  //     console.log(loading);
-  //     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //     const data = {
-  //       name,
-  //       number,
-  //       email,
-  //       date: new Date(),
-  //       description,
-  //       jobId,
-  //     };
-
-  //     const storageRef = ref(storage, `/files/${jobId}`);
-
-  //     // progress can be paused and resumed. It also exposes progress updates.
-  //     // Receives the storage reference and the file to upload.
-  //     let url;
-  //     if (resume instanceof File) {
-  //       const uploadTask = uploadBytesResumable(storageRef, resume);
-  //       // Further code to handle upload
-
-  //       uploadTask.on(
-  //         "state_changed",
-  //         (snapshot) => {
-  //           console.log("uploading");
-  //           var percent =
-  //             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //           console.log(percent + "% done");
-  //         },
-  //         (err) => console.log(err)
-  //       );
-
-  //       // download url
-  //       url = await getDownloadURL(uploadTask.snapshot.ref);
-  //     }
-  //     // hide the from email
-  //     const apiData = {
-  //       to: currJob?.data.recieveEmail,
-  //       subject: "Aplicación para la posición de " + jobName,
-  //       html: description,
-  //       company: currJob?.data.company,
-  //       name,
-  //       number,
-  //       email,
-  //       date: new Date(),
-  //       description,
-  //       jobName: jobName,
-  //       resume,
-  //       imgUrl: url,
-  //     };
-
-  //     const apiUrl: string =
-  //       "http://127.0.0.1:5001/hrbot-e8686/us-central1/sendmessage";
-
-  //     axios
-  //       .post(apiUrl, apiData)
-  //       .then((response) => {
-  //         console.log(response.data);
-
-  //         navigate("/thank-you");
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         alert("failes to send application");
-  //         setLoading(false);
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     setformAlert(true);
-  //     setLoading(false);
-  //     window.scrollTo(0, 0);
-  //   }
-  // };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (name && number && email && description) {
@@ -156,10 +79,10 @@ function JobApply() {
 
       // Prepare data to send, regardless of whether a file was uploaded
       const apiData = {
-        to: currJob?.data.recieveEmail,
+        to: currJob?.recieveEmail,
         subject: "Aplicación para la posición de " + jobName,
         html: description,
-        company: currJob?.data.company,
+        company: currJob?.company,
         name,
         number,
         email,
@@ -213,7 +136,10 @@ function JobApply() {
       // get the job data from aprams
       const id = searchParams.get("id");
       if (id) {
-        const jobData = await getJobPositionData(id);
+        // const jobData = await getJobPositionData(id);
+        // setJobId(id);
+        // setCurrJob(jobData);
+        const jobData = await getJobById(id);
         setJobId(id);
         setCurrJob(jobData);
       }
