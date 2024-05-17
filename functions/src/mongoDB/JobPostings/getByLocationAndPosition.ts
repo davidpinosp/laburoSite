@@ -1,8 +1,6 @@
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { LocationData } from "../../interface/LocationData";
 
-// const uri =
-//   "mongodb+srv://support:SEBAS123sebas@cluster0.e9gwtvj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const uri = process.env.MONGODB_URI;
 let client: MongoClient;
 if (uri) {

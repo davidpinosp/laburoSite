@@ -33,18 +33,20 @@ function AutocompleteLocation({
   function onLoad(autocomplete: google.maps.places.Autocomplete) {
     setSearchResult(autocomplete);
   }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === "") {
+      setSelectedLocation(undefined);
+      if (setGrayButton) {
+        setGrayButton(false);
+      }
+    }
+  };
 
   async function onPlaceChanged() {
     try {
       if (searchResult != null) {
         const place = await searchResult.getPlace();
-        if (place.name === "") {
-          if (setGrayButton) {
-            setGrayButton(true);
-          }
-          setSelectedLocation(undefined);
-          return;
-        }
+
         // const name = place.name;
         // const status = place.business_status;
         // const formattedAddress = place.formatted_address;
@@ -93,6 +95,7 @@ function AutocompleteLocation({
             type="text"
             className="search-pill-input "
             placeholder={placeholder ? placeholder : ""}
+            onChange={handleInputChange}
           />
         </div>
       </Autocomplete>

@@ -17,7 +17,10 @@ import sgMail = require("@sendgrid/mail");
 //   imageURL?: string | undefined;
 // }
 
-const postPaymentConfirmation = async (destination: string) => {
+const postPaymentConfirmation = async (
+  destination: string,
+  editKey: string,
+) => {
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
@@ -39,7 +42,7 @@ const postPaymentConfirmation = async (destination: string) => {
         <h1>Laburo</h1>
         <h2>Resumen de Compra</h2>
         <p>Estimado cliente,</p>
-        <p>Te agradecemos por confiar en Laburo. Ahora estás un paso más cerca de encontrar al mejor talento para tu empresa. Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos a nuestro correo <a href='mailto:support@quierolaburo.com'>support@quierolaburo.com</a>.</p>
+        <p>Te agradecemos por confiar en Laburo. Ahora estás un paso más cerca de encontrar al mejor talento para tu empresa.Si necesitas hacer algun cambio o pausar las aplicaciones en tu publicación por favor utiliza este <a href="https://www.quierolaburo.com/edit-post?editId=${editKey}" target="_blank">enlace</a>.  Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos a nuestro correo <a href='mailto:support@quierolaburo.com'>support@quierolaburo.com</a>.</p>
         <p>Esperamos verte de nuevo. ¡Siempre a tu servicio!</p>
         <p>Saludos,<br>Equipo de Laburo</p>
     </div>

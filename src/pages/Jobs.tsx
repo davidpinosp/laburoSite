@@ -221,17 +221,29 @@ function Jobs() {
                 </div>
               )}
 
-              {jobsToDisplay?.map((job, index) => (
-                <a
-                  href={`/job-des/?id=${job._id}`}
-                  target="_blank" // Opens the link in a new tab
-                  rel="noopener noreferrer" // Security measure for links to open in a new tab
-                  key={index}
-                  className="link-style"
-                >
-                  <JobPost currJob={job as JobInt} />
-                </a>
-              ))}
+              {jobsToDisplay?.map((job, index) =>
+                job.recieveViaEmail ? (
+                  <a
+                    href={`/job-des/?id=${job._id}`}
+                    target="_blank" // Opens the link in a new tab
+                    rel="noopener noreferrer" // Security measure for links to open in a new tab
+                    key={index}
+                    className="link-style"
+                  >
+                    <JobPost currJob={job as JobInt} />
+                  </a>
+                ) : (
+                  <a
+                    href={job.recieveEmail}
+                    key={index}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="link-style"
+                  >
+                    <JobPost currJob={job as JobInt} />
+                  </a>
+                )
+              )}
             </div>
 
             <LoadingWidget loading={loading} />
