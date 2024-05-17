@@ -5,7 +5,7 @@ width: 100%;
 min-height: 100vh;
 display: flex;
 justify-content: center;
-
+padding: 0px 10px;
 
 }
 .edit-post-content{
@@ -20,11 +20,29 @@ width: 200px;
 height: 45px;
 border-radius: 5px;
 font-size: 18px;
+color :black
 
+}
+
+.refresh-post-button{
+    background-color: transparent;
+    font-size: 30px;
+    font-style: bold; 
+    right: 10px;
+
+    position: absolute;
+}
+.refresh-post-button:hover{
+    cursor: pointer;
 }
 
 .edit-post-button:hover{
     cursor: pointer;
+}
+.button-cont-edit{
+    display: flex;
+    justify-content: space-evenly;
+   
 }
 
 

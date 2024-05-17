@@ -5,12 +5,13 @@ import RichTextEditor from "../components/RichTextEditor";
 
 import Switch from "@mui/material/Switch";
 import { Alert } from "@mui/material";
-
+import RefreshIcon from "@mui/icons-material/Refresh";
 import { useSearchParams } from "react-router-dom";
 import { getJobByEditKey, updateDbStatusDescription } from "../utils/jobsUtils";
 import { JobInt } from "../typescript/interfaces/JobInterface";
 
 import LoadingWidget from "../components/widgets/LoadingWidget";
+import { Refresh } from "@mui/icons-material";
 
 function EditPost() {
   const [htmlValue, setHTMLValue] = useState("");
@@ -23,13 +24,9 @@ function EditPost() {
   const label = { inputProps: { "aria-label": "Color switch demo" } };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(event.target.checked);
+    console.log(event.target.checked);
   };
-  const resetInfo = () => {
-    if (currPost) {
-      setIsChecked(currPost.status);
-      setHTMLValue(currPost.description);
-    }
-  };
+
   const handleSubmit = async () => {
     setIsLoading(true);
     if (currPost) {
@@ -41,6 +38,7 @@ function EditPost() {
       try {
         await updateDbStatusDescription(updatedPost);
         setSuccessAlert(true);
+
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -52,6 +50,7 @@ function EditPost() {
   useEffect(() => {
     const getJobData = async () => {
       const editKey = searchParams.get("editId");
+      setIsLoading(true);
       // when result is null put ale
       if (editKey) {
         try {
@@ -60,6 +59,7 @@ function EditPost() {
           setCurrPost(result);
           setIsChecked(result.status);
           setHTMLValue(result.description);
+          setIsLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -100,11 +100,16 @@ function EditPost() {
             </Alert>
           )}
 
-          <div className="txt-s6" style={{ marginTop: "100px" }}>
+          <div className="txt-s6 " style={{ marginTop: "100px" }}>
             Editar Publicación
           </div>
           {/* activar desactivar */}
-          <div className="flx mt-50 " style={{ alignItems: "baseline" }}>
+
+          <div className="mt-25 mb-25">
+            <LoadingWidget loading={isLoading} />
+          </div>
+
+          <div className="flx mt-25 " style={{ alignItems: "baseline" }}>
             <div className="txt-s4"> Pausa</div>
             <Switch
               {...label}
@@ -114,16 +119,26 @@ function EditPost() {
             />
             <div className="txt-s4">Activo</div>
           </div>
+          <div
+            className="w100"
+            style={{ position: "relative", height: "10px" }}
+          >
+            <button
+              className="refresh-post-button "
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              <RefreshIcon style={{ fontSize: "25px", fontStyle: "bold" }} />
+            </button>
+          </div>
           <RichTextEditor
             editorName={""}
             htmlValue={htmlValue}
             setHTMLValue={setHTMLValue}
           />
-          <LoadingWidget loading={isLoading} />
-          <div className="w100 flx  flx-center mt-50" style={{ gap: "50px" }}>
-            <button className="edit-post-button " onClick={resetInfo}>
-              Descartar
-            </button>
+
+          <div className="w100 flx mt-50 button-cont-edit">
             <button
               className="edit-post-button green bg-laburo-green"
               onClick={handleSubmit}
