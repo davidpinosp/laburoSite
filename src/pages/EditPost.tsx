@@ -4,12 +4,12 @@ import "../assets/styles/editPost.css";
 import RichTextEditor from "../components/RichTextEditor";
 
 import Switch from "@mui/material/Switch";
-import { Alert, alpha, styled } from "@mui/material";
-import { pink } from "@mui/material/colors";
+import { Alert } from "@mui/material";
+
 import { useSearchParams } from "react-router-dom";
 import { getJobByEditKey, updateDbStatusDescription } from "../utils/jobsUtils";
 import { JobInt } from "../typescript/interfaces/JobInterface";
-import { TryRounded } from "@mui/icons-material";
+
 import LoadingWidget from "../components/widgets/LoadingWidget";
 
 function EditPost() {
@@ -31,6 +31,7 @@ function EditPost() {
     }
   };
   const handleSubmit = async () => {
+    setIsLoading(true);
     if (currPost) {
       const updatedPost = {
         ...currPost,
@@ -40,9 +41,11 @@ function EditPost() {
       try {
         await updateDbStatusDescription(updatedPost);
         setSuccessAlert(true);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         setLoadingAlert(true);
+        setIsLoading(false);
       }
     }
   };
@@ -64,7 +67,7 @@ function EditPost() {
     };
 
     getJobData();
-  }, []);
+  }, [searchParams]);
   return (
     <div className="edit-post-container">
       <Navbar scrollPast={true} />
