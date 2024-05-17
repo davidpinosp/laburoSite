@@ -11,7 +11,6 @@ import { getJobByEditKey, updateDbStatusDescription } from "../utils/jobsUtils";
 import { JobInt } from "../typescript/interfaces/JobInterface";
 
 import LoadingWidget from "../components/widgets/LoadingWidget";
-import { Refresh } from "@mui/icons-material";
 
 function EditPost() {
   const [htmlValue, setHTMLValue] = useState("");
