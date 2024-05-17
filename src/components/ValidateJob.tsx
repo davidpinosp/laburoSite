@@ -38,8 +38,14 @@ function ValidateJob(props: ValidateJobProps) {
           <div className="validate-job-text"> Posición: {props.job.title}</div>
           <div className="validate-job-text"> Empresa: {props.job.company}</div>
           <div className="validate-job-text">
-            Ubicación:
-            {props.job.location.city + ", " + props.job.location.country}
+            {props.job.location.city && props.job.location.country ? (
+              <React.Fragment>
+                Ubicación:{" "}
+                {props.job.location.city + ", " + props.job.location.country}
+              </React.Fragment>
+            ) : (
+              ""
+            )}
           </div>
           {props.job.recieveViaEmail ? (
             <div className="validate-job-text">Descripción: </div>

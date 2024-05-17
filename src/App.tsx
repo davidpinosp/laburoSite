@@ -15,6 +15,7 @@ import AboutUs from "./pages/AboutUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ContactUs from "./pages/ContactUs";
 import MessageSent from "./pages/MessageSent";
+import EditPost from "./pages/EditPost";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/jobs" element={<Jobs />} />
-
+          <Route path="/edit-post" element={<EditPost />} />
           <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/job-des" element={<JobDescription />} />

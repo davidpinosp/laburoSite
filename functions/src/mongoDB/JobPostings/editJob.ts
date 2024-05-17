@@ -1,7 +1,5 @@
-import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
+import { MongoClient, ServerApiVersion } from "mongodb";
 import { JobInt } from "../../interface/JobInt";
-import { v4 as uuidv4 } from "uuid";
-
 // import { LocationData } from "../../interface/LocationData";
 // import { JobInt } from "../interface/JobInt";
 // const uri = process.env.MONGODB_URI ||"";
@@ -17,15 +15,16 @@ if (uri) {
   });
 }
 
-const addJobPost = async (data: JobInt) => {
+const getJobByEditKey = async (editKey: string) => {
   try {
     await client.connect();
 
     const db = client.db("Laburo");
     const col = db.collection("job");
-
-    const result = await col.insertOne(data);
-    return result.insertedId.toString();
+    const query = { editKey: editKey };
+    console.log(query);
+    const result = await col.findOne(query);
+    return result;
   } catch (err) {
     console.error("An error occurred:", err);
     throw err; // Rethrow the error after logging
@@ -34,14 +33,17 @@ const addJobPost = async (data: JobInt) => {
   }
 };
 
-const updateJopPostStatus = async (id: string) => {
+const updateJobPostOrStatus = async (data: JobInt) => {
   try {
     await client.connect();
 
     const db = client.db("Laburo");
     const col = db.collection("job");
-    const query = { _id: new ObjectId(id) };
-    const update = { $set: { status: true } };
+    const query = { editKey: data.editKey };
+    console.log(query);
+    const update = {
+      $set: { status: data.status, description: data.description },
+    };
     await col.updateOne(query, update);
   } catch (err) {
     console.error("An error occurred:", err);
@@ -51,8 +53,4 @@ const updateJopPostStatus = async (id: string) => {
   }
 };
 
-const generateUniqueEditId = () => {
-  return uuidv4();
-};
-
-export { addJobPost, updateJopPostStatus, generateUniqueEditId };
+export { updateJobPostOrStatus, getJobByEditKey };

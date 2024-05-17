@@ -15,6 +15,7 @@ import {
   where,
 } from "firebase/firestore";
 import axios from "axios";
+import { JobInt } from "../typescript/interfaces/JobInterface";
 
 interface LocationData {
   city: string;
@@ -218,6 +219,31 @@ const getJobById = async (jobId: string) => {
   }
 };
 
+const updateDbStatusDescription = async (jobData: JobInt) => {
+  try {
+    console.log(jobData.status);
+    await axios.post(
+      "https://editjobstatusanddescription-gi2cautoja-uc.a.run.app",
+      jobData
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getJobByEditKey = async (jobId: string) => {
+  try {
+    const result = await axios.post(
+      "https://findjobbyeditkey-gi2cautoja-uc.a.run.app",
+      { editKey: jobId }
+    );
+    console.log(result.data.results);
+    return result.data.results;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // use places api to store place and coordinates
 // for retrieval use autocomplete and also get coordinates so that then we can query db using geojson
 
@@ -230,4 +256,6 @@ export {
   getJobs,
   getDbLength,
   getJobById,
+  getJobByEditKey,
+  updateDbStatusDescription,
 };

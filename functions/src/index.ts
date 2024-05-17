@@ -15,8 +15,14 @@ import { getDbLengthJobsByLocationAndPosition } from "./mongoDB/DbUtils/GetDBLen
 import getSingleJob from "./mongoDB/JobPostings/getSingleJob.js";
 import {
   addJobPost,
+  generateUniqueEditId,
   updateJopPostStatus,
 } from "./mongoDB/JobPostings/postJob.js";
+import { JobInt } from "./interface/JobInt.js";
+import {
+  updateJobPostOrStatus,
+  getJobByEditKey,
+} from "./mongoDB/JobPostings/editJob.js";
 // const corsHandler = cors({ origin: true });
 // import { fileTypeFromBuffer } from "file-type";
 
@@ -34,8 +40,8 @@ exports.sendmessage = onRequest(
     try {
       sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
       const data = req.body;
-      await sendDocument(req);
 
+      await sendDocument(req);
       await postApplicationConfirmation(
         data.name,
         data.jobName,
@@ -61,7 +67,12 @@ exports.stripeCheckoutSession = onRequest(
         res.status(405).send("Method Not Allowed");
         return;
       } else {
-        const id = await addJobPost(req.body);
+        // get editKey id from function and store
+        const bodyData = req.body;
+        const editId = generateUniqueEditId();
+        bodyData.editKey = editId;
+
+        const id = await addJobPost(bodyData);
 
         const session = await stripe.checkout.sessions.create({
           line_items: [
@@ -77,6 +88,7 @@ exports.stripeCheckoutSession = onRequest(
           automatic_tax: { enabled: true },
           metadata: {
             jobData: id,
+            editKey: editId,
           },
         });
 
@@ -114,7 +126,11 @@ exports.eventHandler = onRequest(
 
     if (event?.type === "checkout.session.completed") {
       const checkoutSession = event.data.object.metadata;
-      const payload: string = checkoutSession?.jobData as string;
+      const payload = {
+        jobData: checkoutSession?.jobData,
+        editKey: checkoutSession?.editKey,
+      };
+
       const receiveAddress = event.data.object.customer_details
         ?.email as string;
 
@@ -259,6 +275,43 @@ exports.postJob = onRequest(
   },
 );
 
+exports.findJobByEditKey = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const editKey: string = req.body.editKey;
+      console.log(editKey);
+
+      const results = await getJobByEditKey(editKey);
+
+      res.status(200).json({ results });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
+exports.editJobStatusAndDescription = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const jobData: JobInt = req.body;
+
+      await updateJobPostOrStatus(jobData);
+
+      res.status(200).json({ message: "Record Updated Succesfully" });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
 // ------------------------------------
 // create job
 
@@ -274,21 +327,21 @@ exports.postJob = onRequest(
 // };
 
 //  edit to make the thing valid
-const fulfillOrder = async (payload: string, recieveAdrress: string) => {
+const fulfillOrder = async (
+  data: { jobData: string | undefined; editKey: string | undefined },
+  recieveAdrress: string,
+) => {
   // TODO: get the metadata from the transaction and create the posting with the jobid
   try {
     // const docRef = db.collection("job").doc(payload);
-    try {
-      await updateJopPostStatus(payload);
 
-      functions.logger.log(" Document Successfully created");
-    } catch (error) {
-      console.error("Error updating document: ", error);
+    if (data.jobData) {
+      await updateJopPostStatus(data.jobData);
     }
 
-    // edit to make temporary active
-
-    await postPaymentConfirmation(recieveAdrress);
+    if (data.editKey) {
+      await postPaymentConfirmation(recieveAdrress, data.editKey);
+    }
 
     functions.logger.log("Successfully created");
 

@@ -1,0 +1,39 @@
+
+
+.edit-post-container { 
+width: 100%;   
+min-height: 100vh;
+display: flex;
+justify-content: center;
+
+
+}
+.edit-post-content{
+    max-width: 800px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.edit-post-button { 
+width: 200px;
+height: 45px;
+border-radius: 5px;
+font-size: 18px;
+
+}
+
+.edit-post-button:hover{
+    cursor: pointer;
+}
+
+
+
+
+
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked{
+    color: rgb(21, 188, 127) !important;
+}
+.css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track { 
+    background-color: rgba(21, 188, 127,1) !important;
+}
