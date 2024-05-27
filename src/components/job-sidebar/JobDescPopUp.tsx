@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { JobInt } from "../../typescript/interfaces/JobInterface";
 import "../../assets/styles/job-sidebar.css";
-import JobPost from "../JobPost";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import InfoFlag from "../job-card/InfoFlag";
 import BoltIcon from "@mui/icons-material/Bolt";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { useNavigate } from "react-router-dom";
 
 interface JobDesdPopupProps {
   selectedJob: JobInt;
   setPopOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 function JobDescPopUp({ selectedJob, setPopOpen }: JobDesdPopupProps) {
-  const navigate = useNavigate();
-
   const handleApply = (
     id: string,
     title: string,
@@ -47,7 +43,7 @@ function JobDescPopUp({ selectedJob, setPopOpen }: JobDesdPopupProps) {
     return () => {
       document.body.classList.remove("body-no-scroll");
     };
-  }, []);
+  }, [setPopOpen]);
 
   return (
     <div className="jsb-popup-container">
