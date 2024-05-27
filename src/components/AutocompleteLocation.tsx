@@ -7,6 +7,7 @@ interface AutocompleteProps {
   >;
   setGrayButton?: React.Dispatch<React.SetStateAction<boolean>>;
   placeholder?: string;
+  border?: boolean;
 }
 
 interface LocationData {
@@ -21,6 +22,7 @@ function AutocompleteLocation({
   setSelectedLocation,
   setGrayButton,
   placeholder,
+  border,
 }: AutocompleteProps) {
   const [searchResult, setSearchResult] = useState<any>(null);
   //   const apikey = ;
@@ -90,7 +92,7 @@ function AutocompleteLocation({
           componentRestrictions: { country: ["ec", "ar", "co", "mx"] },
         }}
       >
-        <div className="search-pill">
+        <div className={`${border === false ? "" : "search-pill"}`}>
           <input
             type="text"
             className="search-pill-input "

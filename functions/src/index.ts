@@ -180,6 +180,7 @@ interface GetJobsOptions {
   title: string;
   pageSize?: number;
   lastId?: string;
+  lastDatePosted?: string;
   filters?: JobFilters;
 }
 
@@ -193,6 +194,7 @@ exports.getJobs = onRequest(
         title,
         pageSize = 10,
         lastId,
+        lastDatePosted,
         filters,
       } = req.body as GetJobsOptions;
       const results = await getJobsByLocationAndPosition(
@@ -200,6 +202,7 @@ exports.getJobs = onRequest(
         title,
         pageSize,
         filters,
+        lastDatePosted,
         lastId,
       );
 

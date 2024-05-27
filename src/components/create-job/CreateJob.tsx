@@ -98,7 +98,7 @@ function CreateJob(props: CreateJobProps) {
         </div>
         <div>
           ¡Dale un impulso a tus publicaciones con nuestra oferta especial! Por
-          solo $89 dólares (USD) antes de impuestos, tu vacante estará en
+          solo $49 dólares (USD) antes de impuestos, tu vacante estará en
           nuestra lista destacada durante 45 días completos. Es tu mejor
           oportunidad para encontrar al candidato perfecto para tu equipo.
         </div>

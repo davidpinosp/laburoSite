@@ -164,7 +164,7 @@ function JobApply() {
               {/* link back to job des prior */}
 
               <Link
-                to={`/job-des/?id=${jobId}`}
+                to={`/jobs`}
                 className="link-style "
                 style={{
                   display: "flex",
