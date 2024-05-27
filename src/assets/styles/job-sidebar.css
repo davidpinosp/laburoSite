@@ -1,0 +1,190 @@
+.job-sidebar {
+    display: flex;
+    position: relative;
+    width: 100%;
+  }
+  
+  .job-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 85vh ;
+    width: 100%;
+    /* padding: 20px 20px; */
+    overflow: auto;
+    gap: 20px;
+    position: sticky;
+    top: 75px; /* Adjust as needed */
+  }
+  .js-content-top{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+     padding: 20px 20px;
+     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+
+
+  }
+
+
+  .js-content-btm{
+    /* padding: 20px 20px; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: auto;
+  }
+
+
+  .js-content-btm-sub {
+   display: flex;
+   flex-direction: column;
+   padding: 0px 20px;
+   gap :20px
+  }
+
+  .js-content-btm-desc{
+   display: flex;
+   flex-direction: column;
+   padding-top: 10px;
+   gap: 20px;
+    padding-left: 20px;
+    padding-right: 10px;
+  }
+
+  .apply-btn-sidebar {
+    background-color: var(--laburo-green);
+    width: 125px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+  }
+
+  .sidebar-divider{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    height: 1px;
+  }
+
+
+  .selected-job-highlight{
+    border: 2px solid var(--laburo-green) !important;
+  
+  }
+  .sidebar-content-description {
+    font-size: 1rem;
+  }
+
+  .sidebar-content-description ul{
+padding-left: 30px;
+  }
+
+
+/* Job Desc Popup */
+
+
+
+.jsb-popup-container{
+  width: 100%;
+height :100%;
+  position: fixed;
+top: 0;
+left:0;
+z-index: 1000111;
+
+padding-top: 70px;
+display: flex;
+flex-direction: column;
+
+background-color: rgba(0, 0, 0, 0.5);
+  
+
+}
+
+
+.jsb-back-button:hover{
+cursor: pointer;
+}
+
+.body-no-scroll{
+  overflow: hidden;
+}
+
+
+
+
+
+.jsb-popup-window{
+
+
+background-color: white;
+
+border-top-left-radius: 10px;
+border-top-right-radius: 10px;
+
+/* border-radius: 10px; */
+align-items: center;
+
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+
+
+}
+
+
+
+
+
+
+.jsb-spacing{
+padding-right: 20px;
+
+}
+
+
+.job-filtersbar{
+  gap:20px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+
+  /* show when > 750px */
+  @media(max-width:750px){
+    .job-filtersbar{
+      gap:10px;
+    }
+  .hide-for-phone{
+    display: none;
+
+  }
+  .jsb-spacing{
+    padding-right: 0px;
+    width: 100% !important;
+  }
+  }
+  @media(min-width:750px){ 
+
+    .hide-for-desktop {
+      display: none;
+    }
+
+    .hide-for-phone{
+      display: flex;
+    }
+
+
+
+
+  } 
+
+  /* hide when < 750px */

@@ -146,9 +146,13 @@ background-color: rgba(80, 80, 80, 0.1)
 
 
 
-    
 
   }
+
+
+
+
+
 
 .button{
     background-color: transparent;
@@ -162,5 +166,113 @@ font-size: inherit;
 
 
 
+/* dropdown */
 
- 
+
+ .dropdown-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 5px 10px;
+    
+ }
+
+ .dropdown-content{
+    margin-top: 10px;
+    padding: 15px 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    position: absolute;
+   
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 180px;
+
+  
+ }
+
+ .drop-down-element:hover{
+    text-decoration: underline;
+
+cursor: pointer;
+
+
+ }
+
+ .dropdown-popup-container{
+   left: 0;
+   top: 0;
+    position:fixed;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    height  :100%;
+    width: 100%;
+    padding-top: 150px;
+    z-index: 1000;
+display: flex;
+justify-content: center;
+}
+
+.dropdown-popup-content{
+background-color: white;
+border-radius: 10px;
+height: 100%;
+width: 100%;
+padding: 10px 10px;
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 20px 10px;
+justify-content: space-between;
+
+}
+.dropdown-popup-divider{
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 1px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}
+
+.dropdown-popup-items{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 10px;
+    width: 100%;
+    gap: 20px;
+    font-size: 20px;
+
+}
+
+
+.dropdown-popup-button{
+    background-color: var(--laburo-green);
+    color:white;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 20px;
+    width: 100%;
+}
+
+
+.dropdown-popup-button:hover{
+    cursor: pointer;
+}
+
+ .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for other browsers like Firefox */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;     /* Firefox */
+  }

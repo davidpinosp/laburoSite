@@ -8,6 +8,9 @@ import { useState } from "react";
 
 interface navProps {
   scrollPast: boolean;
+  hidePublish?: boolean;
+  hideSearch?: boolean;
+  lockNavbar?: boolean;
 }
 function Navbar(props: navProps) {
   const [navOpen, setNavOpen] = useState(false);
@@ -23,6 +26,7 @@ function Navbar(props: navProps) {
       className="nav-container"
       style={{
         backgroundColor: `${props.scrollPast ? "white" : ""}`,
+        position: props.lockNavbar ? "static" : "fixed",
       }}
     >
       <div className="laburo-logo-txt">
@@ -37,47 +41,73 @@ function Navbar(props: navProps) {
         </Link>
       </div>
       <div
-        className="flx space-btwn flx-center nav-inner-container"
-        style={{ minWidth: "150px" }}
+        className="flx  flx-center nav-inner-container "
+        style={{
+          justifyContent: "right",
+          height: "100%",
+          alignItems: "center",
+        }}
       >
-        <Link
-          to="/post-job"
+        {/* mobile */}
+        <div
+          className="flx "
           style={{
-            textDecoration: "none",
+            alignItems: "center",
+
+            gap: "20px",
           }}
         >
-          <div className="bg-laburo-green post-job-btn flx flx-center mobile-only">
-            <div>Publicar</div>
-          </div>
-        </Link>
-        {/* <div>
-          <PersonOutlineIcon style={{ fontSize: "30px" }} />
-        </div> */}
-        <div onClick={toggleMenu} className="mobile-only ">
-          <MenuIcon
+          <Link
+            to="/post-job"
+            className="mobile-only w100"
             style={{
-              fontSize: "30px",
-              color: `${props.scrollPast ? "black" : "white"}`,
+              display: "flex",
+              height: "100%",
+
+              textDecoration: "none",
             }}
-          />
-        </div>
-        <div className="flx " style={{ alignItems: "baseline" }}>
+          >
+            <div className="post-job-mobile-btn mobile-only">
+              <div>Contratar</div>
+            </div>
+          </Link>
+
           <div
-            className="txt-s4 desktop-only nav-text-desk-search"
+            onClick={toggleMenu}
+            className="mobile-only  "
+            style={{ height: "100%" }}
+          >
+            <MenuIcon
+              style={{
+                fontSize: "30px",
+                display: "flex",
+                height: "100%",
+                justifyContent: "center",
+                color: `${props.scrollPast ? "black" : "white"}`,
+              }}
+            />
+          </div>
+        </div>
+        {/* desktop */}
+        <div className="flx " style={{ alignItems: "baseline", width: "100%" }}>
+          <div
+            className="txt-s4 desktop-only nav-text-desk-search "
             style={{
               color: `${props.scrollPast ? "black" : "white"}`,
             }}
           >
-            <Link to={"/jobs"}>Buscar Trabajos</Link>
+            <Link to={"/jobs"} style={{ whiteSpace: "nowrap" }}>
+              Buscar Trabajos
+            </Link>
           </div>
           <Link
             to={"/post-job"}
             className="txt-s4 desktop-only nav-text nav-txt-desk-job link-style"
             style={{
-              marginRight: "40px",
+              whiteSpace: "nowrap",
             }}
           >
-            Publicar un Trabajo
+            Contratar con Laburo
           </Link>
         </div>
       </div>
@@ -101,7 +131,7 @@ function Navbar(props: navProps) {
           </div>
           <div>
             <Link to="/post-job" className="link-style">
-              Publicar un Trabajo
+              Contratar con Laburo
             </Link>
           </div>
         </div>

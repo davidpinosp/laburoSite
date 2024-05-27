@@ -57,6 +57,7 @@
     ]
   },
   "devDependencies": {
-    "@types/dompurify": "^3.0.5"
+    "@types/dompurify": "^3.0.5",
+    "file-loader": "^6.2.0"
   }
 }

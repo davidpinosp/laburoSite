@@ -156,11 +156,23 @@ const getJobs = async (
   location?: LocationData,
   position?: string,
   lastIndex?: string,
+  lastDatePosted?: string,
   filters?: {},
   pageSize?: number,
   setLength?: React.Dispatch<React.SetStateAction<number>>
 ) => {
   // return array of jobs with last one with id
+
+  let filteredObject;
+
+  if (filters) {
+    filteredObject = Object.fromEntries(
+      Object.entries(filters).filter(([key, value]) => value !== undefined)
+    );
+  }
+
+  //
+
   console.log(pageSize);
   const reqData = {
     location: location || {
@@ -172,12 +184,14 @@ const getJobs = async (
     title: position,
     pageSize: pageSize,
     lastId: lastIndex,
-    filters: {},
+    lastDatePosted: lastDatePosted,
+    filters: filteredObject || {},
   };
   const result = await axios.post(
     "https://getjobs-gi2cautoja-uc.a.run.app",
     reqData
   );
+  console.log(reqData);
   console.log(result.data);
   if (setLength) {
     setLength(result.data.length);

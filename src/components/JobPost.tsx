@@ -1,10 +1,11 @@
 import React from "react";
-import StoreIcon from "@mui/icons-material/Store";
 import { JobInt } from "../typescript/interfaces/JobInterface";
 import InfoFlag from "./job-card/InfoFlag";
 
 interface postProps {
   currJob: JobInt;
+  setSelectedJob?: React.Dispatch<React.SetStateAction<JobInt | undefined>>;
+  selected?: boolean;
 }
 
 const JobPost = (data: postProps) => {
@@ -32,30 +33,35 @@ const JobPost = (data: postProps) => {
     if (daysDiff > 2) {
       return (
         <React.Fragment>
-          <span> {checkTimeDif()}</span> <span> días </span>
+          {checkTimeDif()} <span> días</span>
         </React.Fragment>
       );
     } else {
-      return (
-        <React.Fragment>
-          <span> reciente </span>
-        </React.Fragment>
-      );
+      return <div> reciente </div>;
     }
   };
   return (
-    <div className="job-post-container">
+    <div
+      className={`job-post-container ${
+        data.selected && "selected-job-highlight"
+      }`}
+      onClick={() => {
+        if (data.setSelectedJob) {
+          data.setSelectedJob(data.currJob);
+        }
+      }}
+    >
       {/* image  */}
-      <div className="job-post-img-container">
+      {/* <div className="job-post-img-container">
         <div className="job-post-img bg-laburo-green flx flx-center">
           <StoreIcon style={{ fontSize: "35px" }} />
         </div>
-      </div>
+      </div> */}
 
       {/* text */}
-      <div className="flx   job-post-txt">
-        <div className="job-post-txt-col1">
-          <div className="flx flx-space-btwn w100">
+      <div className="flx w100 job-post-txt">
+        <div className="job-post-txt-col1 w100">
+          <div className="flx w100" style={{ justifyContent: "space-between" }}>
             <div className="txt-s4  job-post-position">
               {props.title ? props.title : "Posición"}
             </div>
@@ -77,13 +83,20 @@ const JobPost = (data: postProps) => {
           >
             {props.location.city && props.location.country
               ? props.location.city + ", " + props.location.country
-              : ""}
+              : "Remoto"}
           </div>
-          <div className="flag-container">
-            {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />}
-            {!props.inPerson && <InfoFlag name={"Remoto"} />}
-            {!props.fullTime && <InfoFlag name={"Medio Tiempo "} />}
-          </div>
+          {/* <div className="w100 flx">
+            <div className="job-post-salary">$200-$300 por mes</div>
+          </div> */}
+
+          {props.inPerson ||
+            (props.fullTime && (
+              <div className="flag-container">
+                {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />}
+                {!props.inPerson && <InfoFlag name={"Remoto"} />}
+                {!props.fullTime && <InfoFlag name={"Medio Tiempo "} />}
+              </div>
+            ))}
         </div>
       </div>
     </div>
