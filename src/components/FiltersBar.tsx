@@ -11,13 +11,13 @@ interface FiltersBarProps {
       fullTime: boolean | undefined;
     }>
   >;
-
+  loading: boolean;
   getJobsOnChange?: () => Promise<void>;
   mobile?: boolean;
   currJob?: JobInt;
 }
 
-function FiltersBar({ filters }: FiltersBarProps) {
+function FiltersBar({ filters, loading }: FiltersBarProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [datePosted, setDatePosted] = useState<string>("");
   const [inPerson, setInPerson] = useState<string>("");
@@ -57,12 +57,14 @@ function FiltersBar({ filters }: FiltersBarProps) {
         name="Modalidad"
         options={["En Persona", "Remoto"]}
         setSelected={setInPerson}
+        loading={loading}
       />
 
       <DropDown
         name="Contrato"
         options={["Tiempo Completo", "Medio Tiempo"]}
         setSelected={setFullTime}
+        loading={loading}
       />
     </div>
   );

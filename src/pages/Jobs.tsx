@@ -19,7 +19,7 @@ import FiltersBar from "../components/FiltersBar";
 function Jobs() {
   const [jobsnumber, setJobsNumber] = useState(0);
   const [loading, setLoading] = useState(false);
-
+  const [filtersLoading, setFiltersLoading] = useState(true);
   const [selectedLocation, setSelectedLocation] = useState<LocationData>();
   const [loadMoreText, setLoadMoreText] = useState(false);
   const [grayButton, setGrayButton] = useState(true);
@@ -141,9 +141,14 @@ function Jobs() {
   }, [pageSize]);
 
   useEffect(() => {
-    if (!initialRender) {
-      getJobsToDisplay();
-    }
+    const handleFilters = async () => {
+      setFiltersLoading(true);
+      if (!initialRender) {
+        await getJobsToDisplay();
+      }
+      setFiltersLoading(false);
+    };
+    handleFilters();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filtersObject]);
@@ -303,7 +308,7 @@ function Jobs() {
               </div>
             </form>
 
-            <FiltersBar filters={setFiltersObject} />
+            <FiltersBar filters={setFiltersObject} loading={filtersLoading} />
             <div
               className="flx space-btwn w100 filters-menu "
               style={{ marginTop: "25px" }}
@@ -312,7 +317,7 @@ function Jobs() {
             </div>
 
             <div className="w100 mb-25">
-              {jobsToDisplay?.length === 0 && (
+              {jobsToDisplay?.length === 0 && !loading && (
                 <div className="flx flx-center mt-25">
                   <div style={{ fontSize: "18px", textAlign: "center" }}>
                     😔 Lo sentimos, no pudimos encontrar nada con tu búsqueda.
