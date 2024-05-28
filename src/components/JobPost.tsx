@@ -33,7 +33,7 @@ const JobPost = (data: postProps) => {
     if (daysDiff > 2) {
       return (
         <React.Fragment>
-          <span style={{ textWrap: "nowrap" }}> {checkTimeDif()} días</span>
+          <span style={{ whiteSpace: "nowrap" }}> {checkTimeDif()} días</span>
         </React.Fragment>
       );
     } else {
