@@ -199,6 +199,35 @@ overflow: hidden;
    padding: 2px 4px;
 }
 
+
+.flag-purple{
+    background-color: rgba(158, 0, 255, 0.3);
+}
+
+.flag-orange{
+    background-color: rgb(255, 107, 0,0.3);
+}
+.flag-blue{
+    background-color: rgb(21, 148, 188,0.3);
+}
+.flag-turquoise{
+
+  background-color: rgb(64, 224, 208,0.3);
+
+}
+.flag-red{
+    background-color: rgba(255, 0, 0, 0.322);
+}
+
+.flag-new{
+    background-color:rgba(245, 0, 0, 0.3);
+}
+
+.flag-
+
+
+
+
 .days-ago{
     color: rgba(0, 0, 0, 0.4);
     gap: 3px;

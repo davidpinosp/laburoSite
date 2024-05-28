@@ -173,7 +173,6 @@ const getJobs = async (
 
   //
 
-  console.log(pageSize);
   const reqData = {
     location: location || {
       city: "",
@@ -191,8 +190,7 @@ const getJobs = async (
     "https://getjobs-gi2cautoja-uc.a.run.app",
     reqData
   );
-  console.log(reqData);
-  console.log(result.data);
+
   if (setLength) {
     setLength(result.data.length);
   }
@@ -235,7 +233,6 @@ const getJobById = async (jobId: string) => {
 
 const updateDbStatusDescription = async (jobData: JobInt) => {
   try {
-    console.log(jobData.status);
     await axios.post(
       "https://editjobstatusanddescription-gi2cautoja-uc.a.run.app",
       jobData
@@ -251,7 +248,7 @@ const getJobByEditKey = async (jobId: string) => {
       "https://findjobbyeditkey-gi2cautoja-uc.a.run.app",
       { editKey: jobId }
     );
-    console.log(result.data.results);
+
     return result.data.results;
   } catch (error) {
     console.log(error);

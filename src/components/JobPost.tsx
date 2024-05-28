@@ -33,7 +33,7 @@ const JobPost = (data: postProps) => {
     if (daysDiff > 2) {
       return (
         <React.Fragment>
-          {checkTimeDif()} <span> días</span>
+          <span style={{ whiteSpace: "nowrap" }}> {checkTimeDif()} días</span>
         </React.Fragment>
       );
     } else {
@@ -77,26 +77,32 @@ const JobPost = (data: postProps) => {
           <div className="job-post-company">
             {props.company ? props.company : "Compania"}
           </div>
-          <div
-            className="job-post-location"
-            style={{ color: "rgba(0,0,0,0.5)" }}
-          >
-            {props.location.city && props.location.country
-              ? props.location.city + ", " + props.location.country
-              : "Remoto"}
-          </div>
+
+          {props.location.city && props.location.country && (
+            <div
+              className="job-post-location"
+              style={{ color: "rgba(0,0,0,0.5)" }}
+            >
+              {props.location.city + ", " + props.location.country}
+            </div>
+          )}
           {/* <div className="w100 flx">
             <div className="job-post-salary">$200-$300 por mes</div>
           </div> */}
 
-          {props.inPerson ||
-            (props.fullTime && (
-              <div className="flag-container">
-                {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />}
-                {!props.inPerson && <InfoFlag name={"Remoto"} />}
-                {!props.fullTime && <InfoFlag name={"Medio Tiempo "} />}
-              </div>
-            ))}
+          <div className="flag-container">
+            {checkTimeDif() < 4 && <InfoFlag name={"Nuevo"} />}
+            {!props.inPerson ? (
+              <InfoFlag name={"Remoto"} color="flag-purple" />
+            ) : (
+              <InfoFlag name={"En Persona"} color="flag-purple" />
+            )}
+            {!props.fullTime ? (
+              <InfoFlag name={"Medio Tiempo "} color="flag-orange" />
+            ) : (
+              <InfoFlag name={"Tiempo Completo"} color="flag-orange" />
+            )}
+          </div>
         </div>
       </div>
     </div>

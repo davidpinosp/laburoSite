@@ -157,8 +157,17 @@ function JobSideDesc(props: JobSideDescProps) {
 
               <div className="flag-container">
                 {/* {checkTimeDif() < 10 && <InfoFlag name={"Nuevo"} />} */}
-                {!selectedJob?.inPerson && <InfoFlag name={"Remoto"} />}
-                {!selectedJob?.fullTime && <InfoFlag name={"Medio Tiempo "} />}
+
+                {!selectedJob.inPerson ? (
+                  <InfoFlag name={"Remoto"} color="flag-purple" />
+                ) : (
+                  <InfoFlag name={"En Persona"} color="flag-purple" />
+                )}
+                {!selectedJob.fullTime ? (
+                  <InfoFlag name={"Medio Tiempo "} color="flag-orange" />
+                ) : (
+                  <InfoFlag name={"Tiempo Completo"} color="flag-orange" />
+                )}
               </div>
 
               <div className="sidebar-divider"></div>

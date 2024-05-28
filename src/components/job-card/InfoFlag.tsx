@@ -3,10 +3,12 @@ import React from "react";
 interface InfoFlagsProps {
   name: string;
   tag?: string;
+  color?: string;
 }
 
 function InfoFlag(props: InfoFlagsProps) {
-  return <div className="info-flag">{props.name}</div>;
+  // className="info-flag"
+  return <div className={`info-flag ${props.color}`}>{props.name}</div>;
 }
 
 export default InfoFlag;

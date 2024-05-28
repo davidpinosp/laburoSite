@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import SlideLoader from "../animations/SlideLoader";
 
 interface DropDownProps {
   setSelected?: React.Dispatch<React.SetStateAction<string>>;
 
   name: string;
   options: string[];
-
+  loading: boolean;
   popup?: boolean;
 }
 
@@ -42,7 +43,10 @@ function DropDown(props: DropDownProps) {
   }, [showDropdown]);
   return (
     <div ref={htmlRef}>
-      <div className="dropdown-container">
+      <div
+        className="dropdown-container"
+        style={{ position: "relative", overflow: "hidden" }}
+      >
         <div
           onClick={() => {
             console.log(showDropdown);
@@ -88,6 +92,7 @@ function DropDown(props: DropDownProps) {
             </div>
           )}
         </div>
+        <SlideLoader visible={props.loading} />
       </div>
       {showDropdown && (
         <div>
