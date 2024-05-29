@@ -244,7 +244,7 @@ function JobApply() {
                 {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
                 {/* <div className=" job-des-input"> */}
                 <RichTextEditor
-                  editorName="Información Adicional"
+                  editorName="Información Adicional (Opcional)"
                   htmlValue={description}
                   setHTMLValue={setDescription}
                 />
