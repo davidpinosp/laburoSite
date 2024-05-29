@@ -38,7 +38,7 @@ function JobApply() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (name && number && email && description) {
+    if (resume && name && number && email) {
       setformAlert(false);
       setLoading(true);
 
@@ -102,7 +102,7 @@ function JobApply() {
         navigate("/thank-you");
       } catch (error) {
         console.error("Failed to send application: ", error);
-        alert("Failed to send application: " + error);
+        alert("Error: No se pudo enviar la aplicación: " + error);
       } finally {
         setLoading(false);
       }
@@ -113,8 +113,8 @@ function JobApply() {
     }
   };
   const showEmptyFields = () => {
-    let names = ["Nombre", "Email", "Teléfono", "Descripción"];
-    let form = [name, number, email, description];
+    let names = ["CV", "Nombre", "Email", "Teléfono"];
+    let form = [resume, name, number, email];
     return form.map((val, index) => {
       if (!val) {
         return <div key={index}>{names[index]}</div>;
@@ -244,7 +244,7 @@ function JobApply() {
                 {/* <div style={{ marginBottom: "10px" }}>Descripción</div> */}
                 {/* <div className=" job-des-input"> */}
                 <RichTextEditor
-                  editorName="Información Adicional"
+                  editorName="Información Adicional (Opcional)"
                   htmlValue={description}
                   setHTMLValue={setDescription}
                 />
