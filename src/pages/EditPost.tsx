@@ -128,7 +128,9 @@ function EditPost() {
                 window.location.reload();
               }}
             >
-              <RefreshIcon style={{ fontSize: "25px", fontStyle: "bold" }} />
+              <RefreshIcon
+                style={{ fontSize: "25px", fontStyle: "bold", color: "black" }}
+              />
             </button>
           </div>
           <RichTextEditor
