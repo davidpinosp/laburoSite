@@ -2,7 +2,7 @@ import React from "react";
 import { ApplicantInt } from "../../typescript/interfaces/AppInterface";
 import "../../assets/styles/dashboard/applicants.css";
 import EmailIcon from "@mui/icons-material/Email";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+
 import PDFViewer from "../PDFViewer";
 import { Phone } from "@mui/icons-material";
 interface ApplicantSideInfoProps {

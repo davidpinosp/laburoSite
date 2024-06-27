@@ -5,6 +5,7 @@ import "../../assets/styles/login.css";
 const SignInForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 

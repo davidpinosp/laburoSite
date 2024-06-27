@@ -1,8 +1,7 @@
 import googleLogo from "../../assets/images/googleLogo.png";
-import { Link } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import { useState } from "react";
-import { Height } from "@mui/icons-material";
+
 import "../../assets/styles/login.css";
 const GoogleSignUp: React.FC = () => {
   const [error, setError] = useState(false);

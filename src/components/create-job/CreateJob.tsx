@@ -20,7 +20,7 @@ interface CreateJobProps {
 function CreateJob(props: CreateJobProps) {
   const [title, setTitle] = useState(props.job.title);
   const [company, setCompany] = useState(props.job.company);
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
 
   const [selectedLocation, setSelectedLocation] = useState<
     LocationData | undefined

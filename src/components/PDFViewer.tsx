@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-import { Link } from "react-router-dom";
+
 import DownloadIcon from "@mui/icons-material/Download";
 
 // Set the correct workerSrc to the CDN link

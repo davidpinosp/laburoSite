@@ -1,13 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../assets/styles/navbar.css";
 import "../assets/styles/global.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
-import { Dashboard, Person } from "@mui/icons-material";
+
 import { getAuth, signOut } from "firebase/auth";
-import { user } from "firebase-functions/v1/auth";
 import useAuth from "../utils/useAuth";
 
 interface navProps {
@@ -24,9 +22,8 @@ interface navProps {
 }
 function Navbar(props: navProps) {
   const auth = getAuth();
-  const { loading, user } = useAuth();
+  const { user } = useAuth();
   const [navOpen, setNavOpen] = useState(false);
-  const [showDashboard, setShowDashboard] = useState(false);
 
   const toggleMenu = () => {
     setNavOpen(!navOpen);
