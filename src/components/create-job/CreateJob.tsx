@@ -8,6 +8,8 @@ import RichTextEditor from "../RichTextEditor";
 import { JobInt } from "../../typescript/interfaces/JobInterface";
 
 import { Alert } from "@mui/material";
+import useAuth from "../../utils/useAuth";
+import { Link } from "react-router-dom";
 
 interface CreateJobProps {
   job: JobInt;
@@ -18,6 +20,7 @@ interface CreateJobProps {
 function CreateJob(props: CreateJobProps) {
   const [title, setTitle] = useState(props.job.title);
   const [company, setCompany] = useState(props.job.company);
+  const { user } = useAuth();
 
   const [selectedLocation, setSelectedLocation] = useState<
     LocationData | undefined
@@ -44,9 +47,11 @@ function CreateJob(props: CreateJobProps) {
       fullTime,
       recieveViaEmail,
       recieveEmail: destination,
+      userId: user?.email || undefined,
     });
     props.setStep(2);
   };
+
   const showEmptyFields = () => {
     let names = ["Posición", "Empresa", "Lugar", "Destino"];
     let form = [title, company, selectedLocation, destination];
@@ -102,7 +107,17 @@ function CreateJob(props: CreateJobProps) {
           nuestra lista destacada durante 45 días completos. Es tu mejor
           oportunidad para encontrar al candidato perfecto para tu equipo.
         </div>
+
+        <div style={{ marginTop: "10px" }} className="laburo-green">
+          <Link to="/contact-us">
+            ¿Quieres publicar mas de 3 vacantes? ¡Contáctanos para recibir un
+            descuento!
+          </Link>
+        </div>
+
+        {/* add link to getting more than one or make it easy to create multiple and contact me  */}
       </div>
+
       {formAlert && (
         <div className="w100 mb-25">
           <Alert severity="error" style={{ borderRadius: "10px" }}>

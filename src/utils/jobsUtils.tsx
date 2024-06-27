@@ -231,12 +231,20 @@ const getJobById = async (jobId: string) => {
   }
 };
 
-const updateDbStatusDescription = async (jobData: JobInt) => {
+const updateDbStatusDescription = async (jobData: JobInt, withID?: boolean) => {
   try {
-    await axios.post(
-      "https://editjobstatusanddescription-gi2cautoja-uc.a.run.app",
-      jobData
-    );
+    if (withID) {
+      await axios.post(
+        "https://updatejobpostbyid-gi2cautoja-uc.a.run.app",
+        jobData
+      );
+      console.log("updating with _id");
+    } else {
+      await axios.post(
+        "https://editjobstatusanddescription-gi2cautoja-uc.a.run.app",
+        jobData
+      );
+    }
   } catch (error) {
     console.log(error);
   }

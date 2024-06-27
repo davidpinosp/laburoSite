@@ -3,17 +3,28 @@ import "../assets/styles/navbar.css";
 import "../assets/styles/global.css";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
-// import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
+
+import { getAuth, signOut } from "firebase/auth";
+import useAuth from "../utils/useAuth";
 
 interface navProps {
   scrollPast: boolean;
   hidePublish?: boolean;
   hideSearch?: boolean;
+  hideDash?: boolean;
+  hideSignIn?: boolean;
   lockNavbar?: boolean;
+  highlightJobs?: boolean;
+  highlightLogin?: boolean;
+  highlightPost?: boolean;
+  highlightDash?: boolean;
 }
 function Navbar(props: navProps) {
+  const auth = getAuth();
+  const { user } = useAuth();
   const [navOpen, setNavOpen] = useState(false);
+
   const toggleMenu = () => {
     setNavOpen(!navOpen);
   };
@@ -21,6 +32,15 @@ function Navbar(props: navProps) {
   const handleOutsideClick = () => {
     setNavOpen(false);
   };
+
+  // useEffect(() => {
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
+
+  //   if (user != null) {
+  //     setShowDashboard(true);
+  //   }
+  // }, []);
   return (
     <div
       className="nav-container"
@@ -40,21 +60,14 @@ function Navbar(props: navProps) {
           Laburo
         </Link>
       </div>
-      <div
-        className="flx  flx-center nav-inner-container "
-        style={{
-          justifyContent: "right",
-          height: "100%",
-          alignItems: "center",
-        }}
-      >
+      <div className=" nav-inner-container ">
         {/* mobile */}
         <div
           className="flx "
           style={{
-            alignItems: "center",
-
             gap: "20px",
+            width: "100%",
+            justifyContent: "right",
           }}
         >
           <Link
@@ -89,26 +102,80 @@ function Navbar(props: navProps) {
           </div>
         </div>
         {/* desktop */}
-        <div className="flx " style={{ alignItems: "baseline", width: "100%" }}>
+        <div
+          className="flx "
+          style={{ alignItems: "center", width: "100%", gap: "20px" }}
+        >
           <div
             className="txt-s4 desktop-only nav-text-desk-search "
             style={{
               color: `${props.scrollPast ? "black" : "white"}`,
+              opacity: props.highlightJobs ? "0.2" : "1",
             }}
           >
             <Link to={"/jobs"} style={{ whiteSpace: "nowrap" }}>
               Buscar Trabajos
             </Link>
           </div>
-          <Link
-            to={"/post-job"}
-            className="txt-s4 desktop-only nav-text nav-txt-desk-job link-style"
+          <div
+            className="person-icon txt-s4"
             style={{
-              whiteSpace: "nowrap",
+              height: "100%",
+              display: "flex",
+              alignItems: "baseline",
             }}
           >
-            Contratar con Laburo
-          </Link>
+            {user != null ? (
+              <Link
+                className="desktop-only"
+                to="/dashboard"
+                style={{
+                  color: `${props.scrollPast ? "black" : "white"}`,
+                  opacity: props.highlightDash ? "0.2" : "1",
+                }}
+              >
+                Panel de Control
+              </Link>
+            ) : (
+              <div
+                className="txt-s4 desktop-only nav-text-desk-search "
+                style={{
+                  color: `${props.scrollPast ? "black" : "white"}`,
+                  opacity: props.highlightLogin ? "0.2" : "1",
+                }}
+              >
+                {!props.hideSignIn && (
+                  <Link to={"/ingresar"} style={{ whiteSpace: "nowrap" }}>
+                    Iniciar Sesión
+                  </Link>
+                )}
+              </div>
+            )}
+          </div>
+
+          {user === null ? (
+            <Link
+              to={"/post-job"}
+              className="txt-s4 desktop-only nav-text nav-txt-desk-job link-style"
+              style={{
+                whiteSpace: "nowrap",
+                opacity: props.highlightPost ? "0.2" : "1",
+              }}
+            >
+              Contratar con Laburo
+            </Link>
+          ) : (
+            <button
+              className="txt-s4 desktop-only cursor-pointer"
+              onClick={() => signOut(auth)}
+              style={{
+                color: `${props.scrollPast ? "black" : "white"}`,
+                backgroundColor: "inherit",
+              }}
+            >
+              Cerrar Sesión
+            </button>
+          )}
         </div>
       </div>
       {/* nav menu */}
@@ -132,6 +199,11 @@ function Navbar(props: navProps) {
           <div>
             <Link to="/post-job" className="link-style">
               Contratar con Laburo
+            </Link>
+          </div>
+          <div>
+            <Link to="/ingresar" className="link-style laburo-green">
+              Iniciar Sesión
             </Link>
           </div>
         </div>

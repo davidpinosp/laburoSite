@@ -90,11 +90,11 @@ function JobApply() {
         description,
         jobName: jobName,
         resume,
-        imgUrl: url, // This will be an empty string if no file was uploaded
+        resumeUrl: url,
+        jobId: jobId,
       };
 
-      const apiUrl =
-        "https://us-central1-hrbot-e8686.cloudfunctions.net/sendmessage";
+      const apiUrl = "https://sendmessage-gi2cautoja-uc.a.run.app";
 
       try {
         const response = await axios.post(apiUrl, apiData);

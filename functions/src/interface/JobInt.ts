@@ -19,4 +19,6 @@ export interface JobInt {
   status: boolean;
   _id: ObjectId | undefined;
   editKey: string | undefined;
+  userId: string | undefined;
+  applicants: number | undefined;
 }

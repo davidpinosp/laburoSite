@@ -33,10 +33,10 @@ export const sendDocument = async (req: functions.Request) => {
       data.html +
       "  </li></ul><p>¡Muchas Gracias por confiar en nosotros!</p><p>Suerte en su búsqueda,<br>El equipo de Laburo</p></body></html>";
 
-    if (data.imgUrl) {
+    if (data.resumeUrl) {
       const response = await axios({
         method: "get",
-        url: data.imgUrl,
+        url: data.resumeUrl,
         responseType: "arraybuffer", // Important to process as blob
       });
 

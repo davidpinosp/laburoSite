@@ -1,0 +1,37 @@
+:root{
+    --laburo-green : #15BC7F;
+}
+
+.subbar-container{
+    height: 70px;
+    width:100%;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.subbar-box{
+    display: flex;
+    width: 100%;
+    gap: 30px;
+    margin: 0px 10px;
+    max-width: 1000px;
+   
+    
+}
+
+
+.subbar-btn{
+    color: black;
+    background-color: transparent;
+    font-size: 23px;
+}
+.subbar-btn:hover{
+    cursor:pointer;
+}
+
+.subbar-btn-selected{
+    text-decoration: underline;
+}

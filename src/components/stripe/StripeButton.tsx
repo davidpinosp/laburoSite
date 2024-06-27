@@ -25,6 +25,7 @@ function StripeButton(props: StripeButtonProps) {
         body: JSON.stringify(props.body),
       }
     );
+
     console.log(response);
 
     const RedirectUrl = await response.json();

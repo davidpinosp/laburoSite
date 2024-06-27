@@ -20,7 +20,7 @@ if (uri) {
 const addJobPost = async (data: JobInt) => {
   try {
     await client.connect();
-
+    // make the status false here so it cant be sent as true from frontend.
     const db = client.db("Laburo");
     const col = db.collection("job");
 

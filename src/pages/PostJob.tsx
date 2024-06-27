@@ -32,6 +32,8 @@ function PostJob() {
     status: false,
     _id: undefined,
     editKey: undefined,
+    userId: undefined,
+    applicants: undefined,
   };
 
   const Step1 = () => {
@@ -74,7 +76,7 @@ function PostJob() {
       className="w100 flx flx-col flx-center"
       style={{ padding: "0px 10px" }}
     >
-      <Navbar scrollPast={true} />
+      <Navbar scrollPast={true} highlightPost={true} />
       <div className="skip-navbar-margin postjob-container ">
         {/* top bar  */}
 

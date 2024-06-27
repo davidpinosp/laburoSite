@@ -34,7 +34,6 @@ function ValidateJob(props: ValidateJobProps) {
         <div className="validate-job-title">Validar Información</div>
         {/* imagen */}
         <div className="w100">
-          <div className="validate-job-text"> </div>{" "}
           <div className="validate-job-text"> Posición: {props.job.title}</div>
           <div className="validate-job-text"> Empresa: {props.job.company}</div>
           <div className="validate-job-text">

@@ -1,0 +1,165 @@
+
+.applicant-sidebar-container{
+
+display: flex;
+
+justify-content: center;
+
+width: 100%;
+height: 100%;
+}
+
+.applicant-sidebar-box{
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    min-height: 600px;
+    height: 100%;
+  
+    width: 100%;
+}
+
+.applicant-sidebar-left-box{
+
+  width: 50%;
+    padding-right: 10px;
+    height: 100%;
+}
+
+
+.applicant-sidebar-right-box{
+    width: 100%;
+    border: 1px solid rgba(0, 0,0, 0.2);
+   border-radius: 10px;
+    height: 75vh;
+
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+
+.applicant-info-container{
+ display: flex;
+ align-items: center;
+width: 100%;
+
+}
+
+.applicant-info-box{
+display: flex;
+flex-direction: column;
+gap: 10px;
+padding: 20px 30px;
+width: 100%;
+
+}
+.pdf-viewer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+
+  }
+  
+  .navigation {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .navigation button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .download-btn{
+
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: var(--laburo-green);
+    color: white;
+    font-size: 18px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    
+    gap: 10px;
+  }
+  .download-btn:hover{
+    cursor: pointer;
+  }
+  .navigation button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  
+  .error {
+    color: red;
+    font-weight: bold;
+  }
+
+  .react-pdf__Page__canvas {
+    width: 100% !important;
+    height: 100% !important;
+   
+}
+  
+.applicant-dropdown{
+
+padding: 10px 0px;
+display: flex;
+margin-top: 15px;
+
+
+}
+.applicant-dropdown-box{
+    position: relative;
+}
+
+.applicant-dropdown-header{
+border: 1px solid rgba(0, 0, 0, 0.2);
+border-radius: 5px;
+padding: 10px;
+min-width: 250px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: relative;
+
+}
+.applicant-dropdown-arrow{
+
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+
+}
+
+.applicant-dropdown-list{
+position: absolute;
+top: 100%;
+left: 0;
+background-color: white;
+display: flex;
+flex-direction: column;
+gap: 10px;
+width: 100%;
+border: 1px solid rgba(0, 0, 0, 0.2);
+
+border-top: none;
+border-radius: 0px 0px 5px 5px;
+padding: 10px;
+max-height: 100px;
+overflow: auto;
+
+}
+.applicant-dropdown-list-item:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.adl-open{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}

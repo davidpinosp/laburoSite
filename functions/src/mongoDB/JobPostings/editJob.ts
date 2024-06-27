@@ -1,4 +1,4 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { JobInt } from "../../interface/JobInt";
 // import { LocationData } from "../../interface/LocationData";
 // import { JobInt } from "../interface/JobInt";
@@ -53,4 +53,24 @@ const updateJobPostOrStatus = async (data: JobInt) => {
   }
 };
 
-export { updateJobPostOrStatus, getJobByEditKey };
+const updateJobPostById = async (data: JobInt) => {
+  try {
+    await client.connect();
+
+    const db = client.db("Laburo");
+    const col = db.collection("job");
+    const query = { _id: new ObjectId(data._id) };
+    console.log(query);
+    const update = {
+      $set: { status: data.status, description: data.description },
+    };
+    await col.updateOne(query, update);
+  } catch (err) {
+    console.error("An error occurred:", err);
+    throw err; // Rethrow the error after logging
+  } finally {
+    await client.close();
+  }
+};
+
+export { updateJobPostOrStatus, getJobByEditKey, updateJobPostById };

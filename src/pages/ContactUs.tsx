@@ -75,7 +75,7 @@ function ContactForm() {
         )}
         <form onSubmit={handleSubmit}>
           <div className="w100 postjob-gray-container">
-            <div className="postjob-container-title">Contactanos </div>
+            <div className="postjob-container-title">Contáctanos </div>
             <div className="w100">
               <div style={{ marginBottom: "10px", fontSize: "18px" }}>
                 Nombre
