@@ -22,7 +22,13 @@ import { JobInt } from "./interface/JobInt.js";
 import {
   updateJobPostOrStatus,
   getJobByEditKey,
+  updateJobPostById,
 } from "./mongoDB/JobPostings/editJob.js";
+import { addApplicant } from "./mongoDB/Applicants/addApplicant.js";
+import { ApplicantInt } from "./interface/ApplicantInt.js";
+import { getJobByID } from "./mongoDB/Applicants/getJobsById.js";
+import { getApplicantsById } from "./mongoDB/Applicants/getApplicantDataByID.js";
+import { updateApplicantById } from "./mongoDB/Applicants/updateApplicant.js";
 // const corsHandler = cors({ origin: true });
 // import { fileTypeFromBuffer } from "file-type";
 
@@ -41,7 +47,20 @@ exports.sendmessage = onRequest(
       sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
       const data = req.body;
 
+      const applicantData: ApplicantInt = {
+        name: data.name,
+        email: data.email,
+        description: data.description,
+        number: data.number,
+        date: data.date,
+        resumeUrl: data.resumeUrl,
+        jobId: data.jobId,
+      };
+
       await sendDocument(req);
+      // post application with jobid
+      await addApplicant(applicantData);
+
       await postApplicationConfirmation(
         data.name,
         data.jobName,
@@ -278,6 +297,70 @@ exports.postJob = onRequest(
   },
 );
 
+exports.getUserJobsById = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    // get either the job by either userid or emailtorecieve
+
+    if (req.method !== "GET") {
+      res.status(405).send("Method Not Allowed");
+      return;
+    }
+    try {
+      const id = req.query.id;
+
+      if (!id) {
+        res.status(400).send("Bad Request: Missing query parameter :id");
+        return;
+      }
+
+      const job = await getJobByID(id as string); // Assume getJobByID is an async function that fetches the job
+
+      if (!job) {
+        res.status(404).send("Job not found");
+        return;
+      }
+
+      res.status(200).json(job);
+    } catch (error) {
+      console.error("Error fetching job:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+);
+
+exports.getApplicantsById = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    // get either the job by either userid or emailtorecieve
+
+    if (req.method !== "GET") {
+      res.status(405).send("Method Not Allowed");
+      return;
+    }
+    try {
+      const id = req.query.id;
+
+      if (!id) {
+        res.status(400).send("Bad Request: Missing query parameter :id");
+        return;
+      }
+
+      const job = await getApplicantsById(id as string); // Assume getJobByID is an async function that fetches the job
+
+      if (!job) {
+        res.status(404).send("Job not found");
+        return;
+      }
+
+      res.status(200).json(job);
+    } catch (error) {
+      console.error("Error fetching job:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  },
+);
+
 exports.findJobByEditKey = onRequest(
   { cors: true, enforceAppCheck: true },
   async (req, res) => {
@@ -315,21 +398,43 @@ exports.editJobStatusAndDescription = onRequest(
   },
 );
 
-// ------------------------------------
-// create job
+exports.updateJobPostById = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    try {
+      const jobData: JobInt = req.body;
 
-// const createTempPosition = async (payload: JobInt) => {
-//   try {
-//     const doc = await db.collection("job").add(payload);
+      await updateJobPostById(jobData);
 
-//     return doc.id.toString();
-//   } catch (err) {
-//     functions.logger.log("error getting id" + err);
-//   }
-//   return "";
-// };
+      res.status(200).json({ message: "Record Updated Succesfully" });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
 
-//  edit to make the thing valid
+exports.updateApplicant = onRequest(
+  { cors: true, enforceAppCheck: true },
+  async (req, res) => {
+    // gets the id and updates
+    try {
+      const jobData: ApplicantInt = req.body;
+
+      await updateApplicantById(jobData);
+
+      res.status(200).json({ message: "Record Updated Succesfully" });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: "There has been an error", error: error }); // Send a JSON response with the error message
+    }
+  },
+);
+
 const fulfillOrder = async (
   data: { jobData: string | undefined; editKey: string | undefined },
   recieveAdrress: string,

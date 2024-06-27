@@ -276,3 +276,11 @@ justify-content: space-between;
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
     scrollbar-width: none;     /* Firefox */
   }
+
+  .no-border{
+    border: none !important;
+  }
+
+  .cursor-pointer:hover
+  {cursor: pointer;
+}

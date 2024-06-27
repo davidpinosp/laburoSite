@@ -21,24 +21,15 @@ function AboutUs() {
             maxWidth: "800px",
           }}
         >
-          <div className="w100 ff-title">Vision</div>
-          <div className="section-spacing">
-            En Laburo, nuestra visión es diseñar y construir productos para
-            todos. Estamos comprometidos con hacer que los beneficios de la
-            tecnología sean accesibles a toda la comunidad. Nuestro enfoque está
-            en democratizar la tecnología para garantizar que cada persona pueda
-            disfrutar de sus ventajas, independientemente de su ubicación o
-            contexto.
-          </div>
-          <div className="w100 ff-title">Misión </div>
+          <div className="w100 ff-title">Misión y Vision</div>
 
           <div className="section-spacing" style={{ marginBottom: "0px" }}>
-            Como empresa matriz, Humm Labs se dedica a desarrollar el ecosistema
-            tecnológico de América Latina. Nuestro objetivo principal es
-            potenciar la región a través de la creación de empleo y la
+            Humm Labs es un idea lab creado con el propósito de fortalecer el
+            ecosistema tecnológico de América Latina. Nuestro objetivo principal
+            es impulsar la región mediante la creación de empleo y la
             exportación de servicios tecnológicos a nivel global. Nos esforzamos
-            por ser líderes en la innovación, contribuyendo significativamente
-            al progreso tecnológico y economico de América Latina.
+            por ser líderes en innovación, contribuyendo de manera significativa
+            al progreso tecnológico y económico de América Latina.
           </div>
         </div>
       </div>

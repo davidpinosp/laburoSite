@@ -19,10 +19,19 @@ export interface DBApp {
   jobId: string;
 }
 
-export interface AppData {
+export interface ApplicantInt {
+  _id: string;
   name: string;
-  number: string;
   email: string;
-
+  number: string;
   description: string;
+  date: Date;
+  resumeUrl: string;
+  jobId: string;
+  liked: boolean;
+}
+
+export interface OptionsInt {
+  value: any;
+  label: string;
 }

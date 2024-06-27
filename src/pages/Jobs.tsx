@@ -155,7 +155,7 @@ function Jobs() {
 
   return (
     <div>
-      <Navbar scrollPast={true} />
+      <Navbar scrollPast={true} highlightJobs={true} />
       <div className="w100 flx-center flx-col skip-navbar-margin">
         <div
           className="flx-col w100"
